@@ -1,24 +1,19 @@
-package com.cenfotec.ponto;
+package com.cenfotec.ponto.entities.bidder;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-
-import java.time.LocalDate;
 
 public class BidderRegistrationActivity extends AppCompatActivity {
 
@@ -35,11 +30,11 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_registration);
-        initFormInputs();
+        initFormControls();
         initBidderRegistrationButtonListener();
     }
 
-    private void initFormInputs(){
+    private void initFormControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Bidders");
         fullNameEditText = findViewById(R.id.fullNameEditText);
         birthDateEditText = findViewById(R.id.birthDateEditText);
@@ -60,19 +55,15 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     }
 
     private void registerBidderToDB() {
-
         String password = passwordEditText.getText().toString();
         String generatedSecuredPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
-        //it will create a unique id and we will use it as the Primary Key for our User
         String id = databaseReference.push().getKey();
-        //creating a Bidder Object
-        Bidder bidder = new Bidder(id,fullNameEditText.getText().toString(),
+        Bidder bidder = new Bidder(id, fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(), generatedSecuredPasswordHash,
-                biographyEditText.getText().toString(),1);
-        //Saving the Bidder
+                biographyEditText.getText().toString(), 1);
         databaseReference.child(id).setValue(bidder);
 
         fullNameEditText.setText("");
@@ -86,7 +77,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         initBidderProfileView(id);
     }
 
-    private void initBidderProfileView(String id){
+    private void initBidderProfileView(String id) {
         Intent intent = new Intent(BidderRegistrationActivity.this, BidderProfileActivity.class);
         intent.putExtra("token", id);
         startActivity(intent);

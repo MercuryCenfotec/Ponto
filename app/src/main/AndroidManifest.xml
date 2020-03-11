@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BidderProfileActivity"></activity>
-        <activity android:name=".BidderRegistrationActivity" />
+        <activity android:name=".entities.bidder.BidderProfileActivity"></activity>
+        <activity android:name=".entities.bidder.BidderRegistrationActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

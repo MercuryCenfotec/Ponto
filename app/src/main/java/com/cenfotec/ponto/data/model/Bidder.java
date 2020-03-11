@@ -13,6 +13,10 @@ public class Bidder {
     private String biography;
     private int status;
 
+    public Bidder(){
+
+    }
+
     public Bidder(String id, String fullName, String birthDate, String email, String identificationNumber,
                   String password, String biography, int status) {
         this.id = id;
