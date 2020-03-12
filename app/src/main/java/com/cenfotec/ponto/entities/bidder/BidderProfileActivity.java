@@ -178,6 +178,7 @@ public class BidderProfileActivity extends AppCompatActivity {
 
     private void initEditTextBidderDataInPopupDialog(String label, String input) {
         actualModificationEditText.setText(input);
+        actualModificationEditText.setHint(label);
         actualModificationTextView.setText(label);
     }
 
