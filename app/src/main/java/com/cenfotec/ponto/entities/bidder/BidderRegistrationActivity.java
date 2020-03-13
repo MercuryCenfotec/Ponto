@@ -36,7 +36,6 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     TextInputLayout passwordInputLayout;
     TextInputLayout biographyInputLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,58 +65,64 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         btnBidderRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerBidderToDB();
+                preBidderRegistration();
             }
         });
     }
 
     //create statements start here
-    private void registerBidderToDB() {
-        if (showErrorOnBlankSpaces() == false) {
+    private void preBidderRegistration() {
+        if (!showErrorOnBlankSpaces() && isValidEmail()) {
             FirebaseDatabase.getInstance().getReference().child("Bidders")
-            .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    boolean found = false;
-                    for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
-                        if (identificationEditText.getText().toString().equals(bidderSnapshot.child("identificationNumber").getValue().toString())) {
-                            found = true;
-                            showToaster("Identificación ya");
-                        } else if (emailEditText.getText().toString().equals(bidderSnapshot.child("email").getValue().toString())) {
-                            found = true;
-                            showToaster("Email ya");
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            boolean bidderFound = false;
+                            for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
+                                if (identificationEditText.getText().toString().equals(bidderSnapshot
+                                        .child("identificationNumber").getValue().toString())) {
+                                    bidderFound = true;
+                                    showToaster("Identificación existente");
+                                } else if (emailEditText.getText().toString().equals(bidderSnapshot
+                                        .child("email").getValue().toString())) {
+                                    bidderFound = true;
+                                    showToaster("Email existente");
+                                }
+                            }
+
+                            if (!bidderFound) {
+                                registerBidderToDB();
+                            }
                         }
-                    }
 
-                    if (found == false) {
-                        String password = passwordEditText.getText().toString();
-                        String generatedSecuredPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt(12));
-
-                        String id = databaseReference.push().getKey();
-                        Bidder bidder = new Bidder(id, fullNameEditText.getText().toString(),
-                                birthDateEditText.getText().toString(),
-                                emailEditText.getText().toString(),
-                                identificationEditText.getText().toString(), generatedSecuredPasswordHash,
-                                biographyEditText.getText().toString(), 1);
-                        databaseReference.child(id).setValue(bidder);
-
-                        clearBidderRegistrationInputs();
-
-                        showToaster("Oferente agregado");
-                        initBidderProfileView(id);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    System.out.println("The read failed: " + databaseError.getCode());
-                }
-            });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.println("The read failed: " + databaseError.getCode());
+                        }
+                    });
 
         } else {
             showToaster("Error");
         }
+    }
+
+    private void registerBidderToDB() {
+        String password = passwordEditText.getText().toString();
+        String generatedSecuredPasswordHash = BCrypt.hashpw(password,
+                BCrypt.gensalt(12));
+
+        String id = databaseReference.push().getKey();
+        Bidder bidder = new Bidder(id, fullNameEditText.getText().toString(),
+                birthDateEditText.getText().toString(),
+                emailEditText.getText().toString(),
+                identificationEditText.getText().toString(),
+                generatedSecuredPasswordHash,
+                biographyEditText.getText().toString(), 1);
+        databaseReference.child(id).setValue(bidder);
+
+        clearBidderRegistrationInputs();
+        showToaster("Oferente agregado");
+        initBidderProfileView(id);
     }
 
     private void showToaster(String message) {
@@ -125,7 +130,8 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     }
 
     private void initBidderProfileView(String id) {
-        Intent intent = new Intent(BidderRegistrationActivity.this, BidderProfileActivity.class);
+        Intent intent = new Intent(BidderRegistrationActivity.this,
+                BidderProfileActivity.class);
         intent.putExtra("token", id);
         startActivity(intent);
     }
@@ -142,47 +148,31 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
+        EditText[] editTextsList = new EditText[]{fullNameEditText, birthDateEditText,
+                emailEditText, identificationEditText, passwordEditText, biographyEditText};
+        TextInputLayout[] textInputLayouts = new TextInputLayout[]{fullNameInputLayout,
+                birthDateInputLayout, emailInputLayout, identificationInputLayout,
+                passwordInputLayout, biographyInputLayout};
 
-        //This can be an array or a list
-        if (fullNameEditText.getText().toString().equals("")) {
-            fullNameInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            fullNameInputLayout.setError(null);
+        for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
+            if (editTextsList[matchKey].getText().toString().equals("")) {
+                textInputLayouts[matchKey].setError("Campo requerido");
+                isEmpty = true;
+            } else {
+                textInputLayouts[matchKey].setError(null);
+            }
         }
-        if (birthDateEditText.getText().toString().equals("")) {
-            birthDateInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            birthDateInputLayout.setError(null);
-        }
-        if (emailEditText.getText().toString().equals("")) {
-            emailInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            emailInputLayout.setError(null);
-        }
-        if (identificationEditText.getText().toString().equals("")) {
-            identificationInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            identificationInputLayout.setError(null);
-        }
-        if (passwordEditText.getText().toString().equals("")) {
-            passwordInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            passwordInputLayout.setError(null);
-        }
-        if (biographyEditText.getText().toString().equals("")) {
-            biographyInputLayout.setError("Campo requerido");
-            isEmpty = true;
-        } else {
-            biographyInputLayout.setError(null);
-        }
-
         return isEmpty;
-
     }
 
+    private boolean isValidEmail() {
+        String email = emailEditText.getText().toString();
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailInputLayout.setError(null);
+            return true;
+        } else {
+            emailInputLayout.setError("Email inválido");
+            return false;
+        }
+    }
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,18 +25,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class BidderProfileActivity extends AppCompatActivity {
 
-    String token;
+    String intentToken;
     TextView profileFullName;
     TextView profileBirthDate;
     TextView profileEmail;
     TextView profileIdentification;
     TextView profileBiography;
-    TextView actualModificationTextView;
-    EditText actualModificationEditText;
+    TextView modificationTextView;
+    EditText modificationEditText;
+    TextInputLayout modificationInputLayout;
     Button btnDeleteBidder;
-    Button btnBidderModificationDialog;
-    Button btnBidderCancelDialog;
-    View popupBidderModificationDialogView;
+    Button btnSaveBidderDialog;
+    Button btnCancelBidderDialog;
+    View bidderModificationDialogView;
     Bidder bidder;
     Bidder temporalBidder;
 
@@ -43,16 +45,16 @@ public class BidderProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_profile);
-        catchIntent();
+        catchIntentContent();
         initProfileControls();
-        getBidderByToken();
+        getBidderByIntentToken();
         initBidderDeletionButtonListener();
     }
 
     //This can be replaced by the login token
-    private void catchIntent() {
+    private void catchIntentContent() {
         Intent intent = getIntent();
-        token = intent.getExtras().getString("token");
+        intentToken = intent.getExtras().getString("token");
     }
 
     private void initProfileControls() {
@@ -65,16 +67,16 @@ public class BidderProfileActivity extends AppCompatActivity {
         bidder = new Bidder();
     }
 
-    public void getBidderByToken() {
+    private void getBidderByIntentToken() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getBidderQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(token);
-        getBidderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        Query getBidderByIdQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(intentToken);
+        getBidderByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
                     bidder = bidderSnapshot.getValue(Bidder.class);
                     showBidderProfileInformation();
-                    initBidderInformationControls();
+                    preInitBidderInformationControls();
                 }
             }
 
@@ -94,69 +96,65 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     //Update statements start here
-    private void initBidderInformationControls() {
-        profileFullName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generateDynamicBidderDialog("Nombre completo",
-                        profileFullName.getText().toString(), "fullName");
-            }
-        });
+    private void preInitBidderInformationControls() {
+        initBidderProfileLabelListener(profileFullName, "Nombre completo",
+                profileFullName.getText().toString(), "fullName");
 
-        profileBirthDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generateDynamicBidderDialog("Fecha de nacimiento",
-                        profileBirthDate.getText().toString(), "birthDate");
-            }
-        });
+        initBidderProfileLabelListener(profileBirthDate, "Fecha de nacimiento",
+                profileBirthDate.getText().toString(), "birthDate");
 
-        profileEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generateDynamicBidderDialog("Email",
-                        profileEmail.getText().toString(), "email");
-            }
-        });
+        initBidderProfileLabelListener(profileEmail, "Email",
+                profileEmail.getText().toString(), "email");
 
-        profileIdentification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                generateDynamicBidderDialog("Identificación",
-                        profileIdentification.getText().toString(), "identificationNumber");
-            }
-        });
+        initBidderProfileLabelListener(profileIdentification, "Identificación",
+                profileIdentification.getText().toString(), "identificationNumber");
 
-        profileBiography.setOnClickListener(new View.OnClickListener() {
+        initBidderProfileLabelListener(profileBiography, "Biografía",
+                profileBiography.getText().toString(), "biography");
+
+    }
+
+    private void initBidderProfileLabelListener(TextView profileComponent, final String displayLabel,
+                                                final String profileText, final String textType) {
+        profileComponent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                generateDynamicBidderDialog("Biografía",
-                        profileBiography.getText().toString(), "biography");
+                generateDynamicBidderDialog(displayLabel, profileText, textType);
             }
         });
     }
 
     private void generateDynamicBidderDialog(String label, String input, final String type) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(BidderProfileActivity.this);
+        AlertDialog.Builder alertDialogBuilder =
+                new AlertDialog.Builder(BidderProfileActivity.this);
         alertDialogBuilder.setTitle("Editar información");
         alertDialogBuilder.setCancelable(false);
 
-        initPopupViewControls(label, input);
-
-        alertDialogBuilder.setView(popupBidderModificationDialogView);
+        initDialogViewControls(label, input);
+        alertDialogBuilder.setView(bidderModificationDialogView);
 
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        initDialogButtonListener(alertDialog, type);
+    }
 
-        btnBidderModificationDialog.setOnClickListener(new View.OnClickListener() {
+    private void initDialogButtonListener(final AlertDialog alertDialog, final String type) {
+        btnSaveBidderDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modifyInputBasedOnType(type);
-                alertDialog.cancel();
+                if (!showErrorOnBlankSpace()) {
+                    if (type.equals("email")) {
+                        if (isValidEmail()) {
+                            preBidderModification(alertDialog, type);
+                        }
+                    } else {
+                        preBidderModification(alertDialog, type);
+                    }
+                }
             }
         });
 
-        btnBidderCancelDialog.setOnClickListener(new View.OnClickListener() {
+        btnCancelBidderDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.cancel();
@@ -164,41 +162,73 @@ public class BidderProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void initPopupViewControls(String label, String input) {
+    private void preBidderModification(final AlertDialog alertDialog, final String type) {
+        FirebaseDatabase.getInstance().getReference().child("Bidders")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        boolean bidderFound = false;
+                        for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
+                            if (modificationEditText.getText().toString().equals(bidderSnapshot
+                                    .child("identificationNumber").getValue().toString())) {
+                                bidderFound = true;
+                                showToaster("Identificación existente");
+                            } else if (modificationEditText.getText().toString().
+                                    equals(bidderSnapshot.child("email").getValue().toString())) {
+                                bidderFound = true;
+                                showToaster("Email existente");
+                            }
+                        }
+                        if (!bidderFound) {
+                            modifyAttributeBasedOnType(type);
+                            alertDialog.cancel();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        System.out.println("The read failed: " + databaseError.getCode());
+                    }
+                });
+    }
+
+    private void initDialogViewControls(String label, String input) {
         LayoutInflater layoutInflater = LayoutInflater.from(BidderProfileActivity.this);
 
-        popupBidderModificationDialogView = layoutInflater.inflate(R.layout.bidder_modification_dialog, null);
-        btnBidderModificationDialog = popupBidderModificationDialogView.findViewById(R.id.btnBidderModificationDialog);
-        btnBidderCancelDialog = popupBidderModificationDialogView.findViewById(R.id.btnBidderCancelDialog);
-        actualModificationEditText = popupBidderModificationDialogView.findViewById(R.id.actualModificationEditText);
-        actualModificationTextView = popupBidderModificationDialogView.findViewById(R.id.actualModificationTextView);
+        bidderModificationDialogView = layoutInflater.inflate(R.layout.bidder_modification_dialog, null);
+        btnSaveBidderDialog = bidderModificationDialogView.findViewById(R.id.btnSaveBidderDialog);
+        btnCancelBidderDialog = bidderModificationDialogView.findViewById(R.id.btnCancelBidderDialog);
+        modificationEditText = bidderModificationDialogView.findViewById(R.id.modificationEditText);
+        modificationTextView = bidderModificationDialogView.findViewById(R.id.modificationTextView);
+        modificationInputLayout = bidderModificationDialogView.findViewById(R.id.modificationInputLayout);
 
         initEditTextBidderDataInPopupDialog(label, input);
     }
 
     private void initEditTextBidderDataInPopupDialog(String label, String input) {
-        actualModificationEditText.setText(input);
-        actualModificationEditText.setHint(label);
-        actualModificationTextView.setText(label);
+        modificationEditText.setText(input);
+        modificationEditText.setHint(label);
+        modificationTextView.setText(label);
     }
 
-    private void modifyInputBasedOnType(String type) {
+    private void modifyAttributeBasedOnType(String type) {
         temporalBidder = bidder;
         switch (type) {
             case "fullName":
-                temporalBidder.setFullName(actualModificationEditText.getText().toString());
+                temporalBidder.setFullName(modificationEditText.getText().toString());
                 break;
             case "birthDate":
-                temporalBidder.setBirthDate(actualModificationEditText.getText().toString());
+                temporalBidder.setBirthDate(modificationEditText.getText().toString());
                 break;
             case "email":
-                temporalBidder.setEmail(actualModificationEditText.getText().toString());
+                temporalBidder.setEmail(modificationEditText.getText().toString());
                 break;
             case "identificationNumber":
-                temporalBidder.setIdentificationNumber(actualModificationEditText.getText().toString());
+                temporalBidder.setIdentificationNumber(modificationEditText.getText().toString());
                 break;
             case "biography":
-                temporalBidder.setBiography(actualModificationEditText.getText().toString());
+                temporalBidder.setBiography(modificationEditText.getText().toString());
                 break;
             default:
                 break;
@@ -207,10 +237,15 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     private void updateBidder() {
-        DatabaseReference UpdateReference = FirebaseDatabase.getInstance().getReference("Bidders").child(token);
+        DatabaseReference UpdateReference = FirebaseDatabase.getInstance().
+                getReference("Bidders").child(intentToken);
         UpdateReference.setValue(temporalBidder);
-        Toast.makeText(getApplicationContext(), "Bidder Updated", Toast.LENGTH_LONG).show();
+        showToaster("Cambio guardado");
         showBidderProfileInformation();
+    }
+
+    private void showToaster(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     //Delete statements start here
@@ -225,7 +260,7 @@ public class BidderProfileActivity extends AppCompatActivity {
 
     private void deleteBidder() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getBidderQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(token);
+        Query getBidderQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(intentToken);
         getBidderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -245,6 +280,28 @@ public class BidderProfileActivity extends AppCompatActivity {
     private void initMainView() {
         Intent intent = new Intent(BidderProfileActivity.this, MainActivity.class);
         startActivity(intent);
+    }
+
+    //Validation statements start here
+    private boolean showErrorOnBlankSpace() {
+        if (modificationEditText.getText().toString().equals("")) {
+            modificationInputLayout.setError("Campo requerido");
+            return true;
+        } else {
+            modificationInputLayout.setError(null);
+            return false;
+        }
+    }
+
+    private boolean isValidEmail() {
+        String email = modificationEditText.getText().toString();
+        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            modificationInputLayout.setError(null);
+            return true;
+        } else {
+            modificationInputLayout.setError("Email inválido");
+            return false;
+        }
     }
 
 }
