@@ -3,11 +3,14 @@ package com.cenfotec.ponto.entities.bidder;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
+import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 public class BidderProfileActivity extends AppCompatActivity {
 
@@ -40,11 +47,16 @@ public class BidderProfileActivity extends AppCompatActivity {
     View bidderModificationDialogView;
     Bidder bidder;
     Bidder temporalBidder;
+    DatePickerDialog.OnDateSetListener birthDateSetListener;
+    CustomDatePickerDialog customDatePickerDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_profile);
+        Locale spanish = new Locale("es", "ES");
+        Locale.setDefault(spanish);
         catchIntentContent();
         initProfileControls();
         getBidderByIntentToken();
@@ -65,6 +77,7 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileBiography = findViewById(R.id.profileBiography);
         btnDeleteBidder = findViewById(R.id.btnDeleteBidder);
         bidder = new Bidder();
+        customDatePickerDialog = new CustomDatePickerDialog();
     }
 
     private void getBidderByIntentToken() {
@@ -136,6 +149,9 @@ public class BidderProfileActivity extends AppCompatActivity {
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
         initDialogButtonListener(alertDialog, type);
+        if (type.equals("birthDate")) {
+            initDateControls();
+        }
     }
 
     private void initDialogButtonListener(final AlertDialog alertDialog, final String type) {
@@ -304,4 +320,23 @@ public class BidderProfileActivity extends AppCompatActivity {
         }
     }
 
+    private void initDateControls() {
+        modificationEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDatePickerDialog.openDateDialog(modificationEditText,
+                        BidderProfileActivity.this, birthDateSetListener);
+            }
+        });
+
+        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month += 1;
+                String formatDate = dayOfMonth + "/" + month + "/" + year;
+
+                modificationEditText.setText(formatDate);
+            }
+        };
+    }
 }

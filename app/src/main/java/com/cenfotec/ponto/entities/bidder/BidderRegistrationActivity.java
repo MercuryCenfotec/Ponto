@@ -2,11 +2,9 @@ package com.cenfotec.ponto.entities.bidder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,6 +14,7 @@ import android.widget.Toast;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
+import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 public class BidderRegistrationActivity extends AppCompatActivity {
@@ -42,14 +40,17 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     TextInputLayout identificationInputLayout;
     TextInputLayout passwordInputLayout;
     TextInputLayout biographyInputLayout;
-    DatePickerDialog.OnDateSetListener mDateSetListener;
+    DatePickerDialog.OnDateSetListener birthDateSetListener;
+    CustomDatePickerDialog customDatePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_registration);
         initFormControls();
-        initBidderRegistrationButtonListener();
+        initBidderRegistrationControlsListener();
+        Locale spanish = new Locale("es", "ES");
+        Locale.setDefault(spanish);
     }
 
     private void initFormControls() {
@@ -67,9 +68,10 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         identificationInputLayout = findViewById(R.id.identificationInputLayout);
         passwordInputLayout = findViewById(R.id.passwordInputLayout);
         biographyInputLayout = findViewById(R.id.biographyInputLayout);
+        customDatePickerDialog = new CustomDatePickerDialog();
     }
 
-    private void initBidderRegistrationButtonListener() {
+    private void initBidderRegistrationControlsListener() {
         btnBidderRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,20 +82,18 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         birthDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDateDialog();
+                customDatePickerDialog.openDateDialog(birthDateEditText,
+                        BidderRegistrationActivity.this, birthDateSetListener);
             }
         });
 
-        Locale spanish = new Locale("es", "ES");
-        Locale.setDefault(spanish);
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month += 1;
-                String sDate = dayOfMonth + "/" + month + "/" + year;
+                String formatDate = dayOfMonth + "/" + month + "/" + year;
 
-                birthDateEditText.setText(sDate);
+                birthDateEditText.setText(formatDate);
             }
         };
     }
@@ -202,32 +202,5 @@ public class BidderRegistrationActivity extends AppCompatActivity {
             emailInputLayout.setError("Email inválido");
             return false;
         }
-    }
-
-    private void openDateDialog() {
-        int year;
-        int month;
-        int day;
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.YEAR, -18);
-
-        if (TextUtils.isEmpty(birthDateEditText.getText().toString())) {
-            year = cal.get(Calendar.YEAR);
-            month = cal.get(Calendar.MONTH);
-            day = cal.get(Calendar.DAY_OF_MONTH);
-        } else {
-            day = Integer.parseInt(birthDateEditText.getText().toString().split("/")[0]);
-            month = Integer.parseInt(birthDateEditText.getText().toString().split("/")[1])-1;
-            year = Integer.parseInt(birthDateEditText.getText().toString().split("/")[2]);
-        }
-
-        DatePickerDialog dialog = new DatePickerDialog(
-                BidderRegistrationActivity.this,
-                AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
-                mDateSetListener,
-                year, month, day);
-        dialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "Ok", dialog);
-        dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
-        dialog.show();
     }
 }
