@@ -4,25 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Locale;
+import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class BidderRegistrationActivity extends AppCompatActivity {
 
@@ -33,13 +35,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     EditText identificationEditText;
     EditText passwordEditText;
     EditText biographyEditText;
-    Button btnBidderRegistration;
-    TextInputLayout fullNameInputLayout;
-    TextInputLayout birthDateInputLayout;
-    TextInputLayout emailInputLayout;
-    TextInputLayout identificationInputLayout;
-    TextInputLayout passwordInputLayout;
-    TextInputLayout biographyInputLayout;
+    MyTextView_SF_Pro_Display_Medium btnBidderRegistration;
     DatePickerDialog.OnDateSetListener birthDateSetListener;
     CustomDatePickerDialog customDatePickerDialog;
 
@@ -49,8 +45,6 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bidder_registration);
         initFormControls();
         initBidderRegistrationControlsListener();
-        Locale spanish = new Locale("es", "ES");
-        Locale.setDefault(spanish);
     }
 
     private void initFormControls() {
@@ -62,12 +56,6 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         biographyEditText = findViewById(R.id.biographyEditText);
         btnBidderRegistration = findViewById(R.id.btnBidderRegistration);
-        fullNameInputLayout = findViewById(R.id.fullNameInputLayout);
-        birthDateInputLayout = findViewById(R.id.birthDateInputLayout);
-        emailInputLayout = findViewById(R.id.emailInputLayout);
-        identificationInputLayout = findViewById(R.id.identificationInputLayout);
-        passwordInputLayout = findViewById(R.id.passwordInputLayout);
-        biographyInputLayout = findViewById(R.id.biographyInputLayout);
         customDatePickerDialog = new CustomDatePickerDialog();
     }
 
@@ -96,6 +84,21 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                 birthDateEditText.setText(formatDate);
             }
         };
+    }
+
+    public void showHidePass(View view) {
+        if (view.getId() == R.id.imgViewPassword) {
+            if(passwordEditText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                ((ImageView)(view)).setImageResource(R.drawable.ic_hide);
+                //Show Password
+                passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            }
+            else{
+                ((ImageView)(view)).setImageResource(R.drawable.ic_eye);
+                //Hide Password
+                passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            }
+        }
     }
 
     //create statements start here
@@ -178,16 +181,14 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{fullNameEditText, birthDateEditText,
                 emailEditText, identificationEditText, passwordEditText, biographyEditText};
-        TextInputLayout[] textInputLayouts = new TextInputLayout[]{fullNameInputLayout,
-                birthDateInputLayout, emailInputLayout, identificationInputLayout,
-                passwordInputLayout, biographyInputLayout};
-
         for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
             if (editTextsList[matchKey].getText().toString().equals("")) {
-                textInputLayouts[matchKey].setError("Campo requerido");
+                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
+                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                textInputLayouts[matchKey].setError(null);
+                editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
+                editTextsList[matchKey].setHintTextColor(Color.parseColor("#ffffff"));
             }
         }
         return isEmpty;
@@ -196,10 +197,12 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     private boolean isValidEmail() {
         String email = emailEditText.getText().toString();
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailInputLayout.setError(null);
+            emailEditText.setBackgroundResource(R.drawable.rect);
+            emailEditText.setHintTextColor(Color.parseColor("#ffffff"));
             return true;
         } else {
-            emailInputLayout.setError("Email inválido");
+            emailEditText.setBackgroundResource(R.drawable.edittext_error);
+            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }
     }

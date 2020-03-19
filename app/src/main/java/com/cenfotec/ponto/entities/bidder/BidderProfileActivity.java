@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +19,6 @@ import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,8 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-import java.util.Locale;
+import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class BidderProfileActivity extends AppCompatActivity {
 
@@ -40,10 +38,9 @@ public class BidderProfileActivity extends AppCompatActivity {
     TextView profileBiography;
     TextView modificationTextView;
     EditText modificationEditText;
-    TextInputLayout modificationInputLayout;
     Button btnDeleteBidder;
-    Button btnSaveBidderDialog;
-    Button btnCancelBidderDialog;
+    MyTextView_SF_Pro_Display_Medium btnSaveBidderDialog;
+    MyTextView_SF_Pro_Display_Medium btnCancelBidderDialog;
     View bidderModificationDialogView;
     Bidder bidder;
     Bidder temporalBidder;
@@ -55,8 +52,6 @@ public class BidderProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_profile);
-        Locale spanish = new Locale("es", "ES");
-        Locale.setDefault(spanish);
         catchIntentContent();
         initProfileControls();
         getBidderByIntentToken();
@@ -140,7 +135,6 @@ public class BidderProfileActivity extends AppCompatActivity {
     private void generateDynamicBidderDialog(String label, String input, final String type) {
         AlertDialog.Builder alertDialogBuilder =
                 new AlertDialog.Builder(BidderProfileActivity.this);
-        alertDialogBuilder.setTitle("Editar información");
         alertDialogBuilder.setCancelable(false);
 
         initDialogViewControls(label, input);
@@ -217,7 +211,6 @@ public class BidderProfileActivity extends AppCompatActivity {
         btnCancelBidderDialog = bidderModificationDialogView.findViewById(R.id.btnCancelBidderDialog);
         modificationEditText = bidderModificationDialogView.findViewById(R.id.modificationEditText);
         modificationTextView = bidderModificationDialogView.findViewById(R.id.modificationTextView);
-        modificationInputLayout = bidderModificationDialogView.findViewById(R.id.modificationInputLayout);
 
         initEditTextBidderDataInPopupDialog(label, input);
     }
@@ -301,10 +294,12 @@ public class BidderProfileActivity extends AppCompatActivity {
     //Validation statements start here
     private boolean showErrorOnBlankSpace() {
         if (modificationEditText.getText().toString().equals("")) {
-            modificationInputLayout.setError("Campo requerido");
+            modificationEditText.setHintTextColor(Color.parseColor("#c0392b"));
+            modificationEditText.setBackgroundResource(R.drawable.edittext_error);
             return true;
         } else {
-            modificationInputLayout.setError(null);
+            modificationEditText.setHintTextColor(Color.parseColor("#ffffff"));
+            modificationEditText.setBackgroundResource(R.drawable.rect);
             return false;
         }
     }
@@ -312,10 +307,12 @@ public class BidderProfileActivity extends AppCompatActivity {
     private boolean isValidEmail() {
         String email = modificationEditText.getText().toString();
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            modificationInputLayout.setError(null);
+            modificationEditText.setHintTextColor(Color.parseColor("#ffffff"));
+            modificationEditText.setBackgroundResource(R.drawable.rect);
             return true;
         } else {
-            modificationInputLayout.setError("Email inválido");
+            modificationEditText.setHintTextColor(Color.parseColor("#c0392b"));
+            modificationEditText.setBackgroundResource(R.drawable.edittext_error);
             return false;
         }
     }
