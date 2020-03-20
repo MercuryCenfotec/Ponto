@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cenfotec.ponto.entities.petitioner.PetitionerProfileActivity;
+import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 
 public class PetitionerHomeActivity extends AppCompatActivity {
 
@@ -18,6 +19,11 @@ public class PetitionerHomeActivity extends AppCompatActivity {
 
     public void goToProfile(View view) {
         Intent intent = new Intent(this, PetitionerProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToRegister(View view) {
+        Intent intent = new Intent(this, PetitionerRegistrationActivity.class);
         startActivity(intent);
     }
 }
