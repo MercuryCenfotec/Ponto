@@ -55,7 +55,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
 
         getActiveUserId();
         initProfileControls();
-//        getPetitionerByIntentToken();
+        getPetitionerByActiveUserId();
         showRecyclerViewOptions();
     }
 
@@ -90,7 +90,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         activeUserId = sharedpreferences.getString("userId", "");
     }
 
-    private void getPetitionerByIntentToken() {
+    private void getPetitionerByActiveUserId() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
