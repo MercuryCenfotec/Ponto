@@ -45,10 +45,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="192dp"
             android:ems="10"
-            android:focusable="false"
             android:hint="Fecha de nacimiento"
             android:inputType="date"
             android:textSize="20sp"
+            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -152,7 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="624dp"
         android:layout_marginRight="16dp"
         android:background="#00773F"
         android:paddingLeft="30dp"

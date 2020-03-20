@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 public class CustomDatePickerDialog {
 
@@ -19,6 +20,8 @@ public class CustomDatePickerDialog {
         int year;
         int month;
         int day;
+        Locale spanish = new Locale("es", "ES");
+        Locale.setDefault(spanish);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.YEAR, -18);
 
@@ -37,7 +40,8 @@ public class CustomDatePickerDialog {
                 AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
                 dateSetListener,
                 year, month, day);
-        dialog.setButton(android.app.DatePickerDialog.BUTTON_POSITIVE, "Ok", dialog);
+        dialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "Ok", dialog);
+        dialog.setButton(DatePickerDialog.BUTTON_NEGATIVE, "Cancelar", dialog);
         dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
         dialog.show();
     }
