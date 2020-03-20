@@ -4,164 +4,163 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03749C"
     tools:context=".entities.bidder.BidderRegistrationActivity">
 
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fullNameInputLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        app:errorEnabled="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/fullNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
-            android:ems="10"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect"
             android:hint="Nombre completo"
             android:inputType="text"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/birthDateInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/birthDateEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="192dp"
-            android:ems="10"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect"
             android:hint="Fecha de nacimiento"
             android:inputType="date"
-            android:textSize="20sp"
             android:focusable="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="248dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="256dp"
-            android:ems="10"
-            android:hint="Email"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect"
+            android:hint="Correo electrónico"
             android:inputType="textEmailAddress"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/identificationInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="336dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/identificationEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="332dp"
-            android:ems="10"
-            android:hint="Identificación"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect"
+            android:hint="Cédula"
             android:inputType="text"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="428dp"
-        app:passwordToggleEnabled="true"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordEditText"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="428dp"
-            android:ems="10"
-            android:hint="Contraseña"
-            android:inputType="textPassword"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <customfonts.EditText__SF_Pro_Display_Medium
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="41dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginRight="41dp"
+                android:background="@drawable/rect"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:paddingTop="13dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="14dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="17sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/biographyInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="516dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/imgViewPassword"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignTop="@+id/passwordEditText"
+                android:layout_alignEnd="@+id/passwordEditText"
+                android:layout_alignRight="@+id/passwordEditText"
+                android:layout_alignBottom="@+id/passwordEditText"
+                android:layout_marginRight="16dp"
+                android:onClick="showHidePass"
+                android:src="@drawable/ic_eye" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        </RelativeLayout>
+
+        <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/biographyEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="496dp"
-            android:ems="10"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect"
             android:hint="Biografía"
-            android:inputType="textLongMessage"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColorHint="#ffffff"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/btnBidderRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rect_white"
+            android:paddingLeft="48dp"
+            android:paddingTop="11dp"
+            android:paddingRight="48dp"
+            android:paddingBottom="11dp"
+            android:text="Registrarme"
+            android:textAllCaps="false"
+            android:textColor="#3b3b3b"
+            android:textSize="17sp" />
 
-    <Button
-        android:id="@+id/btnBidderRegistration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="624dp"
-        android:layout_marginRight="16dp"
-        android:background="#00773F"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:text="Registrarse"
-        android:textColor="#ffffff"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
