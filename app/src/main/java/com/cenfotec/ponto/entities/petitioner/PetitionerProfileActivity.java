@@ -95,10 +95,8 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot petitionerSnapshot : dataSnapshot.getChildren()) {
-                    petitioner = petitionerSnapshot.getValue(Petitioner.class);
-                    showPetitionerProfileInformation();
-                }
+                petitioner = dataSnapshot.getValue(Petitioner.class);
+                showPetitionerProfileInformation();
             }
 
             @Override
