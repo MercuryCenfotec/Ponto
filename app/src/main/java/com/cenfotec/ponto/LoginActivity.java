@@ -52,54 +52,33 @@ public class LoginActivity extends AppCompatActivity {
             final String email = emailEditText.getText().toString();
             final String password = passwordEditText.getText().toString();
             final DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference();
-            Query petitionersQuery = dbReference.child("Petitioners").orderByChild("email").equalTo(email);
-            Query biddersQuery = dbReference.child("Bidders").orderByChild("email").equalTo(email);
+            Query usersQuery = dbReference.child("Users").orderByChild("email").equalTo(email);
 
-            petitionersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            usersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        if (BCrypt.checkpw(password, data.child("password").getValue().toString())) {
-                            editor.putString("userId", data.child("id").getValue().toString());
-                            editor.putString("userType", "petitioner");
-                            editor.commit();
-                            showToaster("Hola, " + data.child("fullName").getValue().toString());
-                            Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            showToaster("Datos incorrectos");
+                    if(snapshot.exists()) {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            if (BCrypt.checkpw(password, data.child("password").getValue().toString())) {
+                                editor.putString("userId", data.child("id").getValue().toString());
+                                editor.putString("userType", data.child("userType").getValue().toString().equals("1") ? "petitioner" : "bidder");
+                                editor.commit();
+                                showToaster("Hola, " + data.child("fullName").getValue().toString());
+                                Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                                startActivity(intent);
+                            } else {
+                                showToaster("Datos incorrectos");
+                            }
                         }
+                    } else {
+                        showToaster("Datos incorrectos");
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     System.out.println("The petitioner read failed: " + databaseError.getCode());
-                }
-            });
-
-            biddersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        if (BCrypt.checkpw(password, data.child("password").getValue().toString())) {
-                            editor.putString("userId", data.child("id").getValue().toString());
-                            editor.putString("userType", "bidder");
-                            editor.commit();
-                            showToaster("Hola, " + data.child("fullName").getValue().toString());
-                            Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
-                            startActivity(intent);
-                        } else {
-                            showToaster("Datos incorrectos");
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    System.out.println("The bidder read failed: " + databaseError.getCode());
                 }
             });
         }
