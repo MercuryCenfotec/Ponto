@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.cenfotec.ponto.LoginActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Petitioner;
+import com.cenfotec.ponto.data.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,7 +38,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
     TextView profilePetitionerEmail;
 //    TextView profilePetitionerIdentification;
     TextView profilePetitionerRating;
-    Petitioner petitioner;
+    User user;
 
     private ProfileAdapter profileAdapter;
     private RecyclerView recyclerview;
@@ -82,7 +83,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         profilePetitionerEmail = findViewById(R.id.petitionerMailProfile);
 //        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
         profilePetitionerRating = findViewById(R.id.petitionerRatingProfile);
-        petitioner = new Petitioner();
+        user = new User();
     }
 
     private void getActiveUserId() {
@@ -95,7 +96,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                petitioner = dataSnapshot.getValue(Petitioner.class);
+                user = dataSnapshot.getValue(User.class);
                 showPetitionerProfileInformation();
             }
 
@@ -110,7 +111,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
 
         // Convert first letter to capital
         StringBuilder capitalized = new StringBuilder();
-        Scanner lineScan = new Scanner(petitioner.getFullName().toLowerCase());
+        Scanner lineScan = new Scanner(user.getFullName().toLowerCase());
         while(lineScan.hasNext()) {
             String word = lineScan.next();
             capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
@@ -118,8 +119,8 @@ public class PetitionerProfileActivity extends AppCompatActivity {
 
         profilePetitionerFullName.setText(capitalized);
 //        profilePetitionerBirthDate.setText(petitioner.getBirthDate());
-        profilePetitionerEmail.setText(petitioner.getEmail());
+        profilePetitionerEmail.setText(user.getEmail());
 //        profilePetitionerIdentification.setText(petitioner.getIdentificationNumber());
-        profilePetitionerRating.setText(String.valueOf(petitioner.getRating()));
+        profilePetitionerRating.setText(String.valueOf(user.getRating()));
     }
 }
