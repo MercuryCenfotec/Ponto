@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cenfotec.ponto">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.petitioner.PetitionerRegistrationActivity"></activity>
+        <activity android:name=".entities.bidder.BidderVerification"></activity>
+        <activity android:name=".entities.petitioner.PetitionerRegistrationActivity" />
         <activity android:name=".entities.bidder.BidderProfileActivity" />
         <activity android:name=".entities.bidder.BidderRegistrationActivity" />
         <activity android:name=".MainActivity">
@@ -19,6 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
     </application>
 
 </manifest>

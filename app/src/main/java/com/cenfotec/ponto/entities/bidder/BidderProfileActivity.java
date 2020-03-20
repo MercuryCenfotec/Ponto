@@ -39,6 +39,7 @@ public class BidderProfileActivity extends AppCompatActivity {
     TextView modificationTextView;
     EditText modificationEditText;
     Button btnDeleteBidder;
+    Button btnSwapVerification;
     MyTextView_SF_Pro_Display_Medium btnSaveBidderDialog;
     MyTextView_SF_Pro_Display_Medium btnCancelBidderDialog;
     View bidderModificationDialogView;
@@ -71,6 +72,7 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileIdentification = findViewById(R.id.profileIdentification);
         profileBiography = findViewById(R.id.profileBiography);
         btnDeleteBidder = findViewById(R.id.btnDeleteBidder);
+        btnSwapVerification = findViewById(R.id.btnSwapVerification);
         bidder = new Bidder();
         customDatePickerDialog = new CustomDatePickerDialog();
     }
@@ -265,6 +267,18 @@ public class BidderProfileActivity extends AppCompatActivity {
                 deleteBidder();
             }
         });
+
+        btnSwapVerification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swapVerification();
+            }
+        });
+    }
+
+    private void swapVerification(){
+        Intent intent = new Intent(BidderProfileActivity.this, BidderVerification.class);
+        startActivity(intent);
     }
 
     private void deleteBidder() {
