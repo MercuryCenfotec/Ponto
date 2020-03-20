@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         eyeIcon = findViewById(R.id.eyeIcon);
     }
 
-    public void login(View view) throws InterruptedException {
+    public void login(View view){
         if (validForm()) {
             final String email = emailEditText.getText().toString();
             final String password = passwordEditText.getText().toString();
@@ -64,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("userType", "petitioner");
                             editor.commit();
                             showToaster("Hola, " + data.child("fullName").getValue().toString());
+                            Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                            startActivity(intent);
                         } else {
                             showToaster("Datos incorrectos");
                         }
@@ -86,6 +89,8 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("userType", "bidder");
                             editor.commit();
                             showToaster("Hola, " + data.child("fullName").getValue().toString());
+                            Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                            startActivity(intent);
                         } else {
                             showToaster("Datos incorrectos");
                         }
