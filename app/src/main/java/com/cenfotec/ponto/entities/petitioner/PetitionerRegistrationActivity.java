@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
+import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.Petitioner;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.google.android.material.textfield.TextInputLayout;
@@ -34,35 +36,36 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
     EditText birthDateEditText;
     EditText emailEditText;
     EditText passwordEditText;
-    Button btnRegister;
+    DatePickerDialog.OnDateSetListener birthDateSetListener;
+    CustomDatePickerDialog customDatePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petitioner_registration);
 
-        initBidderRegistrationControlsListener();
         findViews();
+        initBidderRegistrationControlsListener();
     }
 
     private void initBidderRegistrationControlsListener() {
-//        birthDateEditText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                customDatePickerDialog.openDateDialog(birthDateEditText,
-//                        BidderRegistrationActivity.this, birthDateSetListener);
-//            }
-//        });
-//
-//        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                month += 1;
-//                String formatDate = dayOfMonth + "/" + month + "/" + year;
-//
-//                birthDateEditText.setText(formatDate);
-//            }
-//        };
+        birthDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDatePickerDialog.openDateDialog(birthDateEditText,
+                        PetitionerRegistrationActivity.this, birthDateSetListener);
+            }
+        });
+
+        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month += 1;
+                String formatDate = dayOfMonth + "/" + month + "/" + year;
+
+                birthDateEditText.setText(formatDate);
+            }
+        };
     }
 
     private void findViews() {
@@ -72,7 +75,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.emailPetEditText);
         identificationEditText = findViewById(R.id.identificationPetEditText);
         passwordEditText = findViewById(R.id.txtPassword);
-        btnRegister = findViewById(R.id.btnRegisterPetitioner);
+        customDatePickerDialog = new CustomDatePickerDialog();
     }
 
     public void prePetitionerRegistration(View view) {
@@ -168,7 +171,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
         for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
             if (editTextsList[matchKey].getText().toString().equals("")) {
                 editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
-//                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
+                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
                 editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
@@ -185,7 +188,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
             emailEditText.setHintTextColor(Color.parseColor("#ffffff"));
             return true;
         } else {
-//            emailEditText.setBackgroundResource(R.drawable.edittext_error);
+            emailEditText.setBackgroundResource(R.drawable.edittext_error);
             emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }

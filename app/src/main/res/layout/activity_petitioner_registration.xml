@@ -68,7 +68,8 @@
             android:paddingBottom="14dp"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:textSize="11.5sp" />
+            android:textSize="11.5sp"
+            android:focusable="false"/>
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/emailPetEditText"
