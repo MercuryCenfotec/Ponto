@@ -16,4 +16,26 @@
         android:text="Bidder home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonBP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PERFIL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="goToBidderProfile"/>
+
+    <Button
+        android:id="@+id/buttonBR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="REGISTRAR"
+        app:layout_constraintBottom_toTopOf="@+id/buttonBP"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBP"
+        app:layout_constraintStart_toStartOf="@+id/buttonBP"
+        android:onClick="goToBidderRegister"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

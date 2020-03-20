@@ -1,10 +1,13 @@
 package com.cenfotec.ponto.entities.bidder;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,10 +18,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cenfotec.ponto.LoginActivity;
 import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
+import com.cenfotec.ponto.data.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +34,11 @@ import com.google.firebase.database.ValueEventListener;
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class BidderProfileActivity extends AppCompatActivity {
+
+    private static SharedPreferences sharedpreferences;
+    private String activeUserId;
+    User temporalUser;
+    User user;
 
     String intentToken;
     TextView profileFullName;
@@ -52,17 +62,33 @@ public class BidderProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_profile);
-        catchIntentContent();
         initProfileControls();
-        getBidderByIntentToken();
+        getActiveUserId();
+        getPetitionerByActiveUserId();
         initBidderDeletionButtonListener();
     }
 
-    //This can be replaced by the login token
-    private void catchIntentContent() {
-        Intent intent = getIntent();
-        intentToken = intent.getExtras().getString("token");
+    private void getActiveUserId() {
+        sharedpreferences = getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        activeUserId = sharedpreferences.getString("userId", "");
     }
+
+    private void getPetitionerByActiveUserId() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                user = dataSnapshot.getValue(User.class);
+                getBidderByIntentToken();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     private void initProfileControls() {
         profileFullName = findViewById(R.id.profileFullName);
@@ -72,12 +98,13 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileBiography = findViewById(R.id.profileBiography);
         btnDeleteBidder = findViewById(R.id.btnDeleteBidder);
         bidder = new Bidder();
+        user = new User();
         customDatePickerDialog = new CustomDatePickerDialog();
     }
 
     private void getBidderByIntentToken() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getBidderByIdQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(intentToken);
+        Query getBidderByIdQuery = databaseReference.child("Bidders").orderByChild("userId").equalTo(activeUserId);
         getBidderByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -96,10 +123,10 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     private void showBidderProfileInformation() {
-        profileFullName.setText(bidder.getFullName());
-        profileBirthDate.setText(bidder.getBirthDate());
-        profileEmail.setText(bidder.getEmail());
-        profileIdentification.setText(bidder.getIdentificationNumber());
+        profileFullName.setText(user.getFullName());
+        profileBirthDate.setText(user.getBirthDate());
+        profileEmail.setText(user.getEmail());
+        profileIdentification.setText(user.getIdentificationNumber());
         profileBiography.setText(bidder.getBiography());
     }
 
@@ -173,7 +200,7 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     private void preBidderModification(final AlertDialog alertDialog, final String type) {
-        FirebaseDatabase.getInstance().getReference().child("Bidders")
+        FirebaseDatabase.getInstance().getReference().child("Users")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -223,18 +250,19 @@ public class BidderProfileActivity extends AppCompatActivity {
 
     private void modifyAttributeBasedOnType(String type) {
         temporalBidder = bidder;
+        temporalUser = user;
         switch (type) {
             case "fullName":
-                temporalBidder.setFullName(modificationEditText.getText().toString());
+                temporalUser.setFullName(modificationEditText.getText().toString());
                 break;
             case "birthDate":
-                temporalBidder.setBirthDate(modificationEditText.getText().toString());
+                temporalUser.setBirthDate(modificationEditText.getText().toString());
                 break;
             case "email":
-                temporalBidder.setEmail(modificationEditText.getText().toString());
+                temporalUser.setEmail(modificationEditText.getText().toString());
                 break;
             case "identificationNumber":
-                temporalBidder.setIdentificationNumber(modificationEditText.getText().toString());
+                temporalUser.setIdentificationNumber(modificationEditText.getText().toString());
                 break;
             case "biography":
                 temporalBidder.setBiography(modificationEditText.getText().toString());
@@ -246,8 +274,11 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     private void updateBidder() {
+        DatabaseReference updateUserReference = FirebaseDatabase.getInstance().
+                getReference("Users").child(activeUserId);
         DatabaseReference UpdateReference = FirebaseDatabase.getInstance().
-                getReference("Bidders").child(intentToken);
+                getReference("Bidders").child(bidder.getId());
+        updateUserReference.setValue(temporalUser);
         UpdateReference.setValue(temporalBidder);
         showToaster("Cambio guardado");
         showBidderProfileInformation();
