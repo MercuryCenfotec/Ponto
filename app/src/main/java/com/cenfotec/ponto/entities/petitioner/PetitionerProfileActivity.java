@@ -69,7 +69,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         profileModelArrayList = new ArrayList<>();
 
         for (int i = 0; i < inbox.length; i++) {
-            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId);
+            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId, "petitioner");
             profileModelArrayList.add(view);
         }
 

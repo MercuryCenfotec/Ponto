@@ -2,24 +2,21 @@ package com.cenfotec.ponto.entities.bidder;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cenfotec.ponto.LoginActivity;
-import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
@@ -31,32 +28,32 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import customfonts.MyTextView_SF_Pro_Display_Medium;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import adapter.ProfileAdapter;
+import model.ProfileModel;
 
 public class BidderProfileActivity extends AppCompatActivity {
 
     private static SharedPreferences sharedpreferences;
     private String activeUserId;
-    User temporalUser;
+    private ProfileAdapter profileAdapter;
+    private RecyclerView recyclerview;
+    private ArrayList<ProfileModel> profileModelArrayList;
     User user;
-
-    String intentToken;
+    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star, R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
+    Integer arrow = R.drawable.ic_chevron_right_black_24dp;
+    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos", "Mi Perfil", "Ajustes"};
+    String txthistory[] = {"Revisá tus contrataciones", "Administrá tus recomendaciones", "Tu colección", "Tu colección", "Cambiá la información de tu perfil", "Ajustes"};
     TextView profileFullName;
-    TextView profileBirthDate;
     TextView profileEmail;
-    TextView profileIdentification;
-    TextView profileBiography;
-    TextView modificationTextView;
+    TextView profileRating;
+    //TextView profileBiography;
     EditText modificationEditText;
-    Button btnDeleteBidder;
-    MyTextView_SF_Pro_Display_Medium btnSaveBidderDialog;
-    MyTextView_SF_Pro_Display_Medium btnCancelBidderDialog;
-    View bidderModificationDialogView;
     Bidder bidder;
-    Bidder temporalBidder;
     DatePickerDialog.OnDateSetListener birthDateSetListener;
     CustomDatePickerDialog customDatePickerDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +61,25 @@ public class BidderProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bidder_profile);
         initProfileControls();
         getActiveUserId();
-        getPetitionerByActiveUserId();
-        initBidderDeletionButtonListener();
+        getUserByActiveUserId();
+        showRecyclerViewOptions();
+    }
+
+    private void showRecyclerViewOptions() {
+        recyclerview = findViewById(R.id.bidderProfileOptions);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerview.setLayoutManager(layoutManager);
+        recyclerview.setItemAnimator(new DefaultItemAnimator());
+
+        profileModelArrayList = new ArrayList<>();
+
+        for (int i = 0; i < inbox.length; i++) {
+            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId,"bidder");
+            profileModelArrayList.add(view);
+        }
+
+        profileAdapter = new ProfileAdapter(this, profileModelArrayList);
+        recyclerview.setAdapter(profileAdapter);
     }
 
     private void getActiveUserId() {
@@ -73,13 +87,13 @@ public class BidderProfileActivity extends AppCompatActivity {
         activeUserId = sharedpreferences.getString("userId", "");
     }
 
-    private void getPetitionerByActiveUserId() {
+    private void getUserByActiveUserId() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 user = dataSnapshot.getValue(User.class);
-                getBidderByIntentToken();
+                getBidderByUserId();
             }
 
             @Override
@@ -91,18 +105,16 @@ public class BidderProfileActivity extends AppCompatActivity {
 
 
     private void initProfileControls() {
-        profileFullName = findViewById(R.id.profileFullName);
-        profileBirthDate = findViewById(R.id.profileBirthDate);
-        profileEmail = findViewById(R.id.profileEmail);
-        profileIdentification = findViewById(R.id.profileIdentification);
-        profileBiography = findViewById(R.id.profileBiography);
-        btnDeleteBidder = findViewById(R.id.btnDeleteBidder);
+        profileFullName = findViewById(R.id.bidderFullNameProfile);
+        profileEmail = findViewById(R.id.bidderMailProfile);
+        profileRating = findViewById(R.id.bidderRatingProfile);
+        //profileBiography = findViewById(R.id.profileBiography);
         bidder = new Bidder();
         user = new User();
         customDatePickerDialog = new CustomDatePickerDialog();
     }
 
-    private void getBidderByIntentToken() {
+    private void getBidderByUserId() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query getBidderByIdQuery = databaseReference.child("Bidders").orderByChild("userId").equalTo(activeUserId);
         getBidderByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,7 +123,6 @@ public class BidderProfileActivity extends AppCompatActivity {
                 for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
                     bidder = bidderSnapshot.getValue(Bidder.class);
                     showBidderProfileInformation();
-                    preInitBidderInformationControls();
                 }
             }
 
@@ -123,15 +134,23 @@ public class BidderProfileActivity extends AppCompatActivity {
     }
 
     private void showBidderProfileInformation() {
-        profileFullName.setText(user.getFullName());
-        profileBirthDate.setText(user.getBirthDate());
+
+        // Convert first letter to capital
+        StringBuilder capitalized = new StringBuilder();
+        Scanner lineScan = new Scanner(user.getFullName().toLowerCase());
+        while(lineScan.hasNext()) {
+            String word = lineScan.next();
+            capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+        }
+
+        profileFullName.setText(capitalized);
         profileEmail.setText(user.getEmail());
-        profileIdentification.setText(user.getIdentificationNumber());
-        profileBiography.setText(bidder.getBiography());
+        profileRating.setText(String.valueOf(user.getRating()));
     }
 
+
     //Update statements start here
-    private void preInitBidderInformationControls() {
+    /*private void preInitBidderInformationControls() {
         initBidderProfileLabelListener(profileFullName, "Nombre completo",
                 profileFullName.getText().toString(), "fullName");
 
@@ -286,41 +305,7 @@ public class BidderProfileActivity extends AppCompatActivity {
 
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    //Delete statements start here
-    private void initBidderDeletionButtonListener() {
-        btnDeleteBidder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteBidder();
-            }
-        });
-    }
-
-    private void deleteBidder() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getBidderQuery = databaseReference.child("Bidders").orderByChild("id").equalTo(intentToken);
-        getBidderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot node : dataSnapshot.getChildren()) {
-                    node.getRef().removeValue();
-                    initMainView();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
-
-    private void initMainView() {
-        Intent intent = new Intent(BidderProfileActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
+    }*/
 
     //Validation statements start here
     private boolean showErrorOnBlankSpace() {

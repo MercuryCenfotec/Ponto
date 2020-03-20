@@ -8,7 +8,7 @@ import com.cenfotec.ponto.data.model.Petitioner;
 
 public class ProfileModel {
     Integer inbox,arrow;
-    String txttrades, txthistory, petitionerId;
+    String txttrades, txthistory, userId, userType;
 
     public Integer getInbox() {
         return inbox;
@@ -42,12 +42,20 @@ public class ProfileModel {
         this.txthistory = txthistory;
     }
 
-    public String getPetitionerId() {
-        return petitionerId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPetitionerId(String petitionerId) {
-        this.petitionerId = petitionerId;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public ProfileModel(Integer inbox, Integer arrow, String txttrades, String txthistory) {
@@ -57,11 +65,12 @@ public class ProfileModel {
         this.txthistory = txthistory;
     }
 
-    public ProfileModel(Integer inbox, Integer arrow, String txttrades, String txthistory, String petitionerId) {
+    public ProfileModel(Integer inbox, Integer arrow, String txttrades, String txthistory, String userId, String userType) {
         this.inbox = inbox;
         this.arrow = arrow;
         this.txttrades = txttrades;
         this.txthistory = txthistory;
-        this.petitionerId = petitionerId;
+        this.userId = userId;
+        this.userType = userType;
     }
 }
