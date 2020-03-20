@@ -9,11 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.petitioner.PetitionerUpdateActivity"></activity>
+        <activity android:name=".entities.petitioner.PetitionerUpdateActivity" />
         <activity android:name=".entities.petitioner.PetitionerProfileActivity" />
         <activity android:name=".entities.petitioner.PetitionerRegistrationActivity" />
         <activity android:name=".entities.bidder.BidderProfileActivity" />
         <activity android:name=".entities.bidder.BidderRegistrationActivity" />
+        <activity android:name=".PetitionerHomeActivity" />
+        <activity android:name=".BidderHomeActivity" />
+        <activity android:name=".UserHomeActivity" />
+        <activity android:name=".UserSelectionActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -19,31 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        btnSwapToBidderRegistration = findViewById(R.id.btnSwapToBidderRegistration);
-        btnSwapToBidderRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openBidderRegistrationView();
-            }
-        });
-
-        btnPetitioner = findViewById(R.id.btnSolicitante);
-        btnPetitioner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    openPetitionerRegistrationView();
-            }
-        });
-    }
-
-    private void openBidderRegistrationView(){
-        Intent intent = new Intent(this, BidderRegistrationActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-    }
-
-    private void openPetitionerRegistrationView(){
-        Intent i = new Intent(this, PetitionerRegistrationActivity.class);
-        this.startActivity(i);
     }
 }
