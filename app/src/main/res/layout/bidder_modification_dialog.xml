@@ -1,73 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#03749C"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/modificationTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:gravity="end"
-        android:text="User Name : "
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/modificationInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
-        app:errorEnabled="true"
+        android:layout_height="70dp"
+        android:background="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/modificationEditText"
-            android:layout_width="match_parent"
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/titleTextView"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="116dp"
-            android:ems="10"
-            android:inputType="text"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:text="Editar información"
+            android:textColor="#3b3b3b"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/modificationTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:text="User Name : "
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <customfonts.EditText__SF_Pro_Display_Medium
+        android:id="@+id/modificationEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="156dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rect"
+        android:inputType="text"
+        android:paddingLeft="20dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Medium
         android:id="@+id/btnSaveBidderDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginRight="16dp"
-        android:background="#00773F"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rect_white"
+        android:paddingLeft="40dp"
+        android:paddingTop="11dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="11dp"
         android:text="Guardar"
-        android:textColor="#ffffff"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#3b3b3b"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <customfonts.MyTextView_SF_Pro_Display_Medium
         android:id="@+id/btnCancelBidderDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginRight="16dp"
-        android:background="#00773F"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/rect_white"
+        android:paddingLeft="40dp"
+        android:paddingTop="11dp"
+        android:paddingRight="40dp"
+        android:paddingBottom="11dp"
         android:text="Cancelar"
-        android:textColor="#ffffff"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textAllCaps="false"
+        android:textColor="#3b3b3b"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
