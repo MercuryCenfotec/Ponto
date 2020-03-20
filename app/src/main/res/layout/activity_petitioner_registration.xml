@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/identificationPetEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -28,11 +29,12 @@
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
             android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
             android:textSize="11.5sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/fullNamePetEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -45,12 +47,13 @@
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
             android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
             android:textSize="11.5sp" />
 
 
         <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/birthDatePetEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -63,11 +66,12 @@
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
             android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
             android:textSize="11.5sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/emailPetEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -80,8 +84,8 @@
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
             android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
             android:textSize="11.5sp" />
 
         <RelativeLayout
@@ -136,7 +140,8 @@
             android:text="Registrarme"
             android:textAllCaps="false"
             android:textColor="#3b3b3b"
-            android:textSize="11.5sp" />
+            android:textSize="11.5sp"
+            android:onClick="prePetitionerRegistration" />
 
 
     </LinearLayout>

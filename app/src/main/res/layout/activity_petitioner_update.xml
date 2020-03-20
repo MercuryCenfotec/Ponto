@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".entities.petitioner.PetitionerUpdateActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="goBack"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/idUpdPetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_dotted"
+            android:focusable="false"
+            android:hint="Número de cédula"
+            android:inputType="none"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#ced0d2"
+            android:textColorHint="#ced0d2"
+            android:textSize="11.5sp" />
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/birthDateUpdPetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_dotted"
+            android:focusable="false"
+            android:hint="Fecha de nacimiento"
+            android:inputType="none"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#ced0d2"
+            android:textColorHint="#ced0d2"
+            android:textSize="11.5sp" />
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/fullNameUpdPetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_black"
+            android:hint="Nombre completo"
+            android:inputType="text"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#000"
+            android:textColorHint="#000"
+            android:textSize="11.5sp" />
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/emailUpdPetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_black"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#000"
+            android:textColorHint="#000"
+            android:textSize="11.5sp" />
+
+        <!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <customfonts.EditText__SF_Pro_Display_Medium-->
+<!--                android:id="@+id/txtPassword"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_marginLeft="41dp"-->
+<!--                android:layout_marginTop="21dp"-->
+<!--                android:layout_marginRight="41dp"-->
+<!--                android:background="@drawable/rect_black"-->
+<!--                android:hint="Contraseña"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:paddingLeft="20dp"-->
+<!--                android:paddingTop="13dp"-->
+<!--                android:paddingRight="13dp"-->
+<!--                android:paddingBottom="14dp"-->
+<!--                android:textColor="#000"-->
+<!--                android:textColorHint="#000"-->
+<!--                android:textSize="11.5sp" />-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imgViewPassword"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignTop="@+id/txtPassword"-->
+<!--                android:layout_alignEnd="@+id/txtPassword"-->
+<!--                android:layout_alignRight="@+id/txtPassword"-->
+<!--                android:layout_alignBottom="@+id/txtPassword"-->
+<!--                android:layout_marginRight="16dp"-->
+<!--                android:onClick="showHidePass"-->
+<!--                android:src="@drawable/ic_eye" />-->
+
+<!--        </RelativeLayout>-->
+
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/btnRegisterPetitioner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rect_blue"
+            android:onClick="updatePetitioner"
+            android:paddingLeft="48dp"
+            android:paddingTop="11dp"
+            android:paddingRight="48dp"
+            android:paddingBottom="11dp"
+            android:text="Actualizar"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="11.5sp" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
