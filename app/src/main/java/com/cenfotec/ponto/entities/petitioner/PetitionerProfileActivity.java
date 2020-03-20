@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.cenfotec.ponto.LoginActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Petitioner;
 import com.google.firebase.database.DataSnapshot;
@@ -27,14 +30,14 @@ import model.ProfileModel;
 
 public class PetitionerProfileActivity extends AppCompatActivity {
 
-    String intentToken;
+    private static SharedPreferences sharedpreferences;
+    private String activeUserId;
     TextView profilePetitionerFullName;
 //    TextView profilePetitionerBirthDate;
     TextView profilePetitionerEmail;
 //    TextView profilePetitionerIdentification;
     TextView profilePetitionerRating;
     Petitioner petitioner;
-    String petitionerId;
 
     private ProfileAdapter profileAdapter;
     private RecyclerView recyclerview;
@@ -50,9 +53,9 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petitioner_profile);
 
-        catchIntentContent();
+        getActiveUserId();
         initProfileControls();
-        getPetitionerByIntentToken();
+//        getPetitionerByIntentToken();
         showRecyclerViewOptions();
     }
 
@@ -65,7 +68,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         profileModelArrayList = new ArrayList<>();
 
         for (int i = 0; i < inbox.length; i++) {
-            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], petitionerId);
+            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId);
             profileModelArrayList.add(view);
         }
 
@@ -82,16 +85,14 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         petitioner = new Petitioner();
     }
 
-    private void catchIntentContent() {
-        Intent intent = getIntent();
-        intentToken = intent.getExtras().getString("token");
-        petitionerId = intentToken;
+    private void getActiveUserId() {
+        sharedpreferences = getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        activeUserId = sharedpreferences.getString("userId", "");
     }
 
     private void getPetitionerByIntentToken() {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getPetitionerByIdQuery = databaseReference.child("Users").orderByChild("id").equalTo(intentToken);
-        getPetitionerByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot petitionerSnapshot : dataSnapshot.getChildren()) {
