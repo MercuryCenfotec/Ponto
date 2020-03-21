@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entities.bidder.BidderProfileActivity">
+    tools:context=".entities.petitioner.PetitionerProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/topBidderInfo"
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgBidderProfile"
+            android:id="@+id/profile_image"
             android:layout_width="85dp"
             android:layout_height="95.7dp"
             android:layout_gravity="center"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
-            android:id="@+id/bidderFullNameProfile"
+            android:id="@+id/petitionerFullNameProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -48,25 +48,25 @@
             android:text="Nombre completo"
             android:textColor="#3b3b3b"
             android:textSize="23dp"
-            app:layout_constraintEnd_toEndOf="@+id/imgBidderProfile"
-            app:layout_constraintStart_toStartOf="@+id/imgBidderProfile"
-            app:layout_constraintTop_toBottomOf="@+id/imgBidderProfile" />
+            app:layout_constraintEnd_toEndOf="@+id/profile_image"
+            app:layout_constraintStart_toStartOf="@+id/profile_image"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/bidderMailProfile"
+            android:id="@+id/petitionerMailProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Correo"
             android:textColor="#a9a9b0"
             android:textSize="14.3sp"
-            app:layout_constraintEnd_toEndOf="@+id/bidderFullNameProfile"
-            app:layout_constraintStart_toStartOf="@+id/bidderFullNameProfile"
-            app:layout_constraintTop_toBottomOf="@+id/bidderFullNameProfile" />
+            app:layout_constraintEnd_toEndOf="@+id/petitionerFullNameProfile"
+            app:layout_constraintStart_toStartOf="@+id/petitionerFullNameProfile"
+            app:layout_constraintTop_toBottomOf="@+id/petitionerFullNameProfile" />
 
 
         <View
-            android:id="@+id/bidderTopCardContentStart"
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="16dp"
@@ -77,10 +77,10 @@
             android:background="#33979797"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bidderMailProfile" />
+            app:layout_constraintTop_toBottomOf="@+id/petitionerMailProfile" />
 
         <LinearLayout
-            android:id="@+id/bidderTopCardContent"
+            android:id="@+id/linearLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -90,7 +90,7 @@
             android:paddingBottom="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bidderTopCardContentStart">
+            app:layout_constraintTop_toBottomOf="@+id/view">
 
             <LinearLayout
                 android:layout_width="85dp"
@@ -126,7 +126,7 @@
                 android:paddingBottom="13dp">
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/bidderRatingProfile"
+                    android:id="@+id/petitionerRatingProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -173,46 +173,32 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/bidderTopCardContentEnd"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="2.5dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBidderInfo"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         android:orientation="horizontal" >
 
     </LinearLayout>
 
-    <customfonts.MyTextView_SF_Pro_Display_Medium
-        android:id="@+id/bidderBiographyProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="324dp"
-        android:layout_marginEnd="176dp"
-        android:layout_marginRight="176dp"
-        android:text="Biografía"
-        android:textColor="#a9a9b0"
-        android:textSize="14.3sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.core.widget.NestedScrollView
-        android:layout_width="407dp"
-        android:layout_height="315dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintBottom_toTopOf="@+id/bidderBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bidderTopCardContentEnd"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.0"
         tools:context=".">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/bidderProfileOptions"
+            android:id="@+id/profileOptionsPetitioner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:nestedScrollingEnabled="false">
@@ -221,7 +207,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.roughike.bottombar.BottomBar
-        android:id="@+id/bidderBottomBar"
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -232,21 +218,5 @@
         app:layout_constraintStart_toStartOf="parent" >
 
     </com.roughike.bottombar.BottomBar>
-
-    <Button
-        android:id="@+id/btnSwapVerification"
-        android:layout_width="46dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="580dp"
-        android:layout_marginRight="16dp"
-        android:background="#2c3e50"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:textColor="#ffffff"
-        app:layout_constraintHorizontal_bias="0.588"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

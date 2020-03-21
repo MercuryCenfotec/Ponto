@@ -18,6 +18,7 @@ import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
+import com.cenfotec.ponto.data.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +30,7 @@ import customfonts.MyTextView_SF_Pro_Display_Medium;
 public class BidderRegistrationActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
+    DatabaseReference bidderDataReference;
     EditText fullNameEditText;
     EditText birthDateEditText;
     EditText emailEditText;
@@ -48,7 +50,8 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     }
 
     private void initFormControls() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Bidders");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        bidderDataReference = FirebaseDatabase.getInstance().getReference("Bidders");
         fullNameEditText = findViewById(R.id.fullNameEditText);
         birthDateEditText = findViewById(R.id.birthDateEditText);
         emailEditText = findViewById(R.id.emailEditText);
@@ -104,7 +107,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     //create statements start here
     private void preBidderRegistration() {
         if (!showErrorOnBlankSpaces() && isValidEmail()) {
-            FirebaseDatabase.getInstance().getReference().child("Bidders")
+            FirebaseDatabase.getInstance().getReference().child("Users")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
@@ -142,30 +145,37 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         String generatedSecuredPasswordHash = BCrypt.hashpw(password,
                 BCrypt.gensalt(12));
 
-        String id = databaseReference.push().getKey();
-        Bidder bidder = new Bidder(id, fullNameEditText.getText().toString(),
+        String userId = databaseReference.push().getKey();
+        User user = new User(userId,fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(),
-                generatedSecuredPasswordHash,
-                biographyEditText.getText().toString(), 1);
-        databaseReference.child(id).setValue(bidder);
+                generatedSecuredPasswordHash, 1, 0, true, 2);
 
+        databaseReference.child(userId).setValue(user);
+        afterUserIsAdded(userId);
+        //initBidderProfileView(bidderId);
+    }
+
+    private void afterUserIsAdded(String userId){
+        String bidderId = bidderDataReference.push().getKey();
+        Bidder bidder = new Bidder(bidderId, biographyEditText.getText().toString(), userId);
+        bidderDataReference.child(bidderId).setValue(bidder);
         clearBidderRegistrationInputs();
         showToaster("Oferente agregado");
-        initBidderProfileView(id);
+
     }
 
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    private void initBidderProfileView(String id) {
+    /*private void initBidderProfileView(String id) {
         Intent intent = new Intent(BidderRegistrationActivity.this,
                 BidderProfileActivity.class);
         intent.putExtra("token", id);
         startActivity(intent);
-    }
+    }*/
 
     //validation statements start here
     private void clearBidderRegistrationInputs() {
@@ -181,14 +191,14 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{fullNameEditText, birthDateEditText,
                 emailEditText, identificationEditText, passwordEditText, biographyEditText};
-        for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
-            if (editTextsList[matchKey].getText().toString().equals("")) {
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
-                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
+        for (EditText editText : editTextsList) {
+            if (editText.getText().toString().equals("")) {
+                editText.setHintTextColor(Color.parseColor("#c0392b"));
+                editText.setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#ffffff"));
+                editText.setBackgroundResource(R.drawable.rect);
+                editText.setHintTextColor(Color.parseColor("#ffffff"));
             }
         }
         return isEmpty;

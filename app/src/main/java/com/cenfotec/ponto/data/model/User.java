@@ -1,6 +1,6 @@
 package com.cenfotec.ponto.data.model;
 
-public class Petitioner {
+public class User {
 
     private String id;
     private String fullName;
@@ -13,10 +13,10 @@ public class Petitioner {
     private boolean allowsPushNotifications;
     private int userType;
 
-    public Petitioner() {
+    public User() {
     }
 
-    public Petitioner(String id, String fullName, String birthDate, String email, String identificationNumber, String password, int status, float rating, boolean allowsPushNotifications, int userType) {
+    public User(String id, String fullName, String birthDate, String email, String identificationNumber, String password, int status, float rating, boolean allowsPushNotifications, int userType) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
