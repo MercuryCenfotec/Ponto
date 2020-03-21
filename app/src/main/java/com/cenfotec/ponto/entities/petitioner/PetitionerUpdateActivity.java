@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.data.model.Petitioner;
+import com.cenfotec.ponto.data.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +28,7 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
     EditText birthDateEditText;
     EditText emailEditText;
     EditText passwordEditText;
-    Petitioner updatedPet;
+    User updatedPet;
 
     String userId;
 
@@ -72,7 +72,7 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot petitionerSnapshot : dataSnapshot.getChildren()) {
-                    updatedPet = petitionerSnapshot.getValue(Petitioner.class);
+                    updatedPet = petitionerSnapshot.getValue(User.class);
                     fillUpdateFields();
                 }
             }

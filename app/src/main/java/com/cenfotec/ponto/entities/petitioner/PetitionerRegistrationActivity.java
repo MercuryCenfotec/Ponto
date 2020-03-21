@@ -20,6 +20,7 @@ import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.Petitioner;
+import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -118,7 +119,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
         String generatedSecuredPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
         String id = databaseReference.push().getKey();
-        Petitioner bidder = new Petitioner(id,
+        User user = new User(id,
                 fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
@@ -130,7 +131,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                 1);
 
         if (id != null)
-            databaseReference.child(id).setValue(bidder);
+            databaseReference.child(id).setValue(user);
 
         clearPetitionRegistrationInputs();
         showToaster("Registro exitoso");

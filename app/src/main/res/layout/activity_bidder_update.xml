@@ -4,8 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03749C"
-    tools:context=".entities.bidder.BidderRegistrationActivity">
+    tools:context=".entities.bidder.BidderUpdateActivity">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="goBack"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,151 +27,115 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/fullNameEditText"
+            android:id="@+id/idUpdBidEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_dotted"
+            android:focusable="false"
+            android:hint="Número de cédula"
+            android:inputType="none"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#ced0d2"
+            android:textColorHint="#ced0d2"
+            android:textSize="15sp" />
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/birthDateUpdBidEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_dotted"
+            android:focusable="false"
+            android:hint="Fecha de nacimiento"
+            android:inputType="none"
+            android:paddingLeft="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:textColor="#ced0d2"
+            android:textColorHint="#ced0d2"
+            android:textSize="15sp" />
+
+        <customfonts.EditText__SF_Pro_Display_Medium
+            android:id="@+id/fullNameUpdBidEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/rect_black"
             android:hint="Nombre completo"
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
+            android:textColor="#000"
+            android:textColorHint="#000"
             android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/birthDateEditText"
+            android:id="@+id/emailUpdBidEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:hint="Fecha de nacimiento"
-            android:inputType="date"
-            android:focusable="false"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
-
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_black"
             android:hint="Correo electrónico"
             android:inputType="textEmailAddress"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
+            android:textColor="#000"
+            android:textColorHint="#000"
             android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/identificationEditText"
+            android:id="@+id/biographyUpdBidEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:hint="Cédula"
-            android:inputType="text"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
-            android:textSize="15sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <customfonts.EditText__SF_Pro_Display_Medium
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="41dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginRight="41dp"
-                android:background="@drawable/rect"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingLeft="20dp"
-                android:paddingTop="13dp"
-                android:paddingRight="13dp"
-                android:paddingBottom="14dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:textSize="15sp" />
-
-            <ImageView
-                android:id="@+id/imgViewPassword"
-                android:layout_width="25dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/passwordEditText"
-                android:layout_alignEnd="@+id/passwordEditText"
-                android:layout_alignRight="@+id/passwordEditText"
-                android:layout_alignBottom="@+id/passwordEditText"
-                android:layout_marginRight="16dp"
-                android:onClick="showHidePass"
-                android:src="@drawable/ic_eye" />
-
-        </RelativeLayout>
-
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/biographyEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_black"
             android:hint="Biografía"
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColorHint="#ffffff"
-            android:textColor="#ffffff"
+            android:textColor="#000"
+            android:textColorHint="#000"
             android:textSize="15sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/btnBidderRegistration"
+            android:id="@+id/btnRegisterPetitioner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/rect_blue"
+            android:onClick="preBidderModification"
             android:paddingLeft="48dp"
             android:paddingTop="11dp"
             android:paddingRight="48dp"
             android:paddingBottom="11dp"
-            android:text="Registrarme"
+            android:text="Actualizar"
             android:textAllCaps="false"
-            android:textColor="#3b3b3b"
+            android:textColor="#FFF"
             android:textSize="15sp" />
-
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

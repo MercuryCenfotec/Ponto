@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
 
@@ -73,9 +74,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 4:
-                        Intent i = new Intent(context, PetitionerUpdateActivity.class);
-                        i.putExtra("petitionerId", profileModelArrayList.get(position).getPetitionerId());
-                        context.startActivity(i);
+                        if(profileModelArrayList.get(position).getUserType().equals("petitioner")){
+                            Intent i = new Intent(context, PetitionerUpdateActivity.class);
+                            i.putExtra("petitionerId", profileModelArrayList.get(position).getUserId());
+                            context.startActivity(i);
+                        }else{
+                            Intent i = new Intent(context, BidderUpdateActivity.class);
+                            i.putExtra("bidderId", profileModelArrayList.get(position).getUserId());
+                            context.startActivity(i);
+                        }
+
                         break;
 
                     case 5:
