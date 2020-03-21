@@ -1,10 +1,14 @@
-package com.cenfotec.ponto;
+package com.cenfotec.ponto.entities.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
+import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 
 public class UserHomeActivity extends AppCompatActivity {
 

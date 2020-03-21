@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserSelectionActivity">
+    tools:context=".entities.user.UserSelectionActivity">
 
 
     <ScrollView
@@ -98,7 +98,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="80dp"
                 android:clipToPadding="true"
                 android:onClick="goToBidderRegistration"
                 app:cardCornerRadius="10dp"

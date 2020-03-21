@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
-import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
-import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
+import com.cenfotec.ponto.entities.user.UserHomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 

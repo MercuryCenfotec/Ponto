@@ -11,7 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.cenfotec.ponto.LoginActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;

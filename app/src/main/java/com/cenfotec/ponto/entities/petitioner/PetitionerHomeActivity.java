@@ -1,4 +1,4 @@
-package com.cenfotec.ponto;
+package com.cenfotec.ponto.entities.petitioner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.entities.petitioner.PetitionerProfileActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
