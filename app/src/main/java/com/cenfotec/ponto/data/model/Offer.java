@@ -3,7 +3,7 @@ package com.cenfotec.ponto.data.model;
 import java.util.List;
 
 public class Offer {
-    private Integer id;
+    private Long id;
     private Bidder bidder;
     private Float cost;
     private Float duration;
@@ -17,7 +17,7 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Integer id, Bidder bidder, Float cost, Float duration, String durationType, String description, Boolean isCounterOffer, Float counterOfferCost, List<Task> taskList, PaymentMethod paymentMethod) {
+    public Offer(Long id, Bidder bidder, Float cost, Float duration, String durationType, String description, Boolean isCounterOffer, Float counterOfferCost, List<Task> taskList, PaymentMethod paymentMethod) {
         this.id = id;
         this.bidder = bidder;
         this.cost = cost;
@@ -30,11 +30,11 @@ public class Offer {
         this.paymentMethod = paymentMethod;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -9,11 +9,15 @@ import android.widget.Button;
 
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionUpdateActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnSwapToBidderRegistration;
     Button btnPetitioner;
+    Button btnPetition;
+    Button btnPetitionUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,32 @@ public class MainActivity extends AppCompatActivity {
                     openPetitionerRegistrationView();
             }
         });
+        btnPetition  = findViewById(R.id.btnPeticion);
+        btnPetition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPetitionCreationView();
+            }
+        });
+        btnPetitionUpdate = findViewById(R.id.btnPeticionUpdate);
+        btnPetitionUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPetitionerUpdateView();
+            }
+        });
+        btnPetition  = findViewById(R.id.btnPeticion);
+        btnPetition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPetitionCreationView();
+            }
+        });
+    }
+
+    private void openPetitionCreationView() {
+        Intent i = new Intent(this, ServicePetitionCreationActivity.class);
+        this.startActivity(i);
     }
 
     private void openBidderRegistrationView(){
@@ -44,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void openPetitionerRegistrationView(){
         Intent i = new Intent(this, PetitionerRegistrationActivity.class);
+        this.startActivity(i);
+    }
+
+    private void openPetitionerUpdateView(){
+        Intent i = new Intent(this, ServicePetitionUpdateActivity.class);
         this.startActivity(i);
     }
 }

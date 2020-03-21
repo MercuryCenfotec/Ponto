@@ -4,59 +4,65 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class ServicePetition {
-    private Long id;
-    private Petitioner petitioner;
-    private String Name;
+    private String id;
+    private String petitionerId;
+    private String name;
     private String description;
-    private List<Ability> abilities;
-    private List<String> files;
-    private ServiceType serviceType;
+//    private List<Ability> abilities;
+//    private List<String> files;
+    private String serviceTypeId;
     private Boolean isFinished;
-    private List<Offer> offers;
+//    private List<Offer> offers;
     private Appointment appointments;
-    private Offer selectedOffer;
+    private String selectedOfferId;
     private LocalDate closingDate;
 
     public ServicePetition() {
     }
 
-    public ServicePetition(Long id, Petitioner petitioner, String name, String description, List<Ability> abilities, List<String> files, ServiceType serviceType, Boolean isFinished, List<Offer> offers, Appointment appointments, Offer selectedOffer, LocalDate closingDate) {
+    public ServicePetition(String id, String petitionerId, String name, String description, String serviceTypeId, Boolean isFinished) {
         this.id = id;
-        this.petitioner = petitioner;
-        Name = name;
+        this.petitionerId = petitionerId;
+        this.name = name;
         this.description = description;
-        this.abilities = abilities;
-        this.files = files;
-        this.serviceType = serviceType;
+        this.serviceTypeId = serviceTypeId;
         this.isFinished = isFinished;
-        this.offers = offers;
+    }
+
+    public ServicePetition(String id, String petitionerId, String name, String description, String serviceTypeId, Boolean isFinished, Appointment appointments, String selectedOfferId, LocalDate closingDate) {
+        this.id = id;
+        this.petitionerId = petitionerId;
+        this.name = name;
+        this.description = description;
+        this.serviceTypeId = serviceTypeId;
+        this.isFinished = isFinished;
         this.appointments = appointments;
-        this.selectedOffer = selectedOffer;
+        this.selectedOfferId = selectedOfferId;
         this.closingDate = closingDate;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Petitioner getPetitioner() {
-        return petitioner;
+    public String getPetitionerId() {
+        return petitionerId;
     }
 
-    public void setPetitioner(Petitioner petitioner) {
-        this.petitioner = petitioner;
+    public void setPetitionerId(String petitionerId) {
+        this.petitionerId = petitionerId;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
@@ -67,28 +73,12 @@ public class ServicePetition {
         this.description = description;
     }
 
-    public List<Ability> getAbilities() {
-        return abilities;
+    public String getServiceTypeId() {
+        return serviceTypeId;
     }
 
-    public void setAbilities(List<Ability> abilities) {
-        this.abilities = abilities;
-    }
-
-    public List<String> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<String> files) {
-        this.files = files;
-    }
-
-    public ServiceType getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(ServiceType serviceType) {
-        this.serviceType = serviceType;
+    public void setServiceTypeId(String serviceType) {
+        this.serviceTypeId = serviceType;
     }
 
     public Boolean getFinished() {
@@ -99,14 +89,6 @@ public class ServicePetition {
         isFinished = finished;
     }
 
-    public List<Offer> getOffers() {
-        return offers;
-    }
-
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
-    }
-
     public Appointment getAppointments() {
         return appointments;
     }
@@ -115,12 +97,12 @@ public class ServicePetition {
         this.appointments = appointments;
     }
 
-    public Offer getSelectedOffer() {
-        return selectedOffer;
+    public String getSelectedOfferId() {
+        return selectedOfferId;
     }
 
-    public void setSelectedOffer(Offer selectedOffer) {
-        this.selectedOffer = selectedOffer;
+    public void setSelectedOfferId(String selectedOfferId) {
+        this.selectedOfferId = selectedOfferId;
     }
 
     public LocalDate getClosingDate() {
