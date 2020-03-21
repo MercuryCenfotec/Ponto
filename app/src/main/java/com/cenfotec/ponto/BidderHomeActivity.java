@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
+import com.cenfotec.ponto.utils.LogoutHelper;
 
 public class BidderHomeActivity extends AppCompatActivity {
 
@@ -25,5 +26,9 @@ public class BidderHomeActivity extends AppCompatActivity {
     public void goToBidderRegister(View view) {
         Intent intent = new Intent(this, BidderRegistrationActivity.class);
         startActivity(intent);
+    }
+
+    public void logout(View view) {
+        LogoutHelper.logout(this);
     }
 }
