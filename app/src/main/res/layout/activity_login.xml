@@ -125,6 +125,7 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:onClick="goToUserSelection"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewSFProDisplayRegular" />

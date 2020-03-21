@@ -105,6 +105,11 @@ public class LoginActivity extends AppCompatActivity {
         showPassword = !showPassword;
     }
 
+    public void goToUserSelection(View view) {
+        Intent intent = new Intent(this, UserSelectionActivity.class);
+        startActivity(intent);
+    }
+
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
