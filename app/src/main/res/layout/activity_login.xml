@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splaxe"
-    tools:context=".LoginActivity">
+    tools:context=".entities.user.LoginActivity">
 
 
     <customfonts.EditText__SF_Pro_Display_Medium
@@ -25,7 +25,8 @@
         android:paddingTop="14dp"
         android:paddingRight="20dp"
         android:paddingBottom="14dp"
-        android:textColorHint="#ffffff"
+        android:textColorHint="#b6b6b6"
+        android:textColor="#fff"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,12 +50,12 @@
         android:paddingTop="14dp"
         android:paddingRight="50dp"
         android:paddingBottom="14dp"
-        android:textColorHint="#ffffff"
+        android:textColorHint="#b6b6b6"
+        android:textColor="#fff"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/eyeIcon"
@@ -125,6 +126,7 @@
             android:textColor="#ffffff"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:onClick="goToUserSelection"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textViewSFProDisplayRegular" />
