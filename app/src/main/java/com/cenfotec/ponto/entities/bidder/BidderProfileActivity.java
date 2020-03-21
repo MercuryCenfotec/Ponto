@@ -6,14 +6,9 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.LoginActivity;
@@ -42,17 +37,18 @@ public class BidderProfileActivity extends AppCompatActivity {
     private RecyclerView recyclerview;
     private ArrayList<ProfileModel> profileModelArrayList;
     User user;
-    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star, R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
+    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star,
+            R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
-    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos", "Mi Perfil", "Ajustes"};
-    String txthistory[] = {"Revisá tus contrataciones", "Administrá tus recomendaciones", "Tu colección", "Tu colección", "Cambiá la información de tu perfil", "Ajustes"};
+    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos",
+            "Mi Perfil", "Ajustes"};
+    String txthistory[] = {"Revisá tus contrataciones", "Administrá tus recomendaciones",
+            "Tu colección", "Tu colección", "Cambiá la información de tu perfil", "Ajustes"};
     TextView profileFullName;
     TextView profileEmail;
     TextView profileRating;
-    //TextView profileBiography;
-    EditText modificationEditText;
+    TextView profileBiography;
     Bidder bidder;
-    DatePickerDialog.OnDateSetListener birthDateSetListener;
     CustomDatePickerDialog customDatePickerDialog;
 
     @Override
@@ -74,7 +70,8 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileModelArrayList = new ArrayList<>();
 
         for (int i = 0; i < inbox.length; i++) {
-            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId,"bidder");
+            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i],
+                    activeUserId,"bidder");
             profileModelArrayList.add(view);
         }
 
@@ -108,7 +105,7 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileFullName = findViewById(R.id.bidderFullNameProfile);
         profileEmail = findViewById(R.id.bidderMailProfile);
         profileRating = findViewById(R.id.bidderRatingProfile);
-        //profileBiography = findViewById(R.id.profileBiography);
+        profileBiography = findViewById(R.id.bidderBiographyProfile);
         bidder = new Bidder();
         user = new User();
         customDatePickerDialog = new CustomDatePickerDialog();
@@ -116,7 +113,8 @@ public class BidderProfileActivity extends AppCompatActivity {
 
     private void getBidderByUserId() {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getBidderByIdQuery = databaseReference.child("Bidders").orderByChild("userId").equalTo(activeUserId);
+        Query getBidderByIdQuery =
+                databaseReference.child("Bidders").orderByChild("userId").equalTo(activeUserId);
         getBidderByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -146,6 +144,7 @@ public class BidderProfileActivity extends AppCompatActivity {
         profileFullName.setText(capitalized);
         profileEmail.setText(user.getEmail());
         profileRating.setText(String.valueOf(user.getRating()));
+        profileBiography.setText(bidder.getBiography());
     }
 
 
@@ -307,32 +306,7 @@ public class BidderProfileActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }*/
 
-    //Validation statements start here
-    private boolean showErrorOnBlankSpace() {
-        if (modificationEditText.getText().toString().equals("")) {
-            modificationEditText.setHintTextColor(Color.parseColor("#c0392b"));
-            modificationEditText.setBackgroundResource(R.drawable.edittext_error);
-            return true;
-        } else {
-            modificationEditText.setHintTextColor(Color.parseColor("#ffffff"));
-            modificationEditText.setBackgroundResource(R.drawable.rect);
-            return false;
-        }
-    }
-
-    private boolean isValidEmail() {
-        String email = modificationEditText.getText().toString();
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            modificationEditText.setHintTextColor(Color.parseColor("#ffffff"));
-            modificationEditText.setBackgroundResource(R.drawable.rect);
-            return true;
-        } else {
-            modificationEditText.setHintTextColor(Color.parseColor("#c0392b"));
-            modificationEditText.setBackgroundResource(R.drawable.edittext_error);
-            return false;
-        }
-    }
-
+    /*//Validation statements start here
     private void initDateControls() {
         modificationEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -351,5 +325,5 @@ public class BidderProfileActivity extends AppCompatActivity {
                 modificationEditText.setText(formatDate);
             }
         };
-    }
+    }*/
 }

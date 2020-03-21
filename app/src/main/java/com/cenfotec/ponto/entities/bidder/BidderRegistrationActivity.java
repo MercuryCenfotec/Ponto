@@ -191,14 +191,14 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{fullNameEditText, birthDateEditText,
                 emailEditText, identificationEditText, passwordEditText, biographyEditText};
-        for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
-            if (editTextsList[matchKey].getText().toString().equals("")) {
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
-                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
+        for (EditText editText : editTextsList) {
+            if (editText.getText().toString().equals("")) {
+                editText.setHintTextColor(Color.parseColor("#c0392b"));
+                editText.setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#ffffff"));
+                editText.setBackgroundResource(R.drawable.rect);
+                editText.setHintTextColor(Color.parseColor("#ffffff"));
             }
         }
         return isEmpty;
