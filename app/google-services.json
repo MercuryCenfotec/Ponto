@@ -1,9 +1,9 @@
 {
   "project_info": {
     "project_number": "631524412902",
-    "firebase_url": "https://ponto-5c572.firebaseio.com/",
+    "firebase_url": "https://ponto-5c572.firebaseio.com",
     "project_id": "ponto-5c572",
-    "storage_bucket": "$STORAGE_BUCKET"
+    "storage_bucket": "ponto-5c572.appspot.com"
   },
   "client": [
     {

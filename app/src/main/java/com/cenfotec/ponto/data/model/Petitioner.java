@@ -11,11 +11,12 @@ public class Petitioner {
     private int status;
     private float rating;
     private boolean allowsPushNotifications;
+    private int userType;
 
     public Petitioner() {
     }
 
-    public Petitioner(String id, String fullName, String birthDate, String email, String identificationNumber, String password, int status, float rating, boolean allowsPushNotifications) {
+    public Petitioner(String id, String fullName, String birthDate, String email, String identificationNumber, String password, int status, float rating, boolean allowsPushNotifications, int userType) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -25,6 +26,7 @@ public class Petitioner {
         this.status = status;
         this.rating = rating;
         this.allowsPushNotifications = allowsPushNotifications;
+        this.userType = userType;
     }
 
     public String getId() {
@@ -97,6 +99,14 @@ public class Petitioner {
 
     public void setAllowsPushNotifications(boolean allowsPushNotifications) {
         this.allowsPushNotifications = allowsPushNotifications;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 }
 

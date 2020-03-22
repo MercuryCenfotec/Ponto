@@ -3,78 +3,36 @@ package com.cenfotec.ponto;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
-import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
-import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionUpdateActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
+import com.cenfotec.ponto.entities.user.UserHomeActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     Button btnSwapToBidderRegistration;
     Button btnPetitioner;
-    Button btnPetition;
-    Button btnPetitionUpdate;
+    public static final String MY_PREFERENCES = "MyPrefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnSwapToBidderRegistration = findViewById(R.id.btnSwapToBidderRegistration);
-        btnSwapToBidderRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openBidderRegistrationView();
-            }
-        });
+        SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+        String userId = myPrefs.getString("userId", "none");
+        Intent intent;
 
-        btnPetitioner = findViewById(R.id.btnSolicitante);
-        btnPetitioner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    openPetitionerRegistrationView();
-            }
-        });
-        btnPetition  = findViewById(R.id.btnPeticion);
-        btnPetition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPetitionCreationView();
-            }
-        });
-        btnPetitionUpdate = findViewById(R.id.btnPeticionUpdate);
-        btnPetitionUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPetitionerUpdateView();
-            }
-        });
-        btnPetition  = findViewById(R.id.btnPeticion);
-        btnPetition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPetitionCreationView();
-            }
-        });
-    }
+        if (userId.equals("none")) {
+            intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        } else {
+            intent = new Intent(this, UserHomeActivity.class);
+            startActivity(intent);
+        }
 
-    private void openPetitionCreationView() {
-        Intent i = new Intent(this, ServicePetitionCreationActivity.class);
-        this.startActivity(i);
-    }
-
-    private void openBidderRegistrationView(){
-        Intent intent = new Intent(this, BidderRegistrationActivity.class);
-        startActivity(intent);
-    }
-
-    private void openPetitionerRegistrationView(){
-        Intent i = new Intent(this, PetitionerRegistrationActivity.class);
-        this.startActivity(i);
     }
 
     private void openPetitionerUpdateView(){

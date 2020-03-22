@@ -31,7 +31,7 @@
             android:paddingBottom="14dp"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/birthDateEditText"
@@ -50,7 +50,7 @@
             android:paddingBottom="14dp"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/emailEditText"
@@ -68,7 +68,7 @@
             android:paddingBottom="14dp"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/identificationEditText"
@@ -86,7 +86,7 @@
             android:paddingBottom="14dp"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                 android:paddingBottom="14dp"
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/imgViewPassword"
@@ -141,7 +141,7 @@
             android:paddingBottom="14dp"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
             android:id="@+id/btnBidderRegistration"
@@ -158,7 +158,7 @@
             android:text="Registrarme"
             android:textAllCaps="false"
             android:textColor="#3b3b3b"
-            android:textSize="17sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 
