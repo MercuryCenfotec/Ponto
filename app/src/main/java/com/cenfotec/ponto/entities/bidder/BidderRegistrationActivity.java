@@ -150,7 +150,8 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(),
-                generatedSecuredPasswordHash, 1, 0, true, 2);
+                generatedSecuredPasswordHash, 1, 0, true,
+                2, "");
 
         databaseReference.child(userId).setValue(user);
         afterUserIsAdded(userId);

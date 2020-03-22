@@ -17,6 +17,28 @@
         app:layout_constraintTop_toTopOf="parent"
         android:onClick="goBack"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgPetitionerProfile"
+        android:layout_width="131dp"
+        android:layout_height="152dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="92dp"
+        android:src="@drawable/profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgPetitionerCameraIcon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="124dp"
+        android:onClick="askCameraPermissions"
+        app:layout_constraintEnd_toEndOf="@+id/imgPetitionerProfile"
+        app:layout_constraintStart_toStartOf="@+id/imgPetitionerProfile"
+        app:layout_constraintTop_toTopOf="@+id/imgPetitionerProfile"
+        app:srcCompat="@drawable/ic_camera_black" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -145,7 +167,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rect_blue"
-            android:onClick="updatePetitioner"
+            android:onClick="checkPetitionerValidations"
             android:paddingLeft="48dp"
             android:paddingTop="11dp"
             android:paddingRight="48dp"

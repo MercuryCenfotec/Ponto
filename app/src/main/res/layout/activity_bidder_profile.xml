@@ -233,20 +233,4 @@
 
     </com.roughike.bottombar.BottomBar>
 
-    <Button
-        android:id="@+id/btnSwapVerification"
-        android:layout_width="46dp"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="580dp"
-        android:layout_marginRight="16dp"
-        android:background="#2c3e50"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:textColor="#ffffff"
-        app:layout_constraintHorizontal_bias="0.588"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

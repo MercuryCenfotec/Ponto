@@ -12,11 +12,14 @@ public class User {
     private float rating;
     private boolean allowsPushNotifications;
     private int userType;
+    private String profileImageUrl;
 
     public User() {
     }
 
-    public User(String id, String fullName, String birthDate, String email, String identificationNumber, String password, int status, float rating, boolean allowsPushNotifications, int userType) {
+    public User(String id, String fullName, String birthDate, String email,
+                String identificationNumber, String password, int status, float rating,
+                boolean allowsPushNotifications, int userType, String profileImageUrl) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -27,6 +30,7 @@ public class User {
         this.rating = rating;
         this.allowsPushNotifications = allowsPushNotifications;
         this.userType = userType;
+        this.profileImageUrl = profileImageUrl;
     }
 
     public String getId() {
@@ -107,6 +111,14 @@ public class User {
 
     public void setUserType(int userType) {
         this.userType = userType;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }
 

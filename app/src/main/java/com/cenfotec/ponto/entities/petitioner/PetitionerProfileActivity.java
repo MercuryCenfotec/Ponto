@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.entities.user.LoginActivity;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -35,6 +37,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
     TextView profilePetitionerEmail;
 //    TextView profilePetitionerIdentification;
     TextView profilePetitionerRating;
+    ImageView profilePetitionerImage;
     User user;
 
     private ProfileAdapter profileAdapter;
@@ -80,6 +83,7 @@ public class PetitionerProfileActivity extends AppCompatActivity {
         profilePetitionerEmail = findViewById(R.id.petitionerMailProfile);
 //        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
         profilePetitionerRating = findViewById(R.id.petitionerRatingProfile);
+        profilePetitionerImage = findViewById(R.id.profile_image);
         user = new User();
     }
 
@@ -114,6 +118,9 @@ public class PetitionerProfileActivity extends AppCompatActivity {
             capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
         }
 
+        if(!user.getProfileImageUrl().equals("")){
+            Picasso.get().load(user.getProfileImageUrl()).into(profilePetitionerImage);
+        }
         profilePetitionerFullName.setText(capitalized);
 //        profilePetitionerBirthDate.setText(petitioner.getBirthDate());
         profilePetitionerEmail.setText(user.getEmail());
