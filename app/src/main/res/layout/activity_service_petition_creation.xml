@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03749C"
     tools:context=".entities.servicePetition.ServicePetitionCreationActivity">
 
     <LinearLayout
@@ -27,15 +26,15 @@
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_black"
             android:hint="Nombre del Trabajo"
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="17sp" />
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/serviceTypeEditText"
@@ -45,16 +44,16 @@
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_black"
             android:focusable="auto"
             android:hint="Categoria del servicio"
             android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="17sp" />
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/descriptionEditText"
@@ -64,23 +63,23 @@
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
+            android:background="@drawable/rect_black"
             android:focusable="auto"
+            android:gravity="top|left"
             android:hint="Descripcion"
             android:inputType="textMultiLine"
             android:lines="8"
-        android:minLines="1"
-        android:gravity="top|left"
-        android:maxLines="10"
-            android:paddingRight="20dp"
+            android:maxLines="10"
+            android:minLines="1"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
+            android:paddingRight="20dp"
             android:paddingBottom="14dp"
-            android:singleLine="false"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
             android:scrollbars="vertical"
-            android:textSize="17sp" />
+            android:singleLine="false"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:textSize="15sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
             android:id="@+id/btnPetitionCreation"
@@ -89,15 +88,15 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/rect_white"
+            android:background="@drawable/rect_blue"
             android:paddingLeft="48dp"
             android:paddingTop="11dp"
             android:paddingRight="48dp"
             android:paddingBottom="11dp"
-            android:text="Publicar"
+            android:text="Confirmar"
             android:textAllCaps="false"
-            android:textColor="#3b3b3b"
-            android:textSize="17sp" />
+            android:textColor="#fff"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -107,9 +106,9 @@
         android:layout_height="62dp"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="88dp"
         android:text="Por favor ingrese la informaciòn para su solicitud de servicio"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

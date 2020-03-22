@@ -2,7 +2,9 @@ package com.cenfotec.ponto.entities.servicePetition;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -25,9 +27,11 @@ import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
+    public static final String MY_PREFERENCES = "MyPrefs";
     DatabaseReference databaseReference;
     String intentToken;
     ServicePetition servicePetition;
+    SharedPreferences sharedPreferences;
     EditText titleEditText;
     EditText descriptionEditText;
     EditText serviceTypeEditText;
@@ -50,6 +54,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
 
     private void initFormControls() {
+        sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         titleEditText = findViewById(R.id.petitionTitleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
