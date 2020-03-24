@@ -3,8 +3,8 @@ package com.cenfotec.ponto.data.model;
 import java.util.List;
 
 public class Offer {
-    private Long id;
-    private Bidder bidder;
+    private String id;
+    private String bidderId;
     private Float cost;
     private Float duration;
     private String durationType;
@@ -13,13 +13,15 @@ public class Offer {
     private Float counterOfferCost;
     private List<Task> taskList;
     private PaymentMethod paymentMethod;
+    private boolean accepted;
+    private String servicePetitionId;
 
     public Offer() {
     }
 
-    public Offer(Long id, Bidder bidder, Float cost, Float duration, String durationType, String description, Boolean isCounterOffer, Float counterOfferCost, List<Task> taskList, PaymentMethod paymentMethod) {
+    public Offer(String id, String bidder, Float cost, Float duration, String durationType, String description, Boolean isCounterOffer, Float counterOfferCost, List<Task> taskList, PaymentMethod paymentMethod, boolean accepted, String servicePetitionId) {
         this.id = id;
-        this.bidder = bidder;
+        this.bidderId = bidder;
         this.cost = cost;
         this.duration = duration;
         this.durationType = durationType;
@@ -28,22 +30,24 @@ public class Offer {
         this.counterOfferCost = counterOfferCost;
         this.taskList = taskList;
         this.paymentMethod = paymentMethod;
+        this.accepted = accepted;
+        this.servicePetitionId = servicePetitionId;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Bidder getBidder() {
-        return bidder;
+    public String getBidderId() {
+        return bidderId;
     }
 
-    public void setBidder(Bidder bidder) {
-        this.bidder = bidder;
+    public void setBidderId(String bidderId) {
+        this.bidderId = bidderId;
     }
 
     public Float getCost() {
@@ -108,5 +112,21 @@ public class Offer {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
+    }
+
+    public String getServicePetitionId() {
+        return servicePetitionId;
+    }
+
+    public void setServicePetitionId(String servicePetitionId) {
+        this.servicePetitionId = servicePetitionId;
     }
 }

@@ -12,6 +12,8 @@ import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
+import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
+import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 public class BidderHomeActivity extends AppCompatActivity {
@@ -41,10 +43,17 @@ public class BidderHomeActivity extends AppCompatActivity {
 
     public void goToPetitionList(View view) {
         Intent intent = new Intent(this, ServicePetitionListActivity.class);
+    }
+    public void goToOfferCreation(View view) {
+        Intent intent = new Intent(this, OfferCreationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOfferDetail(View view) {
+        Intent intent = new Intent(this, OfferDetailActivity.class);
         startActivity(intent);
     }
 
     public void logout(View view) {
         LogoutHelper.logout(this);
     }
-}
