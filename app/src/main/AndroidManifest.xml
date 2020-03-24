@@ -9,6 +9,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< Updated upstream
+=======
+        <activity android:name=".entities.servicePetition.ServicePetitionListActivity"></activity>
+        <activity android:name=".entities.servicePetition.ServicePetitionUpdateActivity" />
+        <activity android:name=".entities.servicePetition.ServicePetitionCreationActivity" />
+        <activity android:name=".entities.bidder.BidderUpdateActivity" />
+        <activity android:name=".entities.petitioner.PetitionerUpdateActivity" />
+        <activity android:name=".entities.petitioner.PetitionerProfileActivity" />
+        <activity android:name=".entities.petitioner.PetitionerRegistrationActivity" />
+        <activity android:name=".entities.bidder.BidderProfileActivity" />
+        <activity android:name=".entities.bidder.BidderRegistrationActivity" />
+        <activity android:name=".entities.petitioner.PetitionerHomeActivity" />
+        <activity android:name=".entities.bidder.BidderHomeActivity" />
+        <activity android:name=".entities.user.UserHomeActivity" />
+        <activity android:name=".entities.user.UserSelectionActivity" />
+        <activity android:name=".entities.user.LoginActivity" />
+>>>>>>> Stashed changes
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
