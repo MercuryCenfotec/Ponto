@@ -128,7 +128,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                 1,
                 0,
                 true,
-                1);
+                1, "");
 
         if (id != null)
             databaseReference.child(id).setValue(user);
