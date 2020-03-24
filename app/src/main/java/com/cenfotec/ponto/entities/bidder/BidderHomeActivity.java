@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
-import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
+import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
+import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 public class BidderHomeActivity extends AppCompatActivity {
@@ -26,6 +26,16 @@ public class BidderHomeActivity extends AppCompatActivity {
 
     public void goToBidderRegister(View view) {
         Intent intent = new Intent(this, BidderRegistrationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOfferCreation(View view) {
+        Intent intent = new Intent(this, OfferCreationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOfferDetail(View view) {
+        Intent intent = new Intent(this, OfferDetailActivity.class);
         startActivity(intent);
     }
 

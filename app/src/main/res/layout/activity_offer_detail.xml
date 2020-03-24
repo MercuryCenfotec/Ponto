@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".entities.offer.OfferDetailActivity">
+
+    <TextView
+        android:id="@+id/costTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Costo del proyecto"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
+
+    <TextView
+        android:id="@+id/costValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₡ 180000"
+        app:layout_constraintStart_toStartOf="@+id/costTitle"
+        app:layout_constraintTop_toBottomOf="@+id/costTitle" />
+
+    <TextView
+        android:id="@+id/durationTypeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Modo de trabajo"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/costValue" />
+
+    <TextView
+        android:id="@+id/durationTypeValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Por hora"
+        app:layout_constraintStart_toStartOf="@+id/durationTypeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/durationTypeTitle" />
+
+    <TextView
+        android:id="@+id/durationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Duración del proyecto"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/durationTypeValue" />
+
+    <TextView
+        android:id="@+id/durationValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:text="64 horas"
+        app:layout_constraintStart_toStartOf="@+id/durationTitle"
+        app:layout_constraintTop_toBottomOf="@+id/durationTitle" />
+
+    <TextView
+        android:id="@+id/descriptionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Descripción del proyecto"
+        android:textColor="#000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/durationValue" />
+
+    <TextView
+        android:id="@+id/descriptionValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="El proyecto contempla la construccion de una fuente en el patio del cliente."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/descriptionTitle"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+
+    <TextView
+        android:id="@+id/viewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:text="Mi oferta"
+        android:textColor="#300"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/createOfferButton" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/createOfferButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/rect_blue"
+        android:onClick="goToOfferUpdate"
+        android:paddingLeft="24dp"
+        android:paddingTop="8dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="8dp"
+        android:text="Modificar oferta"
+        android:textAllCaps="false"
+        android:textColor="#3b3b3b"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

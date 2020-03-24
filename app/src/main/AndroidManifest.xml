@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.bidder.BidderUpdateActivity"></activity>
+        <activity android:name=".entities.offer.OfferUpdateActivity"></activity>
+        <activity android:name=".entities.offer.OfferDetailActivity" />
+        <activity android:name=".entities.offer.OfferCreationActivity" />
+        <activity android:name=".entities.bidder.BidderUpdateActivity" />
         <activity android:name=".entities.petitioner.PetitionerUpdateActivity" />
         <activity android:name=".entities.petitioner.PetitionerProfileActivity" />
         <activity android:name=".entities.petitioner.PetitionerRegistrationActivity" />

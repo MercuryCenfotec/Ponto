@@ -52,13 +52,13 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     private void initFormControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         bidderDataReference = FirebaseDatabase.getInstance().getReference("Bidders");
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
         fullNameEditText = findViewById(R.id.fullNameEditText);
         birthDateEditText = findViewById(R.id.birthDateEditText);
-        emailEditText = findViewById(R.id.emailEditText);
-        identificationEditText = findViewById(R.id.identificationEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
         biographyEditText = findViewById(R.id.biographyEditText);
         btnBidderRegistration = findViewById(R.id.btnBidderRegistration);
+        identificationEditText = findViewById(R.id.identificationEditText);
         customDatePickerDialog = new CustomDatePickerDialog();
     }
 
