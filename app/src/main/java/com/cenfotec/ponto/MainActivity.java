@@ -8,14 +8,11 @@ import android.os.Bundle;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.cenfotec.ponto.entities.user.UserHomeActivity;
 
-public class MainActivity extends AppCompatActivity {
 
 import android.view.View;
 import android.widget.Button;
 
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
-import com.cenfotec.ponto.entities.user.LoginActivity;
-import com.cenfotec.ponto.entities.user.UserHomeActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static final String MY_PREFERENCES = "MyPrefs";
