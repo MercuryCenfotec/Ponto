@@ -29,6 +29,29 @@ public class BidderHomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+<<<<<<< Updated upstream
+=======
+    public void goToPetitionCreation(View view) {
+        Intent intent = new Intent(this, ServicePetitionCreationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToPetitionList(View view) {
+        Intent intent = new Intent(this, ServicePetitionListActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOfferCreation(View view) {
+        Intent intent = new Intent(this, OfferCreationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToOfferDetail(View view) {
+        Intent intent = new Intent(this, OfferDetailActivity.class);
+        startActivity(intent);
+    }
+
+>>>>>>> Stashed changes
     public void logout(View view) {
         LogoutHelper.logout(this);
     }
