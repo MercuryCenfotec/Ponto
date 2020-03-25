@@ -9,6 +9,7 @@ import android.view.View;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.entities.petitioner.PetitionerProfileActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 public class PetitionerHomeActivity extends AppCompatActivity {
@@ -26,6 +27,11 @@ public class PetitionerHomeActivity extends AppCompatActivity {
 
     public void goToRegister(View view) {
         Intent intent = new Intent(this, PetitionerRegistrationActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToServicePetition(View view){
+        Intent intent = new Intent(this, ServicePetitionCreationActivity.class);
         startActivity(intent);
     }
 

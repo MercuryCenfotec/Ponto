@@ -9,13 +9,13 @@ public class ServicePetition {
     private String name;
     private String description;
 //    private List<Ability> abilities;
-//    private List<String> files;
+    private List<String> files;
     private String serviceTypeId;
     private Boolean isFinished;
 //    private List<Offer> offers;
     private Appointment appointments;
     private String selectedOfferId;
-    private LocalDate closingDate;
+    private String closingDate;
 
     public ServicePetition() {
     }
@@ -29,7 +29,7 @@ public class ServicePetition {
         this.isFinished = isFinished;
     }
 
-    public ServicePetition(String id, String petitionerId, String name, String description, String serviceTypeId, Boolean isFinished, Appointment appointments, String selectedOfferId, LocalDate closingDate) {
+    public ServicePetition(String id, String petitionerId, String name, String description, String serviceTypeId, Boolean isFinished, Appointment appointments, String selectedOfferId, String closingDate) {
         this.id = id;
         this.petitionerId = petitionerId;
         this.name = name;
@@ -105,11 +105,19 @@ public class ServicePetition {
         this.selectedOfferId = selectedOfferId;
     }
 
-    public LocalDate getClosingDate() {
+    public String getClosingDate() {
         return closingDate;
     }
 
-    public void setClosingDate(LocalDate closingDate) {
+    public void setClosingDate(String closingDate) {
         this.closingDate = closingDate;
+    }
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
     }
 }

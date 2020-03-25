@@ -36,11 +36,6 @@ public class BidderHomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goToPetitionCreation(View view) {
-        Intent intent = new Intent(this, ServicePetitionCreationActivity.class);
-        startActivity(intent);
-    }
-
     public void goToPetitionList(View view) {
         Intent intent = new Intent(this, ServicePetitionListActivity.class);
         startActivity(intent);
