@@ -161,7 +161,7 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 PetitionerUpdateActivity.this,
                 android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallería");
+        arrayAdapter.add("Galería");
         arrayAdapter.add("Cámara");
 
         builderSingle.setNegativeButton(

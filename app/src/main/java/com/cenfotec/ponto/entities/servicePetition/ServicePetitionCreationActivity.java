@@ -73,7 +73,6 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     public static final int CAMERA_REQUEST_CODE = 1995;
     public static final int GALLERY_REQUEST_CODE = 1994;
     Uri uri;
-    Uri temporalUri;
     private String activeUserId;
     SharedPreferences sharedPreferences;
     DatabaseReference databaseReference;
@@ -82,7 +81,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     EditText serviceTypeEditText;
     TextView fileTextView;
     MyTextView_SF_Pro_Display_Medium btnPostPetition;
-    List<String> filesToUpload;
+    List<Uri> filesToUpload = new ArrayList<>();
+    List<String> realFilesToUpload = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +158,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 ServicePetitionCreationActivity.this,
                 android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallería");
+        arrayAdapter.add("Galería");
         arrayAdapter.add("Cámara");
 
         builderSingle.setNegativeButton(
@@ -187,7 +187,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
             case 0:
                 Intent openGallery = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                openGallery.setType("image/* video/*");
+                openGallery.putExtra(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                openGallery.setType("*/*");
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
                     openGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                 }
@@ -217,7 +218,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CAMERA_REQUEST_CODE:
-                        temporalUri = uri;
+                    filesToUpload.add(uri);
                     break;
                 case GALLERY_REQUEST_CODE:
                     ClipData mClipData = data.getClipData();
@@ -228,23 +229,39 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                         mArrayUri.add(uri);
                     }
 
-                    for (Uri uri : mArrayUri){
-                        filesToUpload.add(uri.toString());
-                    }
+                    filesToUpload.addAll(mArrayUri);
 
                     break;
                 default:
                     break;
             }
+            changeNumberOfFilesAdded(filesToUpload.size());
+
         }
     }
 
     //Upload statements start here
     private void uploadImageToFirebase() {
+        for(Uri uri : filesToUpload){
+            String fileType = "";
+            String asd = getContentResolver().getType(uri);
+            if(asd.contains("image/")){
+                fileType = "images/";
+            }else if(asd.contains("video/")){
+                fileType = "videos/";
+            }
+            tryUpload(fileType, uri);
+        }
+
+    }
+
+    private void tryUpload(String fileType, Uri uri){
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-        final StorageReference imgReference = storageReference.child("images/" +
-                temporalUri.getLastPathSegment());
-        UploadTask uploadTask = imgReference.putFile(temporalUri);
+
+        final StorageReference imgReference = storageReference.child(fileType +
+                uri.getLastPathSegment());
+
+        UploadTask uploadTask = imgReference.putFile(uri);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -260,33 +277,44 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        filesToUpload.add(uri.toString());
+                        realFilesToUpload.add(uri.toString());
+                        if(realFilesToUpload.size() == filesToUpload.size()){
+                            registerServicePetitionToDB();
+                        }
                     }
                 });
             }
         });
     }
 
+    private void changeNumberOfFilesAdded(int newAmount){
+        String textToDisplay = newAmount + " Archivos adjuntos";
+        fileTextView.setText(textToDisplay);
+    }
 
 
     //create statements start here
     private void prePetitionCreation() {
-        if (!showErrorOnBlankSpaces() ) {
-            FirebaseDatabase.getInstance().getReference().child("ServicePetitions")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            registerServicePetitionToDB();
-                        }
+        if(filesToUpload != null){
+            uploadImageToFirebase();
+        }else{
+            if (!showErrorOnBlankSpaces() ) {
+                FirebaseDatabase.getInstance().getReference().child("ServicePetitions")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                registerServicePetitionToDB();
+                            }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            System.out.println("The read failed: " + databaseError.getCode());
-                        }
-                    });
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("The read failed: " + databaseError.getCode());
+                            }
+                        });
 
-        } else {
-            showToaster("Error");
+            } else {
+                showToaster("Error");
+            }
         }
     }
 
@@ -301,7 +329,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 serviceTypeEditText.getText().toString(),
                 false
         );
-        servicePetition.setFiles(filesToUpload);
+        servicePetition.setFiles(realFilesToUpload);
         databaseReference.child(id).setValue(servicePetition);
 
         clearServicePetitionInputs();
@@ -317,6 +345,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         titleEditText.setText("");
         descriptionEditText.setText("");
         serviceTypeEditText.setText("");
+        changeNumberOfFilesAdded(0);
     }
 
     private boolean showErrorOnBlankSpaces() {

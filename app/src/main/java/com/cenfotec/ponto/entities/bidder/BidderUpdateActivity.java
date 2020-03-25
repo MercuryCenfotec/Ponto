@@ -180,7 +180,7 @@ public class BidderUpdateActivity extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 BidderUpdateActivity.this,
                 android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Gallería");
+        arrayAdapter.add("Galería");
         arrayAdapter.add("Cámara");
 
         builderSingle.setNegativeButton(
