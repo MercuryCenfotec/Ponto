@@ -17,7 +17,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/rect_black"
-        android:hint="Monto a cobrar"
+        android:hint="Monto"
         android:inputType="numberDecimal"
         android:paddingLeft="20dp"
         android:paddingTop="14dp"
@@ -88,7 +88,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Método de cobro"
+        android:text="Modo de cobro"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintStart_toStartOf="@+id/radioGroup" />
 
@@ -147,5 +147,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-\
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Duración del proyecto"
+        app:layout_constraintBottom_toTopOf="@+id/durationEditText"
+        app:layout_constraintStart_toStartOf="@+id/durationEditText" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción del proyecto"
+        app:layout_constraintBottom_toTopOf="@+id/descriptionEditText"
+        app:layout_constraintStart_toStartOf="@+id/descriptionEditText" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monto a cobrar"
+        app:layout_constraintBottom_toTopOf="@+id/costEditText"
+        app:layout_constraintStart_toStartOf="@+id/costEditText" />
+    \
 </androidx.constraintlayout.widget.ConstraintLayout>
