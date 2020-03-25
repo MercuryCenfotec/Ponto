@@ -98,6 +98,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     private void getUserId() {
         activeUserId = sharedPreferences.getString("userId", "");
     }
+
     private void initFormControls() {
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
@@ -295,7 +296,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
     //create statements start here
     private void prePetitionCreation() {
-        if(filesToUpload != null){
+        if(filesToUpload.size() != 0){
             uploadImageToFirebase();
         }else{
             if (!showErrorOnBlankSpaces() ) {
@@ -357,14 +358,14 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{titleEditText, descriptionEditText,
                 serviceTypeEditText};
-        for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
-            if (editTextsList[matchKey].getText().toString().equals("")) {
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
-                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
+        for (EditText editText : editTextsList) {
+            if (editText.getText().toString().equals("")) {
+                editText.setHintTextColor(Color.parseColor("#c0392b"));
+                editText.setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                editTextsList[matchKey].setBackgroundResource(R.drawable.rect_black);
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#000000"));
+                editText.setBackgroundResource(R.drawable.rect_black);
+                editText.setHintTextColor(Color.parseColor("#000000"));
             }
         }
         return isEmpty;
