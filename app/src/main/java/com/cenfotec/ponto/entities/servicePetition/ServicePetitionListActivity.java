@@ -102,9 +102,9 @@ public class ServicePetitionListActivity extends AppCompatActivity {
     }
 
     private void setData() {
-        tabLayout1.addTab(tabLayout1.newTab().setText("Todas"));
+//        tabLayout1.addTab(tabLayout1.newTab().setText("Todas"));
         tabLayout1.addTab(tabLayout1.newTab().setText("Mis peticiones"));
-        tabLayout1.addTab(tabLayout1.newTab().setText("Mis aplicaciones"));
+//        tabLayout1.addTab(tabLayout1.newTab().setText("Mis aplicaciones"));
     }
 
 
