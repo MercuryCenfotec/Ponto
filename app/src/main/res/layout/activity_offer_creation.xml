@@ -113,14 +113,16 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:onClick="changeDurationType"
-            android:text="Por hora" />
+            android:text="Por hora"
+            app:buttonTint="#15B1D7"/>
 
         <RadioButton
             android:id="@+id/radioDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="changeDurationType"
-            android:text="Por día" />
+            android:text="Por día"
+            app:buttonTint="#15B1D7"/>
 
     </RadioGroup>
 
