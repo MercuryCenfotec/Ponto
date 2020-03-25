@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/durationEditText" />
 
     <customfonts.EditText__SF_Pro_Display_Medium
         android:id="@+id/durationEditText"
@@ -82,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/durationEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/costEditText" />
 
     <TextView
         android:id="@+id/textView8"
@@ -98,14 +98,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/costEditText">
+        app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <RadioButton
             android:id="@+id/radioHour"
@@ -171,5 +171,18 @@
         android:text="Monto a cobrar"
         app:layout_constraintBottom_toTopOf="@+id/costEditText"
         app:layout_constraintStart_toStartOf="@+id/costEditText" />
-    \
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:text="Modificar oferta de proyecto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
