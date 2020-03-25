@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.adapter.ServicePetitionCard_Adapter;
+import adapter.ServicePetitionCard_Adapter;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 
 public class ServicePetitionsList extends Fragment {
@@ -40,7 +39,7 @@ public class ServicePetitionsList extends Fragment {
 
 
         recyclerview = (view).findViewById(R.id.recycler5);
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
@@ -55,6 +54,7 @@ public class ServicePetitionsList extends Fragment {
                 for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
                     servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
                 }
+//                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
                 servicePetitionCard_adapter.notifyDataSetChanged();
             }
 

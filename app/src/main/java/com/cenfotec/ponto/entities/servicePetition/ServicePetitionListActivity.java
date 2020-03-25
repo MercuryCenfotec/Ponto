@@ -9,11 +9,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.adapter.TablayoutAdapter_Home;
+import adapter.TablayoutAdapter_Home;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
@@ -21,8 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 import java.util.Locale;
-
-import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class ServicePetitionListActivity extends AppCompatActivity {
 

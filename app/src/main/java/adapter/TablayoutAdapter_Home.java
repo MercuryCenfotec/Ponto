@@ -1,4 +1,4 @@
-package com.cenfotec.ponto.adapter;
+package adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

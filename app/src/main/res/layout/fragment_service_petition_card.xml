@@ -1,91 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".entities.servicePetition.ServicePetitionCard">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <LinearLayout
-        android:layout_width="410dp"
-        android:layout_height="129dp"
-        android:background="#3F51B5"
-        android:orientation="vertical">
-
+    <androidx.cardview.widget.CardView
+        android:id="@+id/petitionerCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="5dp"
+        android:clipToPadding="true"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="#2196F3"
-            android:orientation="horizontal">
+            android:layout_width="364dp"
+            android:layout_height="129dp"
+            android:orientation="vertical">
 
-
-            <ImageView
-                android:id="@+id/servicePetitionImage"
-                android:layout_width="178dp"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY" />
 
             <LinearLayout
-                android:layout_width="220dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="0dp"
-                android:background="#4CAF50"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <customfonts.TextViewSFProDisplayRegular
-                    android:id="@+id/servicePetitionName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginRight="3dp"
-                    android:background="#FFFFFF"
-                    android:text="Service Petition Name"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
 
-                <customfonts.TextViewSFProDisplayRegular
-                    android:id="@+id/servicePetitionServiceType"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginRight="3dp"
-                    android:background="#FFFFFF"
-                    android:text="Service Petition Type"
-                    android:textColor="#a9a9b0"
-                    android:textSize="12sp" />
+                <ImageView
+                    android:id="@+id/servicePetitionImage"
+                    android:layout_width="178dp"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY" />
 
-                <customfonts.TextViewSFProDisplayRegular
-                    android:id="@+id/servicePetitionDescription"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginBottom="3dp"
-                    android:background="#FFFFFF"
-                    android:text="Service Petition Description"
-                    android:textColor="#a9a9b0"
-                    android:textSize="14sp" />
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="vertical">
+
+                    <customfonts.TextViewSFProDisplayRegular
+                        android:id="@+id/servicePetitionName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="3dp"
+                        android:text="Service Petition Name"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <customfonts.TextViewSFProDisplayRegular
+                        android:id="@+id/servicePetitionServiceType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="3dp"
+                        android:text="Service Petition Type"
+                        android:textColor="#a9a9b0"
+                        android:textSize="12sp" />
+
+                    <customfonts.TextViewSFProDisplayRegular
+                        android:id="@+id/servicePetitionDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="Service Petition Description"
+                        android:textColor="#a9a9b0"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
 
         </LinearLayout>
-
-
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>

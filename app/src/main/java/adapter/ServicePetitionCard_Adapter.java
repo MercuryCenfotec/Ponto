@@ -1,10 +1,9 @@
-package com.cenfotec.ponto.adapter;
+package adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServicePetitionCard_Adapter extends RecyclerView.Adapter<ServicePetitionCard_Adapter.ViewHolder> {
