@@ -81,7 +81,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 
     public void prePetitionerRegistration(View view) {
         if (!showErrorOnBlankSpaces() && isValidEmail()) {
-            FirebaseDatabase.getInstance().getReference().child("Bidders")
+            FirebaseDatabase.getInstance().getReference().child("Users")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
@@ -110,7 +110,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                     });
 
         } else {
-            showToaster("Error");
+            showToaster("Revisa los campos señalados");
         }
     }
 
@@ -171,7 +171,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                 emailEditText, identificationEditText, passwordEditText};
         for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
             if (editTextsList[matchKey].getText().toString().equals("")) {
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
+//                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
                 editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
@@ -190,7 +190,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
             return true;
         } else {
             emailEditText.setBackgroundResource(R.drawable.edittext_error);
-            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
+//            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }
     }
