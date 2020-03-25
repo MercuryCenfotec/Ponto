@@ -136,7 +136,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                     });
 
         } else {
-            showToaster("Error");
+            showToaster("Revisa los campos señalados");
         }
     }
 
@@ -194,7 +194,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                 emailEditText, identificationEditText, passwordEditText, biographyEditText};
         for (EditText editText : editTextsList) {
             if (editText.getText().toString().equals("")) {
-                editText.setHintTextColor(Color.parseColor("#c0392b"));
+//                editText.setHintTextColor(Color.parseColor("#c0392b"));
                 editText.setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
@@ -213,7 +213,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
             return true;
         } else {
             emailEditText.setBackgroundResource(R.drawable.edittext_error);
-            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
+//            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }
     }

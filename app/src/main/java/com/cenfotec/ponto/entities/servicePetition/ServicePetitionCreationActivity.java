@@ -346,8 +346,13 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         descriptionEditText.setText("");
         serviceTypeEditText.setText("");
         changeNumberOfFilesAdded(0);
+        goToPetitionList();
     }
 
+    public void goToPetitionList() {
+        Intent intent = new Intent(this, ServicePetitionListActivity.class);
+        startActivity(intent);
+    }
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{titleEditText, descriptionEditText,
@@ -358,8 +363,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#ffffff"));
+                editTextsList[matchKey].setBackgroundResource(R.drawable.rect_black);
+                editTextsList[matchKey].setHintTextColor(Color.parseColor("#000000"));
             }
         }
         return isEmpty;

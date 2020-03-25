@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="410dp"
         android:layout_height="129dp"
+        android:background="#3F51B5"
         android:orientation="vertical">
 
 
@@ -22,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:background="#2196F3"
             android:orientation="horizontal">
 
 
@@ -38,6 +40,7 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_marginBottom="0dp"
+                android:background="#4CAF50"
                 android:orientation="vertical">
 
                 <customfonts.TextViewSFProDisplayRegular
@@ -47,6 +50,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="3dp"
+                    android:background="#FFFFFF"
                     android:text="Service Petition Name"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -58,6 +62,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="3dp"
+                    android:background="#FFFFFF"
                     android:text="Service Petition Type"
                     android:textColor="#a9a9b0"
                     android:textSize="12sp" />
@@ -70,6 +75,7 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="3dp"
+                    android:background="#FFFFFF"
                     android:text="Service Petition Description"
                     android:textColor="#a9a9b0"
                     android:textSize="14sp" />
