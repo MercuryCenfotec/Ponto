@@ -9,7 +9,7 @@ public class ServicePetition {
     private String name;
     private String description;
 //    private List<Ability> abilities;
-//    private List<String> files;
+    private List<String> files;
     private String serviceTypeId;
     private Boolean isFinished;
 //    private List<Offer> offers;
@@ -111,5 +111,13 @@ public class ServicePetition {
 
     public void setClosingDate(LocalDate closingDate) {
         this.closingDate = closingDate;
+    }
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
     }
 }
