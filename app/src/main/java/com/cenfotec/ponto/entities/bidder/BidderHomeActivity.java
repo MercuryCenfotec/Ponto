@@ -43,6 +43,7 @@ public class BidderHomeActivity extends AppCompatActivity {
 
     public void goToPetitionList(View view) {
         Intent intent = new Intent(this, ServicePetitionListActivity.class);
+        startActivity(intent);
     }
 
     public void goToOfferCreation(View view) {
@@ -54,7 +55,6 @@ public class BidderHomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OfferDetailActivity.class);
         startActivity(intent);
     }
-
     public void logout(View view) {
         LogoutHelper.logout(this);
     }

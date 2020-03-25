@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="132dp"
         android:layout_marginLeft="132dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:onClick="goToPetitionList"
         android:text="Lista Peticiones"
         app:layout_constraintEnd_toEndOf="@+id/textView"
@@ -83,11 +83,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
         android:layout_marginLeft="140dp"
-        android:layout_marginTop="16dp"
-        android:text="Crear oferta"
+        android:layout_marginTop="24dp"
         android:onClick="goToOfferCreation"
+        android:text="Crear oferta"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonBP" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPetitionList2" />
 
     <Button
         android:id="@+id/button5"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="124dp"
         android:layout_marginLeft="124dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:onClick="goToOfferDetail"
         android:text="Detalle de oferta"
         app:layout_constraintStart_toStartOf="parent"
