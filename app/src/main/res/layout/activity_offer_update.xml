@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/rect_black"
@@ -54,12 +54,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/costEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <customfonts.EditText__SF_Pro_Display_Medium
         android:id="@+id/descriptionEditText"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="97dp"
         android:layout_gravity="center"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
@@ -67,8 +67,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/rect_black"
+        android:gravity="top|left"
         android:hint="Descripción"
-        android:inputType="text"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
+        android:minLines="1"
         android:paddingLeft="20dp"
         android:paddingTop="14dp"
         android:paddingRight="20dp"
@@ -95,29 +98,29 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionEditText">
+        app:layout_constraintTop_toBottomOf="@+id/costEditText">
 
         <RadioButton
             android:id="@+id/radioHour"
             android:layout_width="168dp"
             android:layout_height="wrap_content"
-            android:text="Por hora"
             android:checked="true"
-            android:onClick="changeDurationType"/>
+            android:onClick="changeDurationType"
+            android:text="Por hora" />
 
         <RadioButton
             android:id="@+id/radioDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Por día"
-            android:onClick="changeDurationType"/>
+            android:onClick="changeDurationType"
+            android:text="Por día" />
 
     </RadioGroup>
 
