@@ -1,45 +1,49 @@
 package com.cenfotec.ponto.entities.servicePetition;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.MotionEvent;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
-import adapter.TabLayoutAdapter_List;
-import com.cenfotec.ponto.data.model.ServicePetition;
-import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-import java.util.Locale;
+import adapter.TabLayoutAdapter_List;
 
-public class ServicePetitionListActivity extends AppCompatActivity {
+public class ServicePetitionBidder extends Fragment {
 
+    View view;//this one it's necessary in a new fragment
     ViewPager viewPager1;
     TabLayout tabLayout1;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_petition_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_service_petition_bidder,
+                container, false);
         initContent();
-        setData();
-        Locale spanish = new Locale("es", "ES");
-        Locale.setDefault(spanish);
+        setContent();
 
-        TabLayoutAdapter_List adapter = new TabLayoutAdapter_List(getSupportFragmentManager(), tabLayout1.getTabCount());
+        return view;
+    }
+    private void initContent() {
+        //Get the elements by the id
+        viewPager1 = view.findViewById(R.id.viewpager1);
+        tabLayout1 = view.findViewById(R.id.tablayout1);
+        tabLayout1.setTabGravity(TabLayout.GRAVITY_FILL);
+    }
+
+    private void setContent() {
+        //Set the elements function by id
+        tabLayout1.addTab(tabLayout1.newTab().setText("Peticiones"));
+        tabLayout1.addTab(tabLayout1.newTab().setText("Mis ofertas"));
+        TabLayoutAdapter_List adapter = new TabLayoutAdapter_List(getChildFragmentManager(), tabLayout1.getTabCount());
         viewPager1.setAdapter(adapter);
         viewPager1.setOffscreenPageLimit(1);
         viewPager1.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout1));
@@ -49,7 +53,7 @@ public class ServicePetitionListActivity extends AppCompatActivity {
             TabLayout.Tab tab = tabLayout1.getTabAt(i);
             if (tab != null) {
 
-                TextView tabTextView = new TextView(this);
+                TextView tabTextView = new TextView(getActivity());
                 tab.setCustomView(tabTextView);
 
                 tabTextView.getLayoutParams().width = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -67,9 +71,6 @@ public class ServicePetitionListActivity extends AppCompatActivity {
             }
 
         }
-
-
-
         tabLayout1.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -93,18 +94,7 @@ public class ServicePetitionListActivity extends AppCompatActivity {
 
             }
         });
+
     }
-
-    private void setData() {
-        tabLayout1.addTab(tabLayout1.newTab().setText("Peticiones"));
-        tabLayout1.addTab(tabLayout1.newTab().setText("Mis ofertas"));
-    }
-
-
-    private void initContent() {
-        viewPager1 = findViewById(R.id.viewpager1);
-        tabLayout1 = findViewById(R.id.tablayout1);
-        tabLayout1.setTabGravity(TabLayout.GRAVITY_FILL);
-    }
-
+    //    here goes the activity's methods
 }
