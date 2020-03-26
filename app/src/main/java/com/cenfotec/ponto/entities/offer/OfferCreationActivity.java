@@ -30,7 +30,6 @@ public class OfferCreationActivity extends AppCompatActivity {
 
     DatabaseReference offerDBReference;
     DatabaseReference bidderDBReference;
-    TextView createOfferButton;
     EditText costInput;
     EditText durationInput;
     EditText descriptionInput;
@@ -43,7 +42,6 @@ public class OfferCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_offer_creation);
         offerDBReference = FirebaseDatabase.getInstance().getReference("Offers");
         bidderDBReference = FirebaseDatabase.getInstance().getReference("Bidders");
-        createOfferButton = findViewById(R.id.createOfferButton);
         costInput = findViewById(R.id.costEditText);
         durationInput = findViewById(R.id.durationEditText);
         descriptionInput = findViewById(R.id.descriptionEditText);
