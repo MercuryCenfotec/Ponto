@@ -2,6 +2,7 @@
     <tab
         id="@+id/tab_home"
         icon="@drawable/ic_home"
+        color="#FFFFFFFF"
         inActiveColor="#4De9e9e9"
         activeColor="#118df0"/>
 
@@ -28,6 +29,4 @@
         icon="@drawable/ic_user"
         inActiveColor="#4De9e9e9"
         activeColor="#118df0"/>
-
-
 </tabs>

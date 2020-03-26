@@ -1,5 +1,6 @@
 package com.cenfotec.ponto.entities.servicePetition;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.cenfotec.ponto.R;
 import adapter.ServicePetitionCard_Adapter;
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,5 +73,9 @@ public class ServicePetitionsList extends Fragment {
         return view;
 
         }
+    public void goToBidderProfile2(View view) {
+        Intent intent = new Intent(getActivity(), BidderProfileActivity.class);
+        startActivity(intent);
+    }
     }
 

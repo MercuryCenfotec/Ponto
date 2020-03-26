@@ -5,16 +5,39 @@
     android:layout_height="wrap_content"
     tools:context="fragments.navbar" >
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        app:bb_behavior="iconsOnly"
-        app:bb_tabXmlResource="@xml/bottombar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/bidderHomeNavbar"
+        android:layout_width="410dp"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        app:tabIconTint="#118df0"
+        app:tabIndicatorColor="#118df0">
 
-    </com.roughike.bottombar.BottomBar>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_home" />
+
+        <com.google.android.material.tabs.TabItem
+            androidicon="@drawable/ic_message_square"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_message_square" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_plus" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_tag" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_user" />
+    </com.google.android.material.tabs.TabLayout>
 </FrameLayout>
+

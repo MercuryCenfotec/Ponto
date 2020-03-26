@@ -4,16 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
-import adapter.TablayoutAdapter_Home;
+import adapter.TabLayoutAdapter_List;
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -27,7 +30,6 @@ public class ServicePetitionListActivity extends AppCompatActivity {
     private String activeUserId;
     SharedPreferences sharedPreferences;
     DatabaseReference databaseReference;
-    List<ServicePetition> servicePetitionList;
     ViewPager viewPager1;
     TabLayout tabLayout1;
 
@@ -41,9 +43,8 @@ public class ServicePetitionListActivity extends AppCompatActivity {
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
 
-        TablayoutAdapter_Home adapter = new TablayoutAdapter_Home(getSupportFragmentManager(), tabLayout1.getTabCount());
+        TabLayoutAdapter_List adapter = new TabLayoutAdapter_List(getSupportFragmentManager(), tabLayout1.getTabCount());
         viewPager1.setAdapter(adapter);
-
         viewPager1.setOffscreenPageLimit(5);
         viewPager1.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout1));
 
@@ -99,7 +100,7 @@ public class ServicePetitionListActivity extends AppCompatActivity {
     }
 
     private void setData() {
-//        tabLayout1.addTab(tabLayout1.newTab().setText("Todas"));
+        tabLayout1.addTab(tabLayout1.newTab().setText("Todas"));
         tabLayout1.addTab(tabLayout1.newTab().setText("Mis peticiones"));
 //        tabLayout1.addTab(tabLayout1.newTab().setText("Mis aplicaciones"));
     }
