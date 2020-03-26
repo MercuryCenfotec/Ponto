@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.cenfotec.ponto.entities.bidder.BidderHome;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionBidder;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionsList;
 
 public class TabLayoutAdapter_Home extends FragmentStatePagerAdapter {
@@ -29,6 +30,9 @@ public class TabLayoutAdapter_Home extends FragmentStatePagerAdapter {
             case 0:
                 BidderHome tab1 = new BidderHome();
                 return tab1;
+            case 1:
+                ServicePetitionBidder tab2 = new ServicePetitionBidder();
+                return tab2;
             default:
                 return null;
         }
@@ -36,6 +40,6 @@ public class TabLayoutAdapter_Home extends FragmentStatePagerAdapter {
 //this has to be the same length or less than the switchCase valid cases otherwise it will throw an error
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

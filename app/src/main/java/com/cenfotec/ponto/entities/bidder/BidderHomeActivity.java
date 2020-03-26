@@ -1,10 +1,12 @@
 package com.cenfotec.ponto.entities.bidder;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +37,6 @@ public class BidderHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bidder_home);
         bindContent();
         initContent();
-
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
     }
@@ -54,17 +55,12 @@ public class BidderHomeActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                TextView text = (TextView) tab.getCustomView();
-
-                text.setTextColor(Color.parseColor("#000000"));
-                text.setTypeface(null, Typeface.BOLD);
+                tab.getIcon().setColorFilter(Color.parseColor("#118df0"), PorterDuff.Mode.SRC_IN);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                TextView text = (TextView) tab.getCustomView();
-                text.setTextColor(Color.parseColor("#acacac"));
-                text.setTypeface(null, Typeface.NORMAL);
+                tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
 
             }
 

@@ -35,17 +35,14 @@ public class TabLayoutAdapter_List extends FragmentStatePagerAdapter {
                 ServicePetitionsList tab1 = new ServicePetitionsList();
                 return tab1;
             case 1:
-                ServicePetitionsList tab2 = new ServicePetitionsList();
+                BidderHome tab2 = new BidderHome();
                 return tab2;
-            case 2:
-                ServicePetitionsList tab3 = new ServicePetitionsList();
-                return tab3;
             default:
                 return null;
         }
     }
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

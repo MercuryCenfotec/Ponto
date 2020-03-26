@@ -23,7 +23,7 @@ public class BidderHome extends Fragment {
     Button btnOffer;
     Button btnOfferDetail;
     Button btnLO;
-    View view;
+    View view;//this one it's necessary in a new fragment
 
     public BidderHome() {
         super();
