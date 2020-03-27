@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
-import com.cenfotec.ponto.data.model.Task;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,9 +20,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class OfferCreationActivity extends AppCompatActivity {
 
@@ -67,39 +62,21 @@ public class OfferCreationActivity extends AppCompatActivity {
 
     public void createOffer(View view) {
         if (validForm()) {
-
             SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
-            String userId = myPrefs.getString("userId", "none");
-            final String servicePetitionId = myPrefs.getString("servicePetitionId","none");
+            String key = offerDBReference.push().getKey();
 
-            Query bidderQuery = bidderDBReference.orderByChild("userId").equalTo(userId);
+            offer.setId(key);
+            offer.setAccepted(false);
+            offer.setCounterOffer(false);
+            offer.setDescription(descriptionInput.getText().toString());
+            offer.setCost(Float.parseFloat(costInput.getText().toString()));
+            offer.setUserId(myPrefs.getString("userId", "none"));
+            offer.setDuration(Float.parseFloat(durationInput.getText().toString()));
+            offer.setServicePetitionId(myPrefs.getString("servicePetitionId","none"));
+            offer.setServicePetitionTitle(myPrefs.getString("servicePetitionTitle", "none"));
 
-            bidderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        String key = offerDBReference.push().getKey();
-                        String bidderIdKey = data.child("id").getValue().toString();
-
-                        offer.setBidderId(bidderIdKey);
-                        offer.setDuration(Float.parseFloat(durationInput.getText().toString()));
-                        offer.setDescription(descriptionInput.getText().toString());
-                        offer.setCost(Float.parseFloat(costInput.getText().toString()));
-                        offer.setCounterOffer(false);
-                        offer.setAccepted(false);
-                        offer.setId(key);
-                        offer.setServicePetitionId(servicePetitionId);
-
-                        offerDBReference.child(key).setValue(offer);
-                        goToHome();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    System.out.println("The bidder read failed: " + databaseError.getCode());
-                }
-            });
+            offerDBReference.child(key).setValue(offer);
+            goToHome();
         }
     }
 

@@ -70,7 +70,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
                     offer.setDescription(data.child("description").getValue().toString());
                     offer.setDuration(Float.parseFloat(data.child("duration").getValue().toString()));
                     offer.setServicePetitionId(data.child("servicePetitionId").getValue().toString());
-                    offer.setBidderId(data.child("bidderId").getValue().toString());
+                    offer.setUserId(data.child("bidderId").getValue().toString());
                     offer.setDurationType(data.child("durationType").getValue().toString());
                 }
             }
