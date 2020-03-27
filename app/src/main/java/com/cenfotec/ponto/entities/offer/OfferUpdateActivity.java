@@ -72,6 +72,8 @@ public class OfferUpdateActivity extends AppCompatActivity {
                     offer.setServicePetitionId(data.child("servicePetitionId").getValue().toString());
                     offer.setUserId(data.child("bidderId").getValue().toString());
                     offer.setDurationType(data.child("durationType").getValue().toString());
+                    offer.setBidderName(data.child("bidderName").getValue().toString());
+                    // Terminar de llenar los nuevos campos
                 }
             }
 
