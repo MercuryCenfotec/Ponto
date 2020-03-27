@@ -13,10 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.servicePetition.ServicePetitionListActivity"></activity>
+        <activity android:name=".entities.servicePetition.ServicePetitionDetailActivity"></activity>
         <activity android:name=".entities.servicePetition.ServicePetitionUpdateActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionCreationActivity" />
-        <activity android:name=".entities.offer.OfferUpdateActivity"></activity>
+        <activity android:name=".entities.offer.OfferUpdateActivity" />
         <activity android:name=".entities.offer.OfferDetailActivity" />
         <activity android:name=".entities.offer.OfferCreationActivity" />
         <activity android:name=".entities.bidder.BidderUpdateActivity" />
@@ -37,6 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -44,7 +45,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
 

@@ -1,17 +1,11 @@
 package adapter;
 
-import android.content.Context;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.entities.bidder.BidderHome;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionsList;
-
-import java.util.List;
 
 public class TabLayoutAdapter_List extends FragmentStatePagerAdapter {
 

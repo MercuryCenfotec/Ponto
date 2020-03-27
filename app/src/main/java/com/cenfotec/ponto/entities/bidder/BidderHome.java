@@ -13,7 +13,6 @@ import android.widget.Button;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 public class BidderHome extends Fragment {
@@ -46,7 +45,6 @@ public class BidderHome extends Fragment {
         //Get the buttons by the id
         buttonBP = (Button) view.findViewById(R.id.buttonBP);
         buttonBR = (Button) view.findViewById(R.id.buttonBR);
-        btnPetitionList = (Button) view.findViewById(R.id.btnPetitionList);
         btnOffer = (Button) view.findViewById(R.id.btnOffer);
         btnOfferDetail = (Button) view.findViewById(R.id.btnOfferDetail);
         btnLO = (Button) view.findViewById(R.id.btnLO);
@@ -70,12 +68,6 @@ public class BidderHome extends Fragment {
             }
         });
 
-        btnPetitionList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToPetitionList(v);
-            }
-        });
 
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +89,7 @@ public class BidderHome extends Fragment {
             }
         });
     }
+
 //    here goes the activity methods
     public void goToBidderProfile(View view) {
         Intent intent = new Intent(getActivity(), BidderProfileActivity.class);
@@ -108,10 +101,6 @@ public class BidderHome extends Fragment {
         startActivity(intent);
     }
 
-    public void goToPetitionList(View view) {
-        Intent intent = new Intent(getActivity(), ServicePetitionListActivity.class);
-        startActivity(intent);
-    }
 
     public void goToOfferCreation(View view) {
         Intent intent = new Intent(getActivity(), OfferCreationActivity.class);

@@ -96,5 +96,5 @@ public class ServicePetitionBidder extends Fragment {
         });
 
     }
-    //    here goes the activity's methods
+
 }
