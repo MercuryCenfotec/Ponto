@@ -1,5 +1,7 @@
 package com.cenfotec.ponto.entities.offer;
 
+import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,10 +46,12 @@ public class OfferCardFragment extends Fragment {
      * @return A new instance of fragment OfferCardFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfferCardFragment newInstance(Offer offer) {
+    public OfferCardFragment newInstance(Offer offer) {
         OfferCardFragment fragment = new OfferCardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, offer.getServicePetitionTitle());
+        SharedPreferences myPrefs = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+
+        args.putString(ARG_PARAM1, myPrefs.getString("userType", "none").equals("bidder") ? offer.getServicePetitionTitle() : offer.getBidderName());
         args.putString(ARG_PARAM2, offer.getDuration() + (offer.getDurationType().equals("hour") ? " horas" : " días"));
         args.putString(ARG_PARAM3, "₡ "+offer.getCost());
         args.putString(ARG_PARAM4, offer.getDescription());

@@ -5,10 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".entities.offer.OffersListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:isScrollContainer="true"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:scrollbars="vertical"
+            android:verticalScrollbarPosition="defaultPosition" />
+
+
+    </LinearLayout>
 
 </FrameLayout>

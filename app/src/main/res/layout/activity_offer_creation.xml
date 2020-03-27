@@ -151,30 +151,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Duración del proyecto"
-        app:layout_constraintBottom_toTopOf="@+id/durationEditText"
-        app:layout_constraintStart_toStartOf="@+id/durationEditText" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descripción del proyecto"
-        app:layout_constraintBottom_toTopOf="@+id/descriptionEditText"
-        app:layout_constraintStart_toStartOf="@+id/descriptionEditText" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monto a cobrar"
-        app:layout_constraintBottom_toTopOf="@+id/costEditText"
-        app:layout_constraintStart_toStartOf="@+id/costEditText" />
-
-    <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

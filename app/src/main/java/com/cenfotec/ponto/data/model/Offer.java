@@ -16,6 +16,7 @@ public class Offer {
     private boolean accepted;
     private String servicePetitionId;
     private String servicePetitionTitle;
+    private String bidderName;
 
     public Offer() {
     }
@@ -122,5 +123,13 @@ public class Offer {
 
     public void setServicePetitionTitle(String servicePetitionTitle) {
         this.servicePetitionTitle = servicePetitionTitle;
+    }
+
+    public String getBidderName() {
+        return bidderName;
+    }
+
+    public void setBidderName(String bidderName) {
+        this.bidderName = bidderName;
     }
 }

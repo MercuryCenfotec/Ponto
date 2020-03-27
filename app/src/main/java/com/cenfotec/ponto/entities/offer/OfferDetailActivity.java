@@ -39,37 +39,23 @@ public class OfferDetailActivity extends AppCompatActivity {
         durationText = findViewById(R.id.durationValue);
         descriptionText = findViewById(R.id.descriptionValue);
         myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+
         String userId = myPrefs.getString("userId", "none");
 //        String servicePetitionId = myPrefs.getString("servicePetitionId","none");
         final String servicePetitionId = myPrefs.getString("servicePetitionId", "-M2oldNjlxrtUUywl3pc");
 
-        Query bidderQuery = bidderDBReference.orderByChild("userId").equalTo(userId);
-
-        bidderQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    String bidderId = data.child("id").getValue().toString();
-                    loadOfferData(bidderId, servicePetitionId);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("The bidder read failed: " + databaseError.getCode());
-            }
-        });
+        loadOfferData(userId, servicePetitionId);
 
     }
 
-    private void loadOfferData(final String bidderId, String petitionId) {
+    private void loadOfferData(final String userId, String petitionId) {
         Query offerQuery = offerDBReference.orderByChild("servicePetitionId").equalTo(petitionId);
 
         offerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    if (data.child("bidderId").getValue().toString().equals(bidderId)) {
+                    if (data.child("userId").getValue().toString().equals(userId)) {
                         costText.setText("₡" + data.child("cost").getValue().toString());
                         descriptionText.setText(data.child("description").getValue().toString());
                         durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
