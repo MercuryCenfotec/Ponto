@@ -40,6 +40,7 @@ import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -347,11 +348,11 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         descriptionEditText.setText("");
         serviceTypeEditText.setText("");
         changeNumberOfFilesAdded(0);
-        goToPetitionList();
+        goToHome();
     }
 
-    public void goToPetitionList() {
-        Intent intent = new Intent(this, ServicePetitionListActivity.class);
+    public void goToHome() {
+        Intent intent = new Intent(this, BidderHomeActivity.class);
         startActivity(intent);
     }
     private boolean showErrorOnBlankSpaces() {

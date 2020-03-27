@@ -1,5 +1,8 @@
 package com.cenfotec.ponto.entities.servicePetition;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,8 +27,10 @@ public class ServicePetitionCard extends Fragment {
     private static final String ARG_PARAM2 = "servicePetitionName";
     private static final String ARG_PARAM3 = "servicePetitionDescription";
     private static final String ARG_PARAM4 = "servicePetitionServiceType";
+    View view;
 
     // TODO: Rename and change types of parameters
+    private String servicePetitionId;
     private String servicePetitionImage;
     private String servicePetitionName;
     private String servicePetitionDescription;
@@ -34,14 +40,6 @@ public class ServicePetitionCard extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param servicePetition service petition object.
-     * @return A new instance of fragment ServicePetitionCard.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ServicePetitionCard newInstance(ServicePetition servicePetition) {
         ServicePetitionCard fragment = new ServicePetitionCard();
         Bundle args = new Bundle();
@@ -67,6 +65,25 @@ public class ServicePetitionCard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_service_petition_card, container, false);
+        view = inflater.inflate(R.layout.fragment_service_petition_bidder,
+                container, false);
+        view.findViewById(R.id.petitionCard).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goToPetitionDetail();
+            }
+        });
+
+        return view;
+    }
+
+    public void goToPetitionDetail(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        Intent intent = new Intent(getActivity(), ServicePetitionDetailActivity.class);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("servicePetitionId", servicePetitionId);
+        editor.commit();
+        startActivity(intent);
     }
 }

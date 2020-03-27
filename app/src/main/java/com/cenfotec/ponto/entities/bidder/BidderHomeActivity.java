@@ -1,26 +1,16 @@
 package com.cenfotec.ponto.entities.bidder;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
-import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
-import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
-import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
-import com.cenfotec.ponto.utils.LogoutHelper;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionDetailActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
@@ -31,6 +21,7 @@ public class BidderHomeActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    TabLayoutAdapter_Home adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,29 +38,32 @@ public class BidderHomeActivity extends AppCompatActivity {
     }
 
     private void initContent() {
-        TabLayoutAdapter_Home adapter = new TabLayoutAdapter_Home(getSupportFragmentManager(), tabLayout.getTabCount());
+        adapter = new TabLayoutAdapter_Home(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(5);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                changeView(tab.getPosition());
                 tab.getIcon().setColorFilter(Color.parseColor("#118df0"), PorterDuff.Mode.SRC_IN);
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
+
+    public void changeView(int position){
+        adapter.setActViewPos(position);
+        viewPager.setAdapter(adapter);
+    }
+
 
 
 }
