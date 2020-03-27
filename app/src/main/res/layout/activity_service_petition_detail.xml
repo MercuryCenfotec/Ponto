@@ -25,39 +25,35 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-        <ImageView
-            android:id="@+id/petitionImage"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:src="@android:drawable/ic_menu_gallery" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
-
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="23dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:layout_editor_absoluteY="38dp">
+
+            <ImageView
+                android:id="@+id/petitionImage"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:src="@android:drawable/ic_menu_gallery" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
             <customfonts.TextViewSFProDisplayRegular
                 android:id="@+id/petitionServiceType"
@@ -96,7 +92,7 @@
             <customfonts.TextViewSFProDisplayRegular
                 android:id="@+id/petitionDescription"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:lineSpacingExtra="4dp"
@@ -105,81 +101,94 @@
                 android:textColor="#a9a9b0"
                 android:textSize="12.3sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.3dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:background="#A3979797" />
-
         </LinearLayout>
 
-        <LinearLayout
+        <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="#A3979797"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="19dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/petitionUserImage"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
-                android:src="@drawable/profile" />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
 
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="13dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
 
-                <customfonts.MyTextView_SF_Pro_Display_Semibold
-                    android:id="@+id/petitionUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Usuario nombre"
-                    android:textColor="#3b3b3b"
-                    android:textSize="16sp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/petitionUserImage"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:src="@drawable/profile" />
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp">
+
+                    <customfonts.MyTextView_SF_Pro_Display_Semibold
+                        android:id="@+id/petitionUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Usuario nombre"
+                        android:textColor="#3b3b3b"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <customfonts.MyTextView_SF_Pro_Display_Semibold
-                    android:id="@+id/btnOfferCreation"
-                    android:layout_width="74dp"
-                    android:layout_height="33dp"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rect_blue"
                     android:gravity="center"
-                    android:paddingTop="7dp"
-                    android:paddingBottom="8dp"
-                    android:text="Ofertar"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:orientation="horizontal">
+
+                    <customfonts.MyTextView_SF_Pro_Display_Semibold
+                        android:id="@+id/btnOfferCreation"
+                        android:layout_width="74dp"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/rect_blue"
+                        android:gravity="center"
+                        android:paddingTop="7dp"
+                        android:paddingBottom="8dp"
+                        android:text="Ofertar"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
-
 
         </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
