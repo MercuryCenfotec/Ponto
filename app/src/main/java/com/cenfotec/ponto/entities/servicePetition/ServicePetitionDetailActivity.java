@@ -44,7 +44,6 @@ public class ServicePetitionDetailActivity extends AppCompatActivity {
         initContent();
         getPetitionId();
         chargePetition();
-        setContent();
     }
 
 
