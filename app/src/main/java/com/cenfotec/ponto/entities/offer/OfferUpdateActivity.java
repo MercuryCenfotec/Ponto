@@ -67,6 +67,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
                     offer.setAccepted(data.child("accepted").getValue().toString().equals(true));
                     offer.setCost(Float.parseFloat(data.child("cost").getValue().toString()));
                     offer.setCounterOffer(data.child("accepted").getValue().toString().equals(true));
+                    offer.setCounterOfferCost(Float.parseFloat(data.child("counterOfferCost").getValue().toString()));
                     offer.setDescription(data.child("description").getValue().toString());
                     offer.setDuration(Float.parseFloat(data.child("duration").getValue().toString()));
                     offer.setServicePetitionId(data.child("servicePetitionId").getValue().toString());

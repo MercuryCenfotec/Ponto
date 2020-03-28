@@ -68,6 +68,7 @@ public class OfferCreationActivity extends AppCompatActivity {
             offer.setId(key);
             offer.setAccepted(false);
             offer.setCounterOffer(false);
+            offer.setCounterOfferCost(0f);
             offer.setBidderName(myPrefs.getString("userName","none"));
             offer.setDescription(descriptionInput.getText().toString());
             offer.setCost(Float.parseFloat(costInput.getText().toString()));

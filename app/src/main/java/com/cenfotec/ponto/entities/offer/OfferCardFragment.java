@@ -1,6 +1,8 @@
 package com.cenfotec.ponto.entities.offer;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -29,6 +31,8 @@ public class OfferCardFragment extends Fragment {
     private static final String ARG_PARAM4 = "cardDescription";
 
     // TODO: Rename and change types of parameters
+    private String offerId;
+    View view;
     private String cardTitle;
     private String cardDuration;
     private String cardCost;
@@ -73,7 +77,20 @@ public class OfferCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offer_card, container, false);
+        view = inflater.inflate(R.layout.fragment_offer_card, container, false);
+        view.findViewById(R.id.offerCard).setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goToOfferDetail();
+            }
+        });
+        return view;
+    }
+
+    public void goToOfferDetail(){
+        SharedPreferences myPrefs = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        myPrefs.edit().putString("offerId",offerId).commit();
+        Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
+        startActivity(intent);
     }
 }
