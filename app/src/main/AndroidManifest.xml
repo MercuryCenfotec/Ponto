@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.servicePetition.ServicePetitionDetailActivity"></activity>
+        <activity android:name=".entities.servicePetition.ServicePetitionPetitionerDetailActivity"></activity>
+        <activity android:name=".entities.servicePetition.ServicePetitionBidderDetailActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionUpdateActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionCreationActivity" />
         <activity android:name=".entities.offer.OfferUpdateActivity" />

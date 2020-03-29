@@ -3,14 +3,11 @@ package com.cenfotec.ponto.entities.bidder;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionDetailActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;

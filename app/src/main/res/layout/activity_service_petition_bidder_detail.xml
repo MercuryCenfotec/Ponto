@@ -4,43 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entities.servicePetition.ServicePetitionDetailActivity">
+    tools:context=".entities.servicePetition.ServicePetitionBidderDetailActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/returnIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_left_arrow"
-            app:srcCompat="@drawable/ic_left_arrow" />
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/returnIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_left_arrow"
+                app:srcCompat="@drawable/ic_left_arrow" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            tools:layout_editor_absoluteY="38dp">
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-            <ImageView
-                android:id="@+id/petitionImage"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:src="@android:drawable/ic_menu_gallery" />
+                android:layout_height="match_parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/carrousellViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left">
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <me.relex.circleindicator.CircleIndicator
+                    android:id="@+id/circleIndicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    app:ci_drawable="@drawable/ic_brightness_1_black_24dp"
+                    app:ci_drawable_unselected="@drawable/ic_brightness_1_black"
+                    app:ci_margin="3dp" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -48,12 +72,13 @@
             android:id="@+id/linearLayout5"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="218dp"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             app:layout_constraintBottom_toTopOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
             <customfonts.TextViewSFProDisplayRegular
                 android:id="@+id/petitionServiceType"
