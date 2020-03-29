@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Offer {
     private String id;
-    private String bidderId;
+    private String userId;
     private Float cost;
     private Float duration;
     private String durationType;
@@ -15,23 +15,10 @@ public class Offer {
     private PaymentMethod paymentMethod;
     private boolean accepted;
     private String servicePetitionId;
+    private String servicePetitionTitle;
+    private String bidderName;
 
     public Offer() {
-    }
-
-    public Offer(String id, String bidder, Float cost, Float duration, String durationType, String description, Boolean isCounterOffer, Float counterOfferCost, List<Task> taskList, PaymentMethod paymentMethod, boolean accepted, String servicePetitionId) {
-        this.id = id;
-        this.bidderId = bidder;
-        this.cost = cost;
-        this.duration = duration;
-        this.durationType = durationType;
-        this.description = description;
-        this.isCounterOffer = isCounterOffer;
-        this.counterOfferCost = counterOfferCost;
-        this.taskList = taskList;
-        this.paymentMethod = paymentMethod;
-        this.accepted = accepted;
-        this.servicePetitionId = servicePetitionId;
     }
 
     public String getId() {
@@ -42,12 +29,12 @@ public class Offer {
         this.id = id;
     }
 
-    public String getBidderId() {
-        return bidderId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setBidderId(String bidderId) {
-        this.bidderId = bidderId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Float getCost() {
@@ -128,5 +115,21 @@ public class Offer {
 
     public void setServicePetitionId(String servicePetitionId) {
         this.servicePetitionId = servicePetitionId;
+    }
+
+    public String getServicePetitionTitle() {
+        return servicePetitionTitle;
+    }
+
+    public void setServicePetitionTitle(String servicePetitionTitle) {
+        this.servicePetitionTitle = servicePetitionTitle;
+    }
+
+    public String getBidderName() {
+        return bidderName;
+    }
+
+    public void setBidderName(String bidderName) {
+        this.bidderName = bidderName;
     }
 }

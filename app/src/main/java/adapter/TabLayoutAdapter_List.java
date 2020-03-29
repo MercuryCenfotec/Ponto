@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.cenfotec.ponto.entities.bidder.BidderHome;
+import com.cenfotec.ponto.entities.offer.OffersListFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionsList;
 
 public class TabLayoutAdapter_List extends FragmentStatePagerAdapter {
@@ -29,12 +29,13 @@ public class TabLayoutAdapter_List extends FragmentStatePagerAdapter {
                 ServicePetitionsList tab1 = new ServicePetitionsList();
                 return tab1;
             case 1:
-                BidderHome tab2 = new BidderHome();
+                OffersListFragment tab2 = new OffersListFragment();
                 return tab2;
             default:
                 return null;
         }
     }
+
     @Override
     public int getCount() {
         return 2;
