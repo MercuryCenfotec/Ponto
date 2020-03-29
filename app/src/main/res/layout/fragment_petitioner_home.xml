@@ -4,75 +4,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entities.bidder.BidderHome">
+    tools:context=".entities.petitioner.PetitionerHome">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".entities.bidder.BidderHomeActivity">
+        tools:context=".entities.petitioner.PetitionerHomeActivity">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="164dp"
-            android:layout_marginLeft="164dp"
+            android:layout_marginStart="152dp"
+            android:layout_marginLeft="152dp"
             android:layout_marginTop="32dp"
-            android:text="Bidder home"
+            android:text="Petitioner home"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/buttonBP"
+            android:id="@+id/btnProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="goToProfile"
             android:text="PERFIL"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.513"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.396" />
+            app:layout_constraintVertical_bias="0.59" />
 
         <Button
-            android:id="@+id/buttonBR"
+            android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="162dp"
+            android:layout_marginLeft="162dp"
+            android:layout_marginEnd="151dp"
+            android:layout_marginRight="151dp"
+            android:layout_marginBottom="24dp"
+            android:onClick="goToRegister"
             android:text="REGISTRAR"
-            app:layout_constraintBottom_toTopOf="@+id/buttonBP"
-            app:layout_constraintEnd_toEndOf="@+id/buttonBP"
-            app:layout_constraintStart_toStartOf="@+id/buttonBP" />
+            app:layout_constraintBottom_toTopOf="@+id/btnProfile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btnLO"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
+            android:onClick="logout"
             android:text="Cerrar sesion"
             app:layout_constraintStart_toEndOf="@+id/textView3"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btnOffer"
+            android:id="@+id/btnCreatePetition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="140dp"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="36dp"
-            android:text="Crear oferta"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonBP" />
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            android:onClick="goToServicePetition"
+            android:text="Crear solicitud"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnOfferDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="124dp"
-            android:layout_marginLeft="124dp"
-            android:layout_marginTop="36dp"
-            android:text="Detalle de oferta"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnOffer" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

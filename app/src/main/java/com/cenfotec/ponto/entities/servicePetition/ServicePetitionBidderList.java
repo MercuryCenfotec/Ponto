@@ -15,9 +15,9 @@ import android.widget.TextView;
 import com.cenfotec.ponto.R;
 import com.google.android.material.tabs.TabLayout;
 
-import adapter.TabLayoutAdapter_List;
+import adapter.TabLayoutAdapter_BidderList;
 
-public class ServicePetitionBidder extends Fragment {
+public class ServicePetitionBidderList extends Fragment {
 
     View view;//this one it's necessary in a new fragment
     ViewPager viewPager1;
@@ -43,7 +43,7 @@ public class ServicePetitionBidder extends Fragment {
         //Set the elements function by id
         tabLayout1.addTab(tabLayout1.newTab().setText("Peticiones"));
         tabLayout1.addTab(tabLayout1.newTab().setText("Mis ofertas"));
-        TabLayoutAdapter_List adapter = new TabLayoutAdapter_List(getChildFragmentManager(), tabLayout1.getTabCount());
+        TabLayoutAdapter_BidderList adapter = new TabLayoutAdapter_BidderList(getChildFragmentManager(), tabLayout1.getTabCount());
         viewPager1.setAdapter(adapter);
         viewPager1.setOffscreenPageLimit(1);
         viewPager1.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout1));

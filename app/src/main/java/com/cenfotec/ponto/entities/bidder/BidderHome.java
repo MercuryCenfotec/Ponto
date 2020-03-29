@@ -1,28 +1,47 @@
 package com.cenfotec.ponto.entities.bidder;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.ServiceType;
+import com.cenfotec.ponto.data.model.SpinnerItem;
 import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
+import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BidderHome extends Fragment {
     Button buttonBP;
     Button buttonBR;
-    Button btnPetitionList;
     Button btnOffer;
     Button btnOfferDetail;
     Button btnLO;
     View view;//this one it's necessary in a new fragment
+
 
     public BidderHome() {
         super();
@@ -67,15 +86,12 @@ public class BidderHome extends Fragment {
                 goToBidderRegister(v);
             }
         });
-
-
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToOfferCreation(v);
             }
         });
-
         btnOfferDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +106,7 @@ public class BidderHome extends Fragment {
         });
     }
 
-//    here goes the activity methods
+    //    here goes the activity methods
     public void goToBidderProfile(View view) {
         Intent intent = new Intent(getActivity(), BidderProfileActivity.class);
         startActivity(intent);

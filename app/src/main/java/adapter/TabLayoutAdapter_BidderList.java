@@ -7,16 +7,16 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.cenfotec.ponto.entities.offer.OffersListFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionsList;
 
-public class TabLayoutAdapter_List extends FragmentStatePagerAdapter {
+public class TabLayoutAdapter_BidderList extends FragmentStatePagerAdapter {
 
     int mnooftabs;
 
-    public TabLayoutAdapter_List(FragmentManager fm, int mnooftabs) {
+    public TabLayoutAdapter_BidderList(FragmentManager fm, int mnooftabs) {
         super(fm);
         this.mnooftabs = mnooftabs;
     }
 
-    public TabLayoutAdapter_List(FragmentManager fm) {
+    public TabLayoutAdapter_BidderList(FragmentManager fm) {
         super(fm);
     }
 

@@ -46,6 +46,7 @@
             android:layout_marginRight="41dp"
             android:background="@drawable/rect_black"
             android:focusable="auto"
+            android:visibility="gone"
             android:hint="Categoria del servicio"
             android:inputType="text"
             android:paddingLeft="20dp"
@@ -54,6 +55,19 @@
             android:textColor="#000000"
             android:textColorHint="#000000"
             android:textSize="15sp" />
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/serviceTypeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="41dp"
+            android:layout_marginRight="41dp"
+            android:layout_marginTop="21dp"
+            android:background="@drawable/rect_black"
+            app:hintText="Categoría del servicio"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnOfferDetail" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/descriptionEditText"

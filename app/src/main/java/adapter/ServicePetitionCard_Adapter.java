@@ -20,6 +20,7 @@ import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.ServiceType;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionBidderDetailActivity;
+import com.cenfotec.ponto.entities.servicePetition.ServicePetitionPetitionerDetailActivity;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.squareup.picasso.Picasso;
 
@@ -30,11 +31,13 @@ public class ServicePetitionCard_Adapter extends RecyclerView.Adapter<ServicePet
     Context context;
     private List<ServicePetition> servicePetitionsArrayList;
     private Map<String,ServiceType> serviceTypesList;
+    private Boolean isPetitioner;
 
-    public ServicePetitionCard_Adapter(Context context, List<ServicePetition> servicePetitionsArrayList, Map<String,ServiceType> serviceTypesList) {
+    public ServicePetitionCard_Adapter(Context context, List<ServicePetition> servicePetitionsArrayList, Map<String, ServiceType> serviceTypesList, Boolean isPetitioner) {
         this.context = context;
         this.servicePetitionsArrayList = servicePetitionsArrayList;
         this.serviceTypesList = serviceTypesList;
+        this.isPetitioner = isPetitioner;
     }
 
     @Override
@@ -58,7 +61,12 @@ public class ServicePetitionCard_Adapter extends RecyclerView.Adapter<ServicePet
             @Override
             public void onClick(View v){
                 SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-                Intent intent = new Intent(context, ServicePetitionBidderDetailActivity.class);
+                Intent intent;
+                if(isPetitioner){
+                    intent = new Intent(context, ServicePetitionPetitionerDetailActivity.class);
+                }else{
+                    intent = new Intent(context, ServicePetitionBidderDetailActivity.class);
+                }
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putString("servicePetitionId", servicePetitionsArrayList.get(position).getId());

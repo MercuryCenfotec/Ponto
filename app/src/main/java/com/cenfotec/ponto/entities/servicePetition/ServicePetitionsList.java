@@ -1,6 +1,8 @@
 package com.cenfotec.ponto.entities.servicePetition;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import adapter.ServicePetitionCard_Adapter;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.ServiceType;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,11 +37,21 @@ import java.util.Map;
 
 public class ServicePetitionsList extends Fragment {
 
+    public static final String MY_PREFERENCES = "MyPrefs";
+    private String userId;
+    SharedPreferences sharedPreferences;
     private ServicePetitionCard_Adapter servicePetitionCard_adapter;
     private RecyclerView recyclerview;
+    private Boolean isPetitioner = false;
     private List<ServicePetition> servicePetitionArrayList;
     private Map<String, ServiceType> serviceTypesList;
 
+    public ServicePetitionsList(boolean isPetitioner) {
+        this.isPetitioner = isPetitioner;
+    }
+
+    public ServicePetitionsList() {
+    }
 
     @Nullable
     @Override
@@ -51,9 +64,17 @@ public class ServicePetitionsList extends Fragment {
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
 
+        sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", "");
 
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        Query getServicePetitionsQuery = databaseReference.child("ServicePetitions");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query getServicePetitionsQuery;
+        if(isPetitioner){
+            databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+            getServicePetitionsQuery = databaseReference.orderByChild("petitionerId").equalTo(userId);
+        }else{
+            getServicePetitionsQuery = databaseReference.child("ServicePetitions");
+        }
         servicePetitionArrayList = new ArrayList<>();
         serviceTypesList = new HashMap<>();
         getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
@@ -73,7 +94,7 @@ public class ServicePetitionsList extends Fragment {
         });
 
 
-        servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(), servicePetitionArrayList, serviceTypesList);
+        servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(), servicePetitionArrayList, serviceTypesList,isPetitioner);
         recyclerview.setAdapter(servicePetitionCard_adapter);
 
         return view;

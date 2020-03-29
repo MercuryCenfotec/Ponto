@@ -12,13 +12,13 @@ import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
 
-import adapter.TabLayoutAdapter_Home;
+import adapter.TabLayoutAdapter_BidderHome;
 
 public class BidderHomeActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     TabLayout tabLayout;
-    TabLayoutAdapter_Home adapter;
+    TabLayoutAdapter_BidderHome adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +35,7 @@ public class BidderHomeActivity extends AppCompatActivity {
     }
 
     private void initContent() {
-        adapter = new TabLayoutAdapter_Home(getSupportFragmentManager(), tabLayout.getTabCount());
+        adapter = new TabLayoutAdapter_BidderHome(getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

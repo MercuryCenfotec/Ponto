@@ -27,11 +27,13 @@ import android.provider.MediaStore;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +42,11 @@ import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.data.model.SpinnerItem;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
+import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +59,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,6 +89,10 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     MyTextView_SF_Pro_Display_Medium btnPostPetition;
     List<Uri> filesToUpload = new ArrayList<>();
     List<String> realFilesToUpload = new ArrayList<>();
+    DatabaseReference serviceTypesRef;
+    SearchableSpinnerHelper spinnerHelper;
+    SearchableSpinner spinner;
+    List<String> spinnerValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +100,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_petition_creation);
         initFormControls();
         getUserId();
+        setSpinnerData();
         initServicePetitionCreationControlsListener();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
@@ -98,6 +108,47 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
     private void getUserId() {
         activeUserId = sharedPreferences.getString("userId", "");
+    }
+
+    private void setSpinnerData() {
+        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<SpinnerItem> spinnerItemList = new ArrayList<>();
+                spinnerValues = new ArrayList<>();
+                for (DataSnapshot serviceTypeSnapshot : dataSnapshot.getChildren()) {
+                    spinnerItemList.add(
+                            new SpinnerItem(
+                                    serviceTypeSnapshot.child("serviceType").getValue().toString(),
+                                    serviceTypeSnapshot.child("id").getValue().toString()
+                            ));
+                    spinnerValues.add(serviceTypeSnapshot.child("id").getValue().toString());
+                }
+
+
+                spinnerHelper.fillSpinner(spinnerItemList);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        serviceTypeEditText.setText(spinnerValues.get(position));
+                        Toast.makeText(ServicePetitionCreationActivity.this, serviceTypeEditText.getText().toString(), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                ;
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initFormControls() {
@@ -108,6 +159,9 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         serviceTypeEditText = findViewById(R.id.serviceTypeEditText);
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
+        spinner = findViewById(R.id.serviceTypeSpinner);
+        serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+        spinnerHelper = new SearchableSpinnerHelper(this, spinner);
     }
 
     private void initServicePetitionCreationControlsListener() {
@@ -244,12 +298,12 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
     //Upload statements start here
     private void uploadImageToFirebase() {
-        for(Uri uri : filesToUpload){
+        for (Uri uri : filesToUpload) {
             String fileType = "";
             String asd = getContentResolver().getType(uri);
-            if(asd.contains("image/")){
+            if (asd.contains("image/")) {
                 fileType = "images/";
-            }else if(asd.contains("video/")){
+            } else if (asd.contains("video/")) {
                 fileType = "videos/";
             }
             tryUpload(fileType, uri);
@@ -257,7 +311,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
     }
 
-    private void tryUpload(String fileType, Uri uri){
+    private void tryUpload(String fileType, Uri uri) {
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
         final StorageReference imgReference = storageReference.child(fileType +
@@ -280,7 +334,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         realFilesToUpload.add(uri.toString());
-                        if(realFilesToUpload.size() == filesToUpload.size()){
+                        if (realFilesToUpload.size() == filesToUpload.size()) {
                             registerServicePetitionToDB();
                         }
                     }
@@ -289,7 +343,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         });
     }
 
-    private void changeNumberOfFilesAdded(int newAmount){
+    private void changeNumberOfFilesAdded(int newAmount) {
         String textToDisplay = newAmount + " Archivos adjuntos";
         fileTextView.setText(textToDisplay);
     }
@@ -297,10 +351,10 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
     //create statements start here
     private void prePetitionCreation() {
-        if(filesToUpload.size() != 0){
+        if (filesToUpload.size() != 0) {
             uploadImageToFirebase();
-        }else{
-            if (!showErrorOnBlankSpaces() ) {
+        } else {
+            if (!showErrorOnBlankSpaces()) {
                 FirebaseDatabase.getInstance().getReference().child("ServicePetitions")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -355,6 +409,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, BidderHomeActivity.class);
         startActivity(intent);
     }
+
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{titleEditText, descriptionEditText,
