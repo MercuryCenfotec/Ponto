@@ -19,7 +19,7 @@
         android:onClick="goBackToContract"/>
 
     <customfonts.MyTextView_SF_Pro_Display_Bold
-        android:id="@+id/textToFirm"
+        android:id="@+id/signatureViewTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -33,19 +33,19 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/buttons_container"
-        android:layout_below="@+id/textToFirm"
-        android:id="@+id/signature_pad_container">
+        android:layout_above="@+id/buttonsContainer"
+        android:layout_below="@+id/signatureViewTitleTextView"
+        android:id="@+id/signaturePadContainer">
 
         <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="@android:color/darker_gray"
             android:layout_marginBottom="8dp"
-            android:layout_above="@+id/signature_pad_description" />
+            android:layout_above="@+id/signaturePadDescription" />
 
         <TextView
-            android:id="@+id/signature_pad_description"
+            android:id="@+id/signaturePadDescription"
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
@@ -57,11 +57,11 @@
         <com.github.gcacace.signaturepad.views.SignaturePad
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/signature_pad" />
+            android:id="@+id/signaturePad" />
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/buttons_container"
+        android:id="@+id/buttonsContainer"
         android:paddingTop="16dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/clear_button"
+            android:id="@+id/btnSignatureClear"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             android:visibility="invisible"/>
 
         <Button
-            android:id="@+id/save_button"
+            android:id="@+id/btnSignatureSave"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"

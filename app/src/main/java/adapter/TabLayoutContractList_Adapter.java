@@ -8,11 +8,11 @@ import com.cenfotec.ponto.entities.contract.ContractListFragment;
 
 public class TabLayoutContractList_Adapter extends FragmentStatePagerAdapter {
 
-    int mnooftabs;
+    int numberOfTabs;
 
-    public TabLayoutContractList_Adapter(FragmentManager fm, int mnooftabs) {
+    public TabLayoutContractList_Adapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
-        this.mnooftabs = mnooftabs;
+        this.numberOfTabs = numberOfTabs;
     }
 
     public TabLayoutContractList_Adapter(FragmentManager fm) {
@@ -25,8 +25,8 @@ public class TabLayoutContractList_Adapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                ContractListFragment tab1 = new ContractListFragment();
-                return tab1;
+                ContractListFragment contractListTab = new ContractListFragment();
+                return contractListTab;
             default:
                 return null;
         }

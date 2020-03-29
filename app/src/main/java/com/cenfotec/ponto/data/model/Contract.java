@@ -12,14 +12,29 @@ public class Contract {
     private String petitionerSignatureUrl;
     private String bidderSignatureUrl;
 
-    public Contract(){
+    public Contract() {
 
     }
 
-    public Contract(String id, String petitionerId, String bidderId, String petitionerSignatureUrl, String bidderSignatureUrl) {
+    public Contract(String id, String petitionerId, String bidderId, String petitionerSignatureUrl,
+                    String bidderSignatureUrl) {
         this.id = id;
         this.petitionerId = petitionerId;
         this.bidderId = bidderId;
+        this.petitionerSignatureUrl = petitionerSignatureUrl;
+        this.bidderSignatureUrl = bidderSignatureUrl;
+    }
+
+    public Contract(String id, String name, String dateCreated, String petitionerId, String bidderId,
+                    String servicePetitionId, String offerId, String petitionerSignatureUrl,
+                    String bidderSignatureUrl) {
+        this.id = id;
+        this.name = name;
+        this.dateCreated = dateCreated;
+        this.petitionerId = petitionerId;
+        this.bidderId = bidderId;
+        this.servicePetitionId = servicePetitionId;
+        this.offerId = offerId;
         this.petitionerSignatureUrl = petitionerSignatureUrl;
         this.bidderSignatureUrl = bidderSignatureUrl;
     }

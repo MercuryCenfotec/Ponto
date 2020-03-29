@@ -2,7 +2,6 @@ package adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,37 +12,47 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Contract;
+import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 
 import java.util.List;
+import java.util.Map;
 
 public class ContractCard_Adapter extends RecyclerView.Adapter<ContractCard_Adapter.ViewHolder> {
 
     Context context;
     private List<Contract> contractList;
+    private Map<String, ServicePetition> servicePetitionList;
 
-    public ContractCard_Adapter(Context context, List<Contract> contractList) {
+    public ContractCard_Adapter(Context context, List<Contract> contractList, Map<String,
+            ServicePetition> servicePetitionList) {
         this.context = context;
         this.contractList = contractList;
+        this.servicePetitionList = servicePetitionList;
     }
 
     @Override
     public ContractCard_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_contract_card, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_contract_card,
+                parent, false);
         return new ContractCard_Adapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ContractCard_Adapter.ViewHolder holder, final int position) {
+        ServicePetition servicePetition = servicePetitionList.
+                get(contractList.get(position).getServicePetitionId());
         holder.contractCardTitle.setText(contractList.get(position).getName());
         holder.contractCardDate.setText(contractList.get(position).getDateCreated());
-        holder.contractCardService.setText(contractList.get(position).getServicePetitionId());
+        holder.contractCardService.setText(servicePetition.getName());
         holder.contractCardView.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         Intent intent = new Intent(context, GeneratedContractActivity.class);
+                        intent.putExtra("petitionerId", contractList.get(position).getPetitionerId());
+                        intent.putExtra("bidderUserId", contractList.get(position).getBidderId());
+                        intent.putExtra("contractId", contractList.get(position).getId());
                         context.startActivity(intent);
                     }
                 });
@@ -66,6 +75,5 @@ public class ContractCard_Adapter extends RecyclerView.Adapter<ContractCard_Adap
             contractCardService = itemView.findViewById(R.id.contractPetitionCardTextView);
         }
     }
-
 
 }

@@ -8,30 +8,29 @@ import android.view.View;
 
 import com.cenfotec.ponto.R;
 
-import adapter.ContractCard_Adapter;
 import adapter.TabLayoutContractList_Adapter;
 
 public class ContractsListActivity extends AppCompatActivity {
 
-    ViewPager viewPager;
-    ContractCard_Adapter contractAdapter;
+    ViewPager contractListViewPager;
     TabLayoutContractList_Adapter tabLayoutContractListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contracts_list);
-        getAll();
-        setAdapter();
+        initViewPager();
+        setContractListAdapter();
     }
 
-    private void getAll(){
-        viewPager = findViewById(R.id.contractListViewPager);
+    private void initViewPager(){
+        contractListViewPager = findViewById(R.id.contractListViewPager);
     }
 
-    private void setAdapter(){
-        tabLayoutContractListAdapter = new TabLayoutContractList_Adapter(getSupportFragmentManager(), 1);
-        viewPager.setAdapter(tabLayoutContractListAdapter);
+    private void setContractListAdapter(){
+        tabLayoutContractListAdapter = new TabLayoutContractList_Adapter(getSupportFragmentManager(),
+                1);
+        contractListViewPager.setAdapter(tabLayoutContractListAdapter);
     }
 
     public void goToMainProfile(View view) {
