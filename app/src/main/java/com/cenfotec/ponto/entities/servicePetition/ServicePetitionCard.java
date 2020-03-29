@@ -15,11 +15,6 @@ import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ServicePetitionCard#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ServicePetitionCard extends Fragment {
     View view;
 

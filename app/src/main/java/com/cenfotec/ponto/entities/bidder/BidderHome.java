@@ -18,7 +18,6 @@ import com.cenfotec.ponto.utils.LogoutHelper;
 public class BidderHome extends Fragment {
     Button buttonBP;
     Button buttonBR;
-    Button btnPetitionList;
     Button btnOffer;
     Button btnOfferDetail;
     Button btnLO;

@@ -1,41 +1,65 @@
 package com.cenfotec.ponto.entities.petitioner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.view.View;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.entities.petitioner.PetitionerProfileActivity;
-import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionCreationActivity;
-import com.cenfotec.ponto.utils.LogoutHelper;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.Locale;
+
+import adapter.TabLayoutAdapter_BidderHome;
+import adapter.TabLayoutAdapter_PetitionerHome;
 
 public class PetitionerHomeActivity extends AppCompatActivity {
+
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    TabLayoutAdapter_PetitionerHome adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_petitioner_home);
+        bindContent();
+        initContent();
+        Locale spanish = new Locale("es", "ES");
+        Locale.setDefault(spanish);
     }
 
-    public void goToProfile(View view) {
-        Intent intent = new Intent(this, PetitionerProfileActivity.class);
-        startActivity(intent);
+    private void bindContent() {
+        viewPager = findViewById(R.id.homeView);
+        tabLayout = findViewById(R.id.petitionerHomeNavbar);
     }
 
-    public void goToRegister(View view) {
-        Intent intent = new Intent(this, PetitionerRegistrationActivity.class);
-        startActivity(intent);
+    private void initContent() {
+        adapter = new TabLayoutAdapter_PetitionerHome(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                changeView(tab.getPosition());
+                tab.getIcon().setColorFilter(Color.parseColor("#118df0"), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.getIcon().setColorFilter(Color.parseColor("#a8a8a8"), PorterDuff.Mode.SRC_IN);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
-    public void goToServicePetition(View view){
-        Intent intent = new Intent(this, ServicePetitionCreationActivity.class);
-        startActivity(intent);
-    }
-
-    public void logout(View view) {
-        LogoutHelper.logout(this);
+    public void changeView(int position){
+        adapter.setActViewPos(position);
+        viewPager.setAdapter(adapter);
     }
 }
