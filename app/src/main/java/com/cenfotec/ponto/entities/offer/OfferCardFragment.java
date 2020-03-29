@@ -69,8 +69,8 @@ public class OfferCardFragment extends Fragment {
         if (getArguments() != null) {
             cardTitle = getArguments().getString(ARG_PARAM1);
             cardDuration = getArguments().getString(ARG_PARAM2);
-            cardCost = getArguments().getString(ARG_PARAM2);
-            cardDescription = getArguments().getString(ARG_PARAM2);
+            cardCost = getArguments().getString(ARG_PARAM3);
+            cardDescription = getArguments().getString(ARG_PARAM4);
         }
     }
 

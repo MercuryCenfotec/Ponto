@@ -31,10 +31,11 @@ public class OfferDetailActivity extends AppCompatActivity {
     TextView durationText;
     TextView descriptionText;
     SharedPreferences myPrefs;
-    User user;
     TextView userName;
     ImageView userImage;
     LinearLayout bidderDetail;
+    TextView createOfferButton;
+    TextView viewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,33 +51,37 @@ public class OfferDetailActivity extends AppCompatActivity {
         userImage = findViewById(R.id.offerUserImage);
         userName = findViewById(R.id.offerUserName);
         bidderDetail = findViewById(R.id.bidderDetail);
-        bidderDetail.setVisibility(View.INVISIBLE);
+        bidderDetail.setVisibility(View.GONE);
+        createOfferButton = findViewById(R.id.createOfferButton);
+        viewTitle = findViewById(R.id.viewTitle);
 
         String userId = myPrefs.getString("userId", "none");
-//        String servicePetitionId = myPrefs.getString("servicePetitionId","none");
-        final String servicePetitionId = myPrefs.getString("servicePetitionId", "-M2oldNjlxrtUUywl3pc");
+        String offerId = myPrefs.getString("offerId","none");
 
-        loadOfferData(userId, servicePetitionId);
+        loadOfferData(userId, offerId);
 
     }
 
-    private void loadOfferData(final String userId, String petitionId) {
-        Query offerQuery = offerDBReference.orderByChild("servicePetitionId").equalTo(petitionId);
+    private void loadOfferData(final String userId, String offerId) {
+        Query offerQuery = offerDBReference.orderByChild("id").equalTo(offerId);
 
         offerQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    if (data.child("userId").getValue().toString().equals(userId)) {
-                        costText.setText("₡" + data.child("cost").getValue().toString());
-                        descriptionText.setText(data.child("description").getValue().toString());
-                        durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
-                        durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
-                        myPrefs.edit().putString("offerId",data.child("id").getValue().toString()).commit();
+                    costText.setText("₡" + data.child("cost").getValue().toString());
+                    descriptionText.setText(data.child("description").getValue().toString());
+                    durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
+                    durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
+                    viewTitle.setText(data.child("servicePetitionTitle").getValue().toString());
 
-                        if (!data.child("userId").getValue().toString().equals(userId)) {
-                            bidderDetail.setVisibility(View.VISIBLE);
-                            loadUserData(userId);
+                    if (!data.child("userId").getValue().toString().equals(userId)) {
+                        bidderDetail.setVisibility(View.VISIBLE);
+                        createOfferButton.setVisibility(View.GONE);
+                        loadUserData(userId);
+                        userName.setText(data.child("bidderName").getValue().toString());
+                        if(!data.child("bidderImageUrl").getValue().toString().equals("")){
+                            Picasso.get().load(data.child("bidderImageUrl").getValue().toString()).into(userImage);
                         }
                     }
                 }
@@ -97,10 +102,7 @@ public class OfferDetailActivity extends AppCompatActivity {
 
                 String imageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
 
-                userName.setText(dataSnapshot.child("fullName").getValue().toString());
-                if(!imageUrl.equals("")){
-                    Picasso.get().load(imageUrl).into(userImage);
-                }
+
             }
 
             @Override

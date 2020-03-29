@@ -76,6 +76,7 @@ public class OfferCreationActivity extends AppCompatActivity {
             offer.setDuration(Float.parseFloat(durationInput.getText().toString()));
             offer.setServicePetitionId(myPrefs.getString("servicePetitionId","none"));
             offer.setServicePetitionTitle(myPrefs.getString("servicePetitionTitle", "none"));
+            offer.setBidderImageUrl(myPrefs.getString("userImageUrl", "none"));
 
             offerDBReference.child(key).setValue(offer);
             goToHome();
