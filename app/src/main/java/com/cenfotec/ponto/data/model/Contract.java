@@ -3,8 +3,12 @@ package com.cenfotec.ponto.data.model;
 public class Contract {
 
     private String id;
+    private String name;
+    private String dateCreated;
     private String petitionerId;
     private String bidderId;
+    private String servicePetitionId;
+    private String offerId;
     private String petitionerSignatureUrl;
     private String bidderSignatureUrl;
 
@@ -28,6 +32,22 @@ public class Contract {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
     public String getPetitionerId() {
         return petitionerId;
     }
@@ -42,6 +62,22 @@ public class Contract {
 
     public void setBidderId(String bidderId) {
         this.bidderId = bidderId;
+    }
+
+    public String getServicePetitionId() {
+        return servicePetitionId;
+    }
+
+    public void setServicePetitionId(String servicePetitionId) {
+        this.servicePetitionId = servicePetitionId;
+    }
+
+    public String getOfferId() {
+        return offerId;
+    }
+
+    public void setOfferId(String offerId) {
+        this.offerId = offerId;
     }
 
     public String getPetitionerSignatureUrl() {
