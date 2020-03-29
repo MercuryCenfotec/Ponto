@@ -62,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (BCrypt.checkpw(password, data.child("password").getValue().toString())) {
                                 editor.putString("userId", data.child("id").getValue().toString());
                                 editor.putString("userType", data.child("userType").getValue().toString().equals("1") ? "petitioner" : "bidder");
+                                editor.putString("userName", data.child("fullName").getValue().toString());
                                 editor.commit();
-                                showToaster("Hola, " + data.child("fullName").getValue().toString());
                                 Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                                 startActivity(intent);
                             } else {

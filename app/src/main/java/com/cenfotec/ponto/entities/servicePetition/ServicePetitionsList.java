@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import com.cenfotec.ponto.R;
+
 import adapter.ServicePetitionCard_Adapter;
+
 import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.data.model.ServiceType;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +27,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ServicePetitionsList extends Fragment {
@@ -30,14 +37,13 @@ public class ServicePetitionsList extends Fragment {
     private ServicePetitionCard_Adapter servicePetitionCard_adapter;
     private RecyclerView recyclerview;
     private List<ServicePetition> servicePetitionArrayList;
-
+    private Map<String, ServiceType> serviceTypesList;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_service_petitions_list,container,false);
-
+        View view = inflater.inflate(R.layout.fragment_service_petitions_list, container, false);
 
 
         recyclerview = (view).findViewById(R.id.recycler5);
@@ -49,12 +55,41 @@ public class ServicePetitionsList extends Fragment {
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query getServicePetitionsQuery = databaseReference.child("ServicePetitions");
         servicePetitionArrayList = new ArrayList<>();
-        servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(),servicePetitionArrayList);
+        serviceTypesList = new HashMap<>();
         getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
                     servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
+                }
+//                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
+                chargeTypes();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
+        servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(), servicePetitionArrayList, serviceTypesList);
+        recyclerview.setAdapter(servicePetitionCard_adapter);
+
+        return view;
+
+    }
+
+    private void chargeTypes() {
+
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        Query getServiceTypesQuery = databaseReference.child("ServiceTypes");
+        getServiceTypesQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
+                    ServiceType serviceType = servicePetitionSnapshot.getValue(ServiceType.class);
+                    serviceTypesList.put(serviceType.getId(),serviceType);
                 }
 //                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
                 servicePetitionCard_adapter.notifyDataSetChanged();
@@ -65,17 +100,11 @@ public class ServicePetitionsList extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
 
-
-        servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(),servicePetitionArrayList);
-        recyclerview.setAdapter(servicePetitionCard_adapter);
-
-        return view;
-
-        }
     public void goToBidderProfile2(View view) {
         Intent intent = new Intent(getActivity(), BidderProfileActivity.class);
         startActivity(intent);
     }
-    }
+}
 

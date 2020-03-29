@@ -12,8 +12,6 @@ import com.cenfotec.ponto.entities.user.UserHomeActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionListActivity;
-
 public class MainActivity extends AppCompatActivity {
     public static final String MY_PREFERENCES = "MyPrefs";
     Button btnPetitionList;
@@ -23,17 +21,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnPetitionList = findViewById(R.id.btnPetitionList);
         SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         String userId = myPrefs.getString("userId", "none");
         Intent intent;
 
-        btnPetitionList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewList();
-            }
-        });
 
 
         if (userId.equals("none")) {
@@ -46,8 +37,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void viewList() {
-        Intent intent = new Intent(this, ServicePetitionListActivity.class);
-        startActivity(intent);
-    }
 }

@@ -1,30 +1,50 @@
 package com.cenfotec.ponto.data.model;
 
 public class ServiceType {
-    private Integer id;
-    private String ServiceType;
+    private String id;
+    private String serviceType;
+    private String imgUrl;
+    private String color;
 
     public ServiceType() {
     }
 
-    public ServiceType(Integer id, String serviceType) {
+    public ServiceType(String id, String serviceType, String imgUrl, String color) {
         this.id = id;
-        ServiceType = serviceType;
+        this.serviceType = serviceType;
+        this.imgUrl = imgUrl;
+        this.color = color;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public String getServiceType() {
-        return ServiceType;
+        return serviceType;
     }
 
     public void setServiceType(String serviceType) {
-        ServiceType = serviceType;
+        this.serviceType = serviceType;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }
