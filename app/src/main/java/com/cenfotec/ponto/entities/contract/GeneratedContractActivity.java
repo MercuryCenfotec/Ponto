@@ -1,12 +1,8 @@
 package com.cenfotec.ponto.entities.contract;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,19 +11,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.pdf.PdfDocument;
+import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
@@ -48,35 +42,26 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import customfonts.MyTextView_SF_Pro_Display_Bold;
+import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class GeneratedContractActivity extends AppCompatActivity {
 
     private static SharedPreferences sharedpreferences;
     private String activeUserId;
-    TextView petitionerName;
-    TextView petitionerIdentification;
-    TextView bidderName;
-    TextView bidderIdentification;
+    MyTextView_SF_Pro_Display_Bold petitionerName;
+    MyTextView_SF_Pro_Display_Bold petitionerIdentification;
+    MyTextView_SF_Pro_Display_Bold bidderName;
+    MyTextView_SF_Pro_Display_Bold bidderIdentification;
     ImageView petitionerSignature;
     ImageView bidderSignature;
-    Button btnGeneratePdf;
-    Button btnSignature;
+    MyTextView_SF_Pro_Display_Medium btnSignature;
     String petitionerId = "-M2qHnZVxG6tWbLwMUWa";
     String bidderId = "-M2qtYcjMe1CM8CHrSaA";
     String contractId = "-M3SXlRAkuyWD0bEXFkj";
@@ -120,7 +105,6 @@ public class GeneratedContractActivity extends AppCompatActivity {
         bidderIdentification = findViewById(R.id.textView21);
         petitionerSignature = findViewById(R.id.imageView);
         bidderSignature = findViewById(R.id.imageView2);
-        btnGeneratePdf = findViewById(R.id.button3x);
         btnSignature = findViewById(R.id.btnSignatureUniqueUnique);
     }
 
@@ -213,22 +197,24 @@ public class GeneratedContractActivity extends AppCompatActivity {
 
     private void checkIfContractHasBoth(){
         if(!contract.getPetitionerSignatureUrl().equals("") && !contract.getBidderSignatureUrl().equals("")){
-            btnGeneratePdf.setEnabled(true);
+            //btnGeneratePdf.setEnabled(true);
         }
         if(!contract.getPetitionerSignatureUrl().equals("") && activeUserId.equals(petitionerId)){
             btnSignature.setEnabled(false);
+            btnSignature.setVisibility(View.INVISIBLE);
         }
         if(!contract.getBidderSignatureUrl().equals("") && activeUserId.equals(bidder.getUserId())){
             btnSignature.setEnabled(false);
+            btnSignature.setVisibility(View.INVISIBLE);
         }
     }
 
     private void fillSignatures(){
         if(!contract.getPetitionerSignatureUrl().equals("")){
-            Picasso.get().load(contract.getPetitionerSignatureUrl()).into(petitionerSignature);
+            Picasso.get().load(contract.getPetitionerSignatureUrl()).fit().into(petitionerSignature);
         }
         if(!contract.getBidderSignatureUrl().equals("")){
-            Picasso.get().load(contract.getBidderSignatureUrl()).into(bidderSignature);
+            Picasso.get().load(contract.getBidderSignatureUrl()).fit().into(bidderSignature);
         }
     }
 
@@ -260,91 +246,6 @@ public class GeneratedContractActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void generatePdf(View view){
-        File pdfDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOCUMENTS), "MyApp");
-        if (!pdfDir.exists()){
-            pdfDir.mkdir();
-        }
-
-        File pdfFile = new File(pdfDir, "myPdfFile.pdf");
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        ConstraintLayout root2 = (ConstraintLayout) inflater.inflate(R.layout.activity_generated_contract, null);
-        root2.setDrawingCacheEnabled(true);
-        Bitmap screen = loadBitmapFromView(view);
-
-        try {
-            Document document = new Document();
-
-            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
-            document.open();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            addImage(document,byteArray);
-            document.close();
-
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = Uri.fromFile(new File(pdfDir,  "myPdfFile.pdf"));
-            intent.setDataAndType(uri, "application/pdf");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    private static void addImage(Document document,byte[] byteArray)
-    {
-        Image image = null;
-        try
-        {
-            image = Image.getInstance(byteArray);
-        }
-        catch (BadElementException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (MalformedURLException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        catch (IOException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        // image.scaleAbsolute(150f, 150f);
-        try
-        {
-            document.add(image);
-        } catch (DocumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public static Bitmap loadBitmapFromView(View v) {
-        Bitmap bm = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
-
-        if (v.getMeasuredHeight() <= 0) {
-            v.measure(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            Bitmap b = Bitmap.createBitmap(v.getMeasuredWidth(), v.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(b);
-            v.layout(0, 0, v.getMeasuredWidth(), v.getMeasuredHeight());
-            v.draw(c);
-            bm = b;
-        }
-        return bm;
-    }
-
-
-
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -360,13 +261,17 @@ public class GeneratedContractActivity extends AppCompatActivity {
             @Override
             public void onSigned() {
                 mSaveButton.setEnabled(true);
+                mSaveButton.setVisibility(View.VISIBLE);
                 mClearButton.setEnabled(true);
+                mClearButton.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onClear() {
                 mSaveButton.setEnabled(false);
+                mSaveButton.setVisibility(View.INVISIBLE);
                 mClearButton.setEnabled(false);
+                mClearButton.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -445,7 +350,7 @@ public class GeneratedContractActivity extends AppCompatActivity {
         DatabaseReference updateUserReference = FirebaseDatabase.getInstance().
                 getReference("Contracts").child(contract.getId());
         updateUserReference.setValue(contract);
-        showToaster("Actualización exitosa");
+        showToaster("Firma exitosa");
         finish();
     }
 
@@ -462,4 +367,9 @@ public class GeneratedContractActivity extends AppCompatActivity {
             );
         }
     }
+
+    public void goBackToContract(View view){
+        finish();
+    }
+
 }

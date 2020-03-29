@@ -17,139 +17,152 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/textView13"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="40dp"
-                android:text="Solicitante: "
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="goBackToContract"/>
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/contractTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:text="Contrato de Entendimiento"
+                android:textColor="#3b3b3b"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView14"
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:text="El contrato de entendimiento corresponde a una noción formal por la cual, tanto los solicitantes y los oferentes pueden tener un respaldo acerca de los eventos acordados por ambas partes, con el objetivo de que ambos posean el conocimiento referente al trabajo a realizar. \n\nDicho trabajo tiene como objetivo unir a ambas partes para poder solventar un problema que estos posean, por medio de conocimientos propios ofrecidos por parte del oferente y la aceptación de dichos conocientos por parte del solicitante. \n\nPor medio de este contrato de intenciones las partes o actores dan fe de que conocen sus responsabilidades y que se comprometen a regir lo establecido, en relación de conveniencia mutua."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractTitle" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDefinition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="40dp"
-                android:text="Cédula: "
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Por esta manera el solicitante:"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+                app:layout_constraintTop_toBottomOf="@+id/contractDescription" />
 
-            <TextView
+            <customfonts.MyTextView_SF_Pro_Display_Bold
                 android:id="@+id/textView15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="40dp"
-                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="|"
-                app:layout_constraintStart_toEndOf="@+id/textView13"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractDefinition" />
 
-            <TextView
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Cédula: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="84dp"
-                android:layout_marginLeft="84dp"
-                android:layout_marginTop="40dp"
-                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="|"
-                app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toBottomOf="@+id/textView15" />
-
-            <TextView
-                android:id="@+id/textView17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="60dp"
-                android:text="Acepta trabajar con "
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
-            <TextView
-                android:id="@+id/textView18"
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDefinitionPart2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
-                android:text="Oferente:"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Hace constancia de su trabajo con el oferente: "
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="32dp"
-                android:text="Cédula:"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-            <TextView
+            <customfonts.MyTextView_SF_Pro_Display_Bold
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="76dp"
-                android:layout_marginLeft="76dp"
-                android:layout_marginTop="32dp"
-                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="|"
-                app:layout_constraintStart_toEndOf="@+id/textView18"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractDefinitionPart2" />
 
-            <TextView
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Cédula:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
                 android:id="@+id/textView21"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="88dp"
-                android:layout_marginLeft="88dp"
-                android:layout_marginTop="32dp"
-                android:textStyle="bold"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
                 android:text="|"
-                app:layout_constraintStart_toEndOf="@+id/textView19"
-                app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:text="En el servicio correspondiente a lo acordado, así como el solicitante se hace responsable de pagar lo debido"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
-            <TextView
-                android:id="@+id/textView23"
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/petitionerSignatureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="36dp"
-                android:text="Firma de solicitante:"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Firma del solicitante:"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView22" />
+                app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="250dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
@@ -157,24 +170,24 @@
                 android:layout_marginRight="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView23"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerSignatureTextView"
                 app:srcCompat="@drawable/fui_idp_button_background_twitter" />
 
-            <TextView
-                android:id="@+id/textView24"
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/bidderSignatureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="36dp"
-                android:text="Firma de oferente:"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:text="Firma del oferente:"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="250dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
@@ -182,36 +195,30 @@
                 android:layout_marginRight="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView24"
+                app:layout_constraintTop_toBottomOf="@+id/bidderSignatureTextView"
                 app:srcCompat="@drawable/fui_idp_button_background_twitter" />
 
-            <Button
+            <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/btnSignatureUniqueUnique"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="88dp"
-                android:layout_marginLeft="88dp"
                 android:layout_marginTop="28dp"
-                android:text="Firmar"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/rect_blue"
                 android:onClick="openSignature"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView2"/>
-
-            <Button
-                android:id="@+id/button3x"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="148dp"
-                android:layout_marginRight="148dp"
-                android:enabled="false"
-                android:onClick="generatePdf"
-                android:text="Generar"
+                android:paddingLeft="48dp"
+                android:paddingTop="11dp"
+                android:paddingRight="48dp"
+                android:paddingBottom="11dp"
+                android:text="Firmar contrato"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnSignatureUniqueUnique"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

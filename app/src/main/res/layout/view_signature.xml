@@ -1,15 +1,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:signature="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relativeRelative"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="goBackToContract"/>
+
+    <customfonts.MyTextView_SF_Pro_Display_Bold
+        android:id="@+id/textToFirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:textColor="#3b3b3b"
+        android:textSize="23sp"
+        android:text="Proceda a realizar una firma"/>
 
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/buttons_container"
+        android:layout_below="@+id/textToFirm"
         android:id="@+id/signature_pad_container">
 
         <FrameLayout
@@ -48,16 +73,44 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:background="@drawable/rect_blue"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="30dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="11dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="11dp"
             android:text="Limpiar"
-            android:enabled="false" />
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="15sp"
+            android:enabled="false"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:background="@drawable/rect_blue"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="20dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="11dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="11dp"
             android:text="Guardar"
-            android:enabled="false" />
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:textSize="15sp"
+            android:enabled="false"
+            android:layout_marginStart="20dp"
+            android:visibility="invisible"/>
     </LinearLayout>
 
 </RelativeLayout>
