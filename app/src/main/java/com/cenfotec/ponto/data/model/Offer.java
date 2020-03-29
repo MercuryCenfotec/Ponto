@@ -17,6 +17,7 @@ public class Offer {
     private String servicePetitionId;
     private String servicePetitionTitle;
     private String bidderName;
+    private String bidderImageUrl;
 
     public Offer() {
     }
@@ -131,5 +132,13 @@ public class Offer {
 
     public void setBidderName(String bidderName) {
         this.bidderName = bidderName;
+    }
+
+    public String getBidderImageUrl() {
+        return bidderImageUrl;
+    }
+
+    public void setBidderImageUrl(String bidderImageUrl) {
+        this.bidderImageUrl = bidderImageUrl;
     }
 }
