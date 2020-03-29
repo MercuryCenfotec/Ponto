@@ -1,5 +1,6 @@
 package com.cenfotec.ponto.data.model;
 
+
 public class ServiceType {
     private String id;
     private String serviceType;
