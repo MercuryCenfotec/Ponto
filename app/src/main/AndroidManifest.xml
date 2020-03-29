@@ -16,7 +16,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".entities.contract.ContractsListActivity"></activity>
         <activity android:name=".entities.contract.GeneratedContractActivity" />
-        <activity android:name=".entities.servicePetition.ServicePetitionListActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionPetitionerDetailActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionBidderDetailActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionUpdateActivity" />
