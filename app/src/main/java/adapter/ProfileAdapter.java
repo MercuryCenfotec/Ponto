@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
+import com.cenfotec.ponto.entities.contract.ContractsListActivity;
+import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
 
@@ -69,8 +71,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 3:
-                        //Intent i = new Intent(context, CLASE DE CONTRATOS.class);
-                        //context.startActivity(i);
+                        Intent intent = new Intent(context, ContractsListActivity.class);
+                        context.startActivity(intent);
                         break;
 
                     case 4:

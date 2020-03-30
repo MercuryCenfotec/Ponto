@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".entities.contract.ContractCardFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/contractCardView"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:clipToPadding="true"
+        app:cardCornerRadius="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contractCardInfoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/contractNameCardTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="Contrato"
+                android:textColor="#000"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/contractCardInfoContainer"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDateCardTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="11dp"
+                android:layout_marginRight="11dp"
+                android:text="10/10/2010"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractPetitionCardTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="68dp"
+                android:text="Nombre de la solicitud"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

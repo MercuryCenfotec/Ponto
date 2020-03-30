@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    tools:context=".entities.contract.GeneratedContractActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_left"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="goBackToContract"/>
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/contractTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:text="Contrato de Entendimiento"
+                android:textColor="#3b3b3b"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDescriptionTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:text="El contrato de entendimiento corresponde a una noción formal por la cual, tanto los solicitantes y los oferentes pueden tener un respaldo acerca de los eventos acordados por ambas partes, con el objetivo de que ambos posean el conocimiento referente al trabajo a realizar. \n\nDicho trabajo tiene como objetivo unir a ambas partes para poder solventar un problema que estos posean, por medio de conocimientos propios ofrecidos por parte del oferente y la aceptación de dichos conocientos por parte del solicitante. \n\nPor medio de este contrato de intenciones las partes o actores dan fe de que conocen sus responsabilidades y que se comprometen a regir lo establecido, en relación de conveniencia mutua."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractTitleTextView" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDefinitionTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Por esta manera el solicitante:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractDescriptionTextView" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/petitionerContractNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="|"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractDefinitionTextView" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/petitionerContractIdDefinitionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Cédula: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerContractNameTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/petitionerContractIdentificationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="|"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerContractIdDefinitionTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/contractDefinitionPart2TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Hace constancia de su trabajo con el oferente: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerContractIdentificationTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/bidderContractNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="|"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contractDefinitionPart2TextView" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/bidderContractIdDefinitionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Cédula:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderContractNameTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Bold
+                android:id="@+id/bidderContractIdentificationTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:text="|"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderContractIdDefinitionTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/petitionerSignatureTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="Firma del solicitante:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderContractIdentificationTV" />
+
+            <ImageView
+                android:id="@+id/petitionerContractSignatureIV"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerSignatureTextView"
+                app:srcCompat="@drawable/fui_idp_button_background_twitter" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/bidderSignatureTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:text="Firma del oferente:"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/petitionerContractSignatureIV" />
+
+            <ImageView
+                android:id="@+id/bidderContractSignatureIV"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderSignatureTextView"
+                app:srcCompat="@drawable/fui_idp_button_background_twitter" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/btnContractSignature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:layout_marginBottom="28dp"
+                android:background="@drawable/rect_blue"
+                android:onClick="openSignaturePad"
+                android:paddingLeft="48dp"
+                android:paddingTop="11dp"
+                android:paddingRight="48dp"
+                android:paddingBottom="11dp"
+                android:text="Firmar contrato"
+                android:textAllCaps="false"
+                android:textColor="#FFF"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderContractSignatureIV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

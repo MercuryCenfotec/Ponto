@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
 
     @Override
     public void onBindViewHolder(OfferCard_Adapter.ViewHolder holder, final int position) {
-        holder.cardTitle.setText(offerList.get(position).getServicePetitionTitle());
+        final SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         holder.cardCost.setText("₡ " + offerList.get(position).getCost().toString());
         holder.cardDuration.setText(offerList.get(position).getDuration() + (offerList.get(position).getDurationType().equals("hour") ? " horas" : " dias"));
         holder.cardDescription.setText(offerList.get(position).getDescription());
@@ -42,12 +44,18 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                         Intent intent = new Intent(context, OfferDetailActivity.class);
-                        myPrefs.edit().putString("servicePetitionId", offerList.get(position).getServicePetitionId()).commit();
+                        myPrefs.edit().putString("offerId", offerList.get(position).getId()).commit();
                         context.startActivity(intent);
                     }
                 });
+        if (myPrefs.getString("userId", "none").equals(offerList.get(position).getUserId())) {
+            holder.cardTitle.setText(offerList.get(position).getServicePetitionTitle());
+        } else {
+            holder.cardTitle.setText(offerList.get(position).getBidderName());
+            holder.cardImage.setVisibility(View.VISIBLE);
+            Picasso.get().load(offerList.get(position).getBidderImageUrl()).into(holder.cardImage);
+        }
     }
 
     @Override
@@ -58,6 +66,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView cardTitle, cardDuration, cardCost, cardDescription;
         CardView offerCard;
+        ImageView cardImage;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -66,6 +75,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
             cardDuration = itemView.findViewById(R.id.cardDuration);
             cardCost = itemView.findViewById(R.id.cardCost);
             cardDescription = itemView.findViewById(R.id.cardDescription);
+            cardImage = itemView.findViewById(R.id.bidderImage);
         }
     }
 }
