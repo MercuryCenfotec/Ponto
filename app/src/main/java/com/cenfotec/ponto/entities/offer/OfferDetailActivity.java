@@ -23,7 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener {
+public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener {
 
     DatabaseReference offerDBReference;
     DatabaseReference bidderDBReference;
@@ -113,7 +113,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         startActivity(intent);
     }
 
-    public void acceptOffer(View view) {
+    public void acceptOffer() {
         String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
         final String offerId = myPrefs.getString("offerId", "none");
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offers");
@@ -129,6 +129,8 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                                     "accepted" :
                                     "cancelled");
                 }
+
+                Toast.makeText(OfferDetailActivity.this, "La oferta fue aceptada", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -159,5 +161,15 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         } else {
             Toast.makeText(this, "Ya hizo una contraoferta", Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void openAcceptOfferDialog(View view) {
+        AcceptOfferDialog offerDialog = new AcceptOfferDialog();
+        offerDialog.show(getSupportFragmentManager(), "accept offer dialog");
+    }
+
+    @Override
+    public void dialogOfferAccepted() {
+        acceptOffer();
     }
 }

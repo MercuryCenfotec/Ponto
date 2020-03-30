@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#03749C"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:text="Confirmar oferta"
+            android:textColor="#3b3b3b"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/modificationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="92dp"
+        android:paddingTop="14dp"
+        android:text="¿Está seguro que desea aceptar esta oferta?"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/modificationTextView"
+        app:layout_constraintStart_toStartOf="@+id/modificationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/modificationTextView">
+
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/btnCancelOfferDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rect_white"
+            android:paddingLeft="40dp"
+            android:paddingTop="11dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="11dp"
+            android:text="Cancelar"
+            android:textAllCaps="false"
+            android:textColor="#3b3b3b"
+            android:textSize="17sp" />
+
+        <customfonts.MyTextView_SF_Pro_Display_Medium
+            android:id="@+id/btnAcceptOfferDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/rect_white"
+            android:paddingLeft="40dp"
+            android:paddingTop="11dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="11dp"
+            android:text="Confirmar"
+            android:textAllCaps="false"
+            android:textColor="#3b3b3b"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

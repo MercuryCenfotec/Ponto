@@ -215,7 +215,7 @@
                     android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="acceptOffer"
+                    android:onClick="openAcceptOfferDialog"
                     android:layout_weight="1"
                     android:background="@drawable/rect_blue"
                     android:paddingTop="7dp"
