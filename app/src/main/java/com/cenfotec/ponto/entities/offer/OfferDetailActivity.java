@@ -41,6 +41,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     boolean hasCounterOffer;
     String offerId;
     Offer activeOffer;
+    TextView counterOfferButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         bidderDetail.setVisibility(View.GONE);
         createOfferButton = findViewById(R.id.createOfferButton);
         viewTitle = findViewById(R.id.viewTitle);
+        counterOfferButton = findViewById(R.id.btnOfferCreation);
 
         String userId = myPrefs.getString("userId", "none");
         offerId = myPrefs.getString("offerId","none");
@@ -89,6 +91,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
                     if (!data.child("userId").getValue().toString().equals(userId)) {
                         bidderDetail.setVisibility(View.VISIBLE);
+                        counterOfferButton.setVisibility(View.VISIBLE);
                         createOfferButton.setVisibility(View.GONE);
                         userName.setText(data.child("bidderName").getValue().toString());
                         if (!data.child("bidderImageUrl").getValue().toString().equals("")) {
@@ -122,7 +125,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot offerSS : dataSnapshot.getChildren()) {
                     ref.child(offerSS.child("id").getValue().toString()).child("accepted")
-                            .setValue(offerSS.child("id").equals(offerId) ?
+                            .setValue(offerSS.child("id").getValue().toString().equals(offerId) ?
                                     "accepted" :
                                     "cancelled");
                 }

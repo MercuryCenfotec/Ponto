@@ -58,6 +58,7 @@ public class OffersListFragment extends Fragment {
         if (myPrefs.getString("userType", "none").equals("bidder")) {
             // Bidder
             offersQuery[0] = offerDBReference.orderByChild("userId").equalTo(myPrefs.getString("userId", "none"));
+            loadOffers(offersQuery[0]);
         } else {
             // Petitioner
             servicePetitionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -67,8 +68,10 @@ public class OffersListFragment extends Fragment {
                         String acceptedOfferId = petitionSnapshot.child("acceptedOfferId").getValue().toString();
                         if (acceptedOfferId.equals("")) {
                             offersQuery[0] = offerDBReference.orderByChild("servicePetitionId").equalTo(myPrefs.getString("servicePetitionId", "none"));
+                            loadOffers(offersQuery[0]);
                         } else {
                             offersQuery[0] = offerDBReference.orderByChild("id").equalTo(acceptedOfferId);
+                            loadOffers(offersQuery[0]);
                         }
                     }
                 }
@@ -80,10 +83,17 @@ public class OffersListFragment extends Fragment {
             });
         }
 
+        offerCard_adapter = new OfferCard_Adapter(getActivity(), offerList);
+        recyclerview.setAdapter(offerCard_adapter);
 
-        offersQuery[0].addValueEventListener(new ValueEventListener() {
+        return view;
+    }
+
+    private void loadOffers (Query query) {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                offerList.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     if (!data.child("accepted").getValue().toString().equals("cancelled"))
                         offerList.add(data.getValue(Offer.class));
@@ -96,10 +106,5 @@ public class OffersListFragment extends Fragment {
                 System.out.println("The offers read failed: " + databaseError.getCode());
             }
         });
-
-        offerCard_adapter = new OfferCard_Adapter(getActivity(), offerList);
-        recyclerview.setAdapter(offerCard_adapter);
-
-        return view;
     }
 }
