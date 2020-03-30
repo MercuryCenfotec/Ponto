@@ -22,7 +22,7 @@
         android:layout_width="131dp"
         android:layout_height="152dp"
         android:layout_gravity="center"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="64dp"
         android:src="@drawable/profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgBidderProfile">
 
 
         <customfonts.EditText__SF_Pro_Display_Medium
@@ -125,16 +127,20 @@
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/biographyUpdBidEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="97dp"
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
             android:background="@drawable/rect_black"
+            android:gravity="top|left"
             android:hint="Biografía"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="1"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
+            android:paddingRight="20dp"
             android:paddingBottom="14dp"
             android:textColor="#000"
             android:textColorHint="#000"
