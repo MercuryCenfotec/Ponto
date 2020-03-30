@@ -46,6 +46,7 @@ import com.cenfotec.ponto.data.model.SpinnerItem;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
+import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -406,7 +407,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     }
 
     public void goToHome() {
-        Intent intent = new Intent(this, BidderHomeActivity.class);
+        Intent intent = new Intent(this, PetitionerHomeActivity.class);
         startActivity(intent);
     }
 
