@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -348,6 +349,11 @@ public class GeneratedContractActivity extends AppCompatActivity {
         updateContractReference.setValue(contract);
         showToaster("Firma exitosa");
         finish();
+        Intent intent = new Intent(this, GeneratedContractActivity.class);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderUserId", bidderUserId);
+        intent.putExtra("contractId", contract.getId());
+        startActivity(intent);
     }
 
     //Other statements start here
@@ -356,6 +362,15 @@ public class GeneratedContractActivity extends AppCompatActivity {
     }
 
     public void goBackToContract(View view) {
+        finish();
+        Intent intent = new Intent(this, GeneratedContractActivity.class);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderUserId", bidderUserId);
+        intent.putExtra("contractId", contract.getId());
+        startActivity(intent);
+    }
+
+    public void goBackToContractList(View view){
         finish();
     }
 
