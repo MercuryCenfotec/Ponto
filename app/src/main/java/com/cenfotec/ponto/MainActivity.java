@@ -30,9 +30,11 @@ public class MainActivity extends AppCompatActivity {
         if (userId.equals("none")) {
             intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         } else {
             intent = new Intent(this, UserHomeActivity.class);
             startActivity(intent);
+            finish();
         }
 
     }
