@@ -350,9 +350,7 @@ public class BidderUpdateActivity extends AppCompatActivity {
     }
 
     private void openBidderProfile() {
-        Intent intent = new Intent(BidderUpdateActivity.this,
-                BidderProfileActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     //Validation statements start here

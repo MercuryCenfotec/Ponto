@@ -342,9 +342,7 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
     }
 
     private void openPetitionerProfile(String id) {
-        Intent intent = new Intent(PetitionerUpdateActivity.this, PetitionerProfileActivity.class);
-        intent.putExtra("token", id);
-        startActivity(intent);
+        finish();
     }
 
     //Validation statements start here

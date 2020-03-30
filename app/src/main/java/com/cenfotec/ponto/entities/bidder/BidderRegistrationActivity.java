@@ -19,6 +19,7 @@ import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -164,19 +165,14 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         bidderDataReference.child(bidderId).setValue(bidder);
         clearBidderRegistrationInputs();
         showToaster("Oferente agregado");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
 
     }
 
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-    /*private void initBidderProfileView(String id) {
-        Intent intent = new Intent(BidderRegistrationActivity.this,
-                BidderProfileActivity.class);
-        intent.putExtra("token", id);
-        startActivity(intent);
-    }*/
 
     //validation statements start here
     private void clearBidderRegistrationInputs() {

@@ -19,8 +19,6 @@ public class PetitionerHome extends Fragment {
     View view;
     Button btnLO;
     Button btnCreatePetition;
-    Button btnRegister;
-    Button btnProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,8 +34,6 @@ public class PetitionerHome extends Fragment {
         //Get the buttons by the id
         btnLO = (Button) view.findViewById(R.id.btnLO);
         btnCreatePetition = (Button) view.findViewById(R.id.btnCreatePetition);
-        btnRegister = (Button) view.findViewById(R.id.btnRegister);
-        btnProfile = (Button) view.findViewById(R.id.btnProfile);
         setContent();
 
     }
@@ -58,30 +54,6 @@ public class PetitionerHome extends Fragment {
                 goToServicePetition(v);
             }
         });
-
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToRegister(v);
-            }
-        });
-
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToProfile(v);
-            }
-        });
-    }
-    public void goToProfile(View view) {
-        Intent intent = new Intent(getActivity(), PetitionerProfileActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToRegister(View view) {
-        Intent intent = new Intent(getActivity(), PetitionerRegistrationActivity.class);
-        startActivity(intent);
     }
 
     public void goToServicePetition(View view){

@@ -22,6 +22,7 @@ import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.Petitioner;
 import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -135,7 +136,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 
         clearPetitionRegistrationInputs();
         showToaster("Registro exitoso");
-        openPetitionerProfile(id);
+        openPetitionerProfile();
     }
 
     private void showToaster(String message) {
@@ -195,9 +196,8 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
         }
     }
 
-    private void openPetitionerProfile(String id) {
-        Intent intent = new Intent(PetitionerRegistrationActivity.this, PetitionerProfileActivity.class);
-        intent.putExtra("token", id);
+    private void openPetitionerProfile() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

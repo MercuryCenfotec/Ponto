@@ -35,13 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BidderHome extends Fragment {
-    Button buttonBP;
-    Button buttonBR;
     Button btnOffer;
     Button btnOfferDetail;
     Button btnLO;
     View view;//this one it's necessary in a new fragment
-
 
     public BidderHome() {
         super();
@@ -59,11 +56,8 @@ public class BidderHome extends Fragment {
         return view;
     }
 
-
     private void initContent() {
         //Get the buttons by the id
-        buttonBP = (Button) view.findViewById(R.id.buttonBP);
-        buttonBR = (Button) view.findViewById(R.id.buttonBR);
         btnOffer = (Button) view.findViewById(R.id.btnOffer);
         btnOfferDetail = (Button) view.findViewById(R.id.btnOfferDetail);
         btnLO = (Button) view.findViewById(R.id.btnLO);
@@ -72,20 +66,7 @@ public class BidderHome extends Fragment {
 
     private void setContent() {
         //Set the button function by id
-        view.findViewById(R.id.buttonBP).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //you can call the button method here
-                goToBidderProfile(v);
-            }
-        });
 
-        buttonBR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToBidderRegister(v);
-            }
-        });
         btnOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,17 +88,6 @@ public class BidderHome extends Fragment {
     }
 
     //    here goes the activity methods
-    public void goToBidderProfile(View view) {
-        Intent intent = new Intent(getActivity(), BidderProfileActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToBidderRegister(View view) {
-        Intent intent = new Intent(getActivity(), BidderRegistrationActivity.class);
-        startActivity(intent);
-    }
-
-
     public void goToOfferCreation(View view) {
         Intent intent = new Intent(getActivity(), OfferCreationActivity.class);
         startActivity(intent);

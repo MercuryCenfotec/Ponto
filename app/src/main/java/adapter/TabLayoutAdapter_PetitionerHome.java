@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.cenfotec.ponto.entities.petitioner.PetitionerHome;
+import com.cenfotec.ponto.entities.petitioner.PetitionerProfileFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionPetitionerList;
 
 public class TabLayoutAdapter_PetitionerHome extends FragmentStatePagerAdapter {
@@ -32,6 +33,9 @@ public class TabLayoutAdapter_PetitionerHome extends FragmentStatePagerAdapter {
             case 1:
                 ServicePetitionPetitionerList tab2 = new ServicePetitionPetitionerList();
                 return tab2;
+            case 2:
+                PetitionerProfileFragment tab3 = new PetitionerProfileFragment();
+                return tab3;
             default:
                 return null;
         }
