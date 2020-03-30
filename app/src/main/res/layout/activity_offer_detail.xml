@@ -219,11 +219,11 @@
                     android:gravity="center"
                     android:paddingTop="7dp"
                     android:paddingBottom="8dp"
-                    android:text="Contra-oferta"
+                    android:text="Contraofertar"
                     android:layout_gravity="center"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
-
+                    android:textSize="12sp"
+                    android:onClick="openCounterOfferDialog" />
 
             </LinearLayout>
 
