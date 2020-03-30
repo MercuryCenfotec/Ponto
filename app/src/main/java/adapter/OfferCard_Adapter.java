@@ -54,7 +54,8 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
         } else {
             holder.cardTitle.setText(offerList.get(position).getBidderName());
             holder.cardImage.setVisibility(View.VISIBLE);
-            Picasso.get().load(offerList.get(position).getBidderImageUrl()).into(holder.cardImage);
+            if (!offerList.get(position).getBidderImageUrl().equals(""))
+                Picasso.get().load(offerList.get(position).getBidderImageUrl()).into(holder.cardImage);
         }
     }
 
