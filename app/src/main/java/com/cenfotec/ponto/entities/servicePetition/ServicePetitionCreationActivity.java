@@ -387,6 +387,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 false
         );
         servicePetition.setFiles(realFilesToUpload);
+        servicePetition.setAcceptedOfferId("");
         databaseReference.child(id).setValue(servicePetition);
 
         clearServicePetitionInputs();

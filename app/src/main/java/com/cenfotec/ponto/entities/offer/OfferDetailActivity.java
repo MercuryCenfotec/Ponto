@@ -56,7 +56,7 @@ public class OfferDetailActivity extends AppCompatActivity {
         viewTitle = findViewById(R.id.viewTitle);
 
         String userId = myPrefs.getString("userId", "none");
-        String offerId = myPrefs.getString("offerId","none");
+        String offerId = myPrefs.getString("offerId", "none");
 
         loadOfferData(userId, offerId);
 
@@ -78,9 +78,8 @@ public class OfferDetailActivity extends AppCompatActivity {
                     if (!data.child("userId").getValue().toString().equals(userId)) {
                         bidderDetail.setVisibility(View.VISIBLE);
                         createOfferButton.setVisibility(View.GONE);
-                        loadUserData(userId);
                         userName.setText(data.child("bidderName").getValue().toString());
-                        if(!data.child("bidderImageUrl").getValue().toString().equals("")){
+                        if (!data.child("bidderImageUrl").getValue().toString().equals("")) {
                             Picasso.get().load(data.child("bidderImageUrl").getValue().toString()).into(userImage);
                         }
                     }
@@ -94,15 +93,27 @@ public class OfferDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void loadUserData(String userId) {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void goToOfferUpdate(View view) {
+        Intent intent = new Intent(this, OfferUpdateActivity.class);
+        startActivity(intent);
+    }
+
+    public void acceptOffer(View view) {
+        String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
+        final String offerId = myPrefs.getString("offerId", "none");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offers");
+
+        Query offersQuery = ref.orderByChild("servicePetitionId").equalTo(servicePetitionId);
+
+        offersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String imageUrl = dataSnapshot.child("profileImageUrl").getValue().toString();
-
-
+                for (DataSnapshot offerSS : dataSnapshot.getChildren()) {
+                    ref.child(offerSS.child("id").getValue().toString()).child("accepted")
+                            .setValue(offerSS.child("id").equals(offerId) ?
+                                    "accepted" :
+                                    "cancelled");
+                }
             }
 
             @Override
@@ -110,10 +121,6 @@ public class OfferDetailActivity extends AppCompatActivity {
 
             }
         });
-    }
 
-    public void goToOfferUpdate(View view) {
-        Intent intent = new Intent(this, OfferUpdateActivity.class);
-        startActivity(intent);
     }
 }

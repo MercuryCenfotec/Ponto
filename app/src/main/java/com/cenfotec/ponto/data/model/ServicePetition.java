@@ -16,6 +16,7 @@ public class ServicePetition {
     private Appointment appointments;
     private String selectedOfferId;
     private String closingDate;
+    private String acceptedOfferId;
 
     public ServicePetition() {
     }
@@ -119,5 +120,13 @@ public class ServicePetition {
 
     public void setFiles(List<String> files) {
         this.files = files;
+    }
+
+    public String getAcceptedOfferId() {
+        return acceptedOfferId;
+    }
+
+    public void setAcceptedOfferId(String acceptedOfferId) {
+        this.acceptedOfferId = acceptedOfferId;
     }
 }
