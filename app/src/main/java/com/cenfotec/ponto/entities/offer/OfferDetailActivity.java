@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class OfferDetailActivity extends AppCompatActivity {
+public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener {
 
     DatabaseReference offerDBReference;
     DatabaseReference bidderDBReference;
@@ -36,6 +38,9 @@ public class OfferDetailActivity extends AppCompatActivity {
     LinearLayout bidderDetail;
     TextView createOfferButton;
     TextView viewTitle;
+    boolean hasCounterOffer;
+    String offerId;
+    Offer activeOffer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +61,7 @@ public class OfferDetailActivity extends AppCompatActivity {
         viewTitle = findViewById(R.id.viewTitle);
 
         String userId = myPrefs.getString("userId", "none");
-        String offerId = myPrefs.getString("offerId", "none");
+        offerId = myPrefs.getString("offerId","none");
 
         loadOfferData(userId, offerId);
 
@@ -69,11 +74,18 @@ public class OfferDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
+
+                    activeOffer = data.getValue(Offer.class);
+
                     costText.setText("₡" + data.child("cost").getValue().toString());
                     descriptionText.setText(data.child("description").getValue().toString());
                     durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
                     durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
                     viewTitle.setText(data.child("servicePetitionTitle").getValue().toString());
+
+                    if (data.child("counterOffer").getValue() != null) {
+                        hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
+                    }
 
                     if (!data.child("userId").getValue().toString().equals(userId)) {
                         bidderDetail.setVisibility(View.VISIBLE);
@@ -122,5 +134,27 @@ public class OfferDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void createCounterOffer(String newCost) {
+        activeOffer.setCounterOffer(true);
+        activeOffer.setCounterOfferCost(Float.parseFloat(newCost));
+        offerDBReference.child(offerId).setValue(activeOffer);
+        hasCounterOffer = true;
+        Toast.makeText(this, "Contraoferta exitosa", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void applyText(String newCost) {
+        createCounterOffer(newCost);
+    }
+
+    public void openCounterOfferDialog(View view) {
+        if (!hasCounterOffer) {
+            CounterOfferDialog counterDialog = new CounterOfferDialog();
+            counterDialog.show(getSupportFragmentManager(), "counter offer dialog");
+        } else {
+            Toast.makeText(this, "Ya hizo una contraoferta", Toast.LENGTH_LONG).show();
+        }
     }
 }

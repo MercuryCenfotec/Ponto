@@ -26,7 +26,7 @@
                 android:src="@drawable/ic_left"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:onClick="goBackToContract"/>
+                android:onClick="goBackToContractList"/>
 
             <customfonts.MyTextView_SF_Pro_Display_Bold
                 android:id="@+id/contractTitleTextView"

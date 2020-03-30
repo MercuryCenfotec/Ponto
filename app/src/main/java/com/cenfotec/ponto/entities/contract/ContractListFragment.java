@@ -54,7 +54,6 @@ public class ContractListFragment extends Fragment {
         servicePetitionList = new HashMap<>();
         getContractsFromDB();
         contractCard_adapter = new ContractCard_Adapter(getActivity(), contractList, servicePetitionList);
-        contractCard_adapter = new ContractCard_Adapter(getActivity(), contractList, servicePetitionList);
         contractListRecycler.setAdapter(contractCard_adapter);
 
         return view;
@@ -77,6 +76,7 @@ public class ContractListFragment extends Fragment {
         contractsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                contractList.clear();
                 for (DataSnapshot contractSnapshot : snapshot.getChildren()) {
                     contractList.add(contractSnapshot.getValue(Contract.class));
                 }
