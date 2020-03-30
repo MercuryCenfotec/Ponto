@@ -17,6 +17,7 @@ import com.cenfotec.ponto.entities.contract.ContractsListActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
+import com.cenfotec.ponto.utils.LogoutHelper;
 
 import java.util.ArrayList;
 
@@ -89,8 +90,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 5:
-                        //Intent i = new Intent(context, CLASE DE AJUSTES.class);
-                        //context.startActivity(i);
+                        LogoutHelper.logout(context);
                         break;
                 }
             }

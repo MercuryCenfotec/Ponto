@@ -35,9 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BidderHome extends Fragment {
-    Button btnOffer;
-    Button btnOfferDetail;
-    Button btnLO;
     View view;//this one it's necessary in a new fragment
 
     public BidderHome() {
@@ -58,47 +55,11 @@ public class BidderHome extends Fragment {
 
     private void initContent() {
         //Get the buttons by the id
-        btnOffer = (Button) view.findViewById(R.id.btnOffer);
-        btnOfferDetail = (Button) view.findViewById(R.id.btnOfferDetail);
-        btnLO = (Button) view.findViewById(R.id.btnLO);
-
     }
 
     private void setContent() {
         //Set the button function by id
-
-        btnOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToOfferCreation(v);
-            }
-        });
-        btnOfferDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToOfferDetail(v);
-            }
-        });
-        btnLO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout(v);
-            }
-        });
     }
 
     //    here goes the activity methods
-    public void goToOfferCreation(View view) {
-        Intent intent = new Intent(getActivity(), OfferCreationActivity.class);
-        startActivity(intent);
-    }
-
-    public void goToOfferDetail(View view) {
-        Intent intent = new Intent(getActivity(), OfferDetailActivity.class);
-        startActivity(intent);
-    }
-
-    public void logout(View view) {
-        LogoutHelper.logout(getActivity());
-    }
 }

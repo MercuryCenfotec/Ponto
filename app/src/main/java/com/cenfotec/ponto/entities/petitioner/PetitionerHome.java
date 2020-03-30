@@ -17,8 +17,6 @@ import com.cenfotec.ponto.utils.LogoutHelper;
 public class PetitionerHome extends Fragment {
 
     View view;
-    Button btnLO;
-    Button btnCreatePetition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,36 +30,11 @@ public class PetitionerHome extends Fragment {
 
     private void initContent() {
         //Get the buttons by the id
-        btnLO = (Button) view.findViewById(R.id.btnLO);
-        btnCreatePetition = (Button) view.findViewById(R.id.btnCreatePetition);
         setContent();
 
     }
 
     private void setContent() {
         //Set the button function by id
-        view.findViewById(R.id.btnLO).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //you can call the button method here
-                logout(v);
-            }
-        });
-
-        btnCreatePetition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToServicePetition(v);
-            }
-        });
-    }
-
-    public void goToServicePetition(View view){
-        Intent intent = new Intent(getActivity(), ServicePetitionCreationActivity.class);
-        startActivity(intent);
-    }
-
-    public void logout(View view) {
-        LogoutHelper.logout(getActivity());
     }
 }
