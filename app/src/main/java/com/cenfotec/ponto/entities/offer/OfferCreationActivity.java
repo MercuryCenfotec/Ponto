@@ -66,7 +66,7 @@ public class OfferCreationActivity extends AppCompatActivity {
             String key = offerDBReference.push().getKey();
 
             offer.setId(key);
-            offer.setAccepted(false);
+            offer.setAccepted("pending");
             offer.setCounterOffer(false);
             offer.setCounterOfferCost(0f);
             offer.setBidderName(myPrefs.getString("userName","none"));

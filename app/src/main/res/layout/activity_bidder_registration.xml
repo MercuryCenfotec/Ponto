@@ -155,23 +155,32 @@
 
         </RelativeLayout>
 
+
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/biographyEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="97dp"
             android:layout_gravity="center"
             android:layout_marginLeft="41dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="41dp"
             android:background="@drawable/rect"
+            android:gravity="top|left"
             android:hint="Biografía"
-            android:inputType="text"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:minLines="1"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
+            android:paddingRight="20dp"
             android:paddingBottom="14dp"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff"
-            android:textSize="13.5sp" />
+            android:textSize="13.5sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
             android:id="@+id/btnBidderRegistration"

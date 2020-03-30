@@ -192,17 +192,20 @@
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
             android:id="@+id/bidderBiographyProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="324dp"
-            android:layout_marginEnd="176dp"
-            android:layout_marginRight="176dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
             android:text="Biografía"
             android:textColor="#a9a9b0"
             android:textSize="14.3sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/bidderTopCardContentEnd" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

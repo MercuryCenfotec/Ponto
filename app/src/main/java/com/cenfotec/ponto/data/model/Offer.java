@@ -13,7 +13,7 @@ public class Offer {
     private Float counterOfferCost;
     private List<Task> taskList;
     private PaymentMethod paymentMethod;
-    private boolean accepted;
+    private String accepted;
     private String servicePetitionId;
     private String servicePetitionTitle;
     private String bidderName;
@@ -102,11 +102,11 @@ public class Offer {
         this.paymentMethod = paymentMethod;
     }
 
-    public boolean isAccepted() {
+    public String getAccepted() {
         return accepted;
     }
 
-    public void setAccepted(boolean accepted) {
+    public void setAccepted(String accepted) {
         this.accepted = accepted;
     }
 

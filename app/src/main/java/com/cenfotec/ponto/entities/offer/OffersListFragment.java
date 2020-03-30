@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
+import com.google.android.gms.common.data.DataBufferSafeParcelable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,30 +44,59 @@ public class OffersListFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_offers_list, container, false);
-        SharedPreferences myPrefs = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        Query offersQuery;
+        final SharedPreferences myPrefs = getActivity().getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        Query servicePetitionQuery = FirebaseDatabase.getInstance().getReference("ServicePetitions").orderByChild("id").equalTo(myPrefs.getString("servicePetitionId", "none"));
+        final Query[] offersQuery = new Query[1];
         recyclerview = (view).findViewById(R.id.recycler5);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         recyclerview.setLayoutManager(layoutManager);
         recyclerview.setItemAnimator(new DefaultItemAnimator());
-
         final DatabaseReference offerDBReference = FirebaseDatabase.getInstance().getReference("Offers");
         offerList = new ArrayList<>();
         offerCard_adapter = new OfferCard_Adapter(getActivity(), offerList);
 
         if (myPrefs.getString("userType", "none").equals("bidder")) {
-            offersQuery = offerDBReference.orderByChild("userId").equalTo(myPrefs.getString("userId", "none"));
+            // Bidder
+            offersQuery[0] = offerDBReference.orderByChild("userId").equalTo(myPrefs.getString("userId", "none"));
+            loadOffers(offersQuery[0]);
         } else {
-            offersQuery = offerDBReference.orderByChild("servicePetitionId").equalTo(myPrefs.getString("servicePetitionId", "none"));
+            // Petitioner
+            servicePetitionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot petitionSnapshot : dataSnapshot.getChildren()) {
+                        String acceptedOfferId = petitionSnapshot.child("acceptedOfferId").getValue().toString();
+                        if (acceptedOfferId.equals("")) {
+                            offersQuery[0] = offerDBReference.orderByChild("servicePetitionId").equalTo(myPrefs.getString("servicePetitionId", "none"));
+                            loadOffers(offersQuery[0]);
+                        } else {
+                            offersQuery[0] = offerDBReference.orderByChild("id").equalTo(acceptedOfferId);
+                            loadOffers(offersQuery[0]);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
         }
 
+        offerCard_adapter = new OfferCard_Adapter(getActivity(), offerList);
+        recyclerview.setAdapter(offerCard_adapter);
 
+        return view;
+    }
 
-        offersQuery.addValueEventListener(new ValueEventListener() {
+    private void loadOffers (Query query) {
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                offerList.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    offerList.add(data.getValue(Offer.class));
+                    if (!data.child("accepted").getValue().toString().equals("cancelled"))
+                        offerList.add(data.getValue(Offer.class));
                 }
                 offerCard_adapter.notifyDataSetChanged();
             }
@@ -76,10 +106,5 @@ public class OffersListFragment extends Fragment {
                 System.out.println("The offers read failed: " + databaseError.getCode());
             }
         });
-
-        offerCard_adapter = new OfferCard_Adapter(getActivity(), offerList);
-        recyclerview.setAdapter(offerCard_adapter);
-
-        return view;
     }
 }

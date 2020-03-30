@@ -20,8 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_left_arrow"
-            app:srcCompat="@drawable/ic_left_arrow" />
+            android:src="@drawable/ic_left_arrow" />
 
     </LinearLayout>
 
@@ -210,20 +209,21 @@
                 android:orientation="horizontal">
 
                 <customfonts.MyTextView_SF_Pro_Display_Semibold
-                    android:id="@+id/btnOfferCreation"
+                    android:id="@+id/acceptOfferButton"
                     android:layout_width="100dp"
                     android:layout_height="33dp"
+                    android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:layout_marginRight="20dp"
+                    android:onClick="acceptOffer"
+                    android:layout_weight="1"
                     android:background="@drawable/rect_blue"
-                    android:gravity="center"
                     android:paddingTop="7dp"
                     android:paddingBottom="8dp"
-                    android:text="Contraofertar"
-                    android:layout_gravity="center"
+                    android:text="Aceptar oferta"
                     android:textColor="#ffffff"
-                    android:textSize="12sp"
-                    android:onClick="openCounterOfferDialog" />
+                    android:textSize="12sp" />
+
 
             </LinearLayout>
 
@@ -231,4 +231,25 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <customfonts.MyTextView_SF_Pro_Display_Semibold
+        android:id="@+id/btnOfferCreation"
+        android:layout_width="100dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="124dp"
+        android:layout_marginLeft="124dp"
+        android:background="@drawable/rect_blue"
+        android:gravity="center"
+        android:onClick="openCounterOfferDialog"
+        android:paddingTop="7dp"
+        android:paddingBottom="8dp"
+        android:text="Contraofertar"
+        android:visibility="gone"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/costValue"
+        app:layout_constraintStart_toEndOf="@+id/costTitle"
+        app:layout_constraintTop_toTopOf="@+id/costTitle"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
