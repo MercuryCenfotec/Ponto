@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                                 startActivity(intent);
+                                finish();
                             } else {
                                 showToaster("Datos incorrectos");
                             }

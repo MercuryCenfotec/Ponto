@@ -27,10 +27,12 @@ public class UserHomeActivity extends AppCompatActivity {
             case "bidder":
                 intent = new Intent(this, BidderHomeActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             case "petitioner":
                 intent = new Intent(this, PetitionerHomeActivity.class);
                 startActivity(intent);
+                finish();
                 break;
             default:
                 break;
