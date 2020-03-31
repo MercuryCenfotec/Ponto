@@ -80,8 +80,18 @@ public class ServicePetitionsList extends Fragment {
         getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                servicePetitionArrayList.clear();
                 for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
-                    servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
+                    ServicePetition servicePetition = servicePetitionSnapshot.getValue(ServicePetition.class);
+                    if(isPetitioner){
+                        servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
+                    }else {
+                        if (servicePetition.getAcceptedOfferId() != null) {
+                            if (servicePetition.getAcceptedOfferId().equals("")) {
+                                servicePetitionArrayList.add(servicePetition);
+                            }
+                        }
+                    }
                 }
 //                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
                 chargeTypes();
