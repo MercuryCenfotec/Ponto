@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.cenfotec.ponto.R;
 
 import adapter.ServicePetitionCard_Adapter;
+import customfonts.EditText__SF_Pro_Display_Regular;
+import customfonts.MyTextView_SF_Pro_Display_Semibold;
 
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.ServiceType;
@@ -39,12 +43,17 @@ public class ServicePetitionsList extends Fragment {
 
     public static final String MY_PREFERENCES = "MyPrefs";
     private String userId;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
     private ServicePetitionCard_Adapter servicePetitionCard_adapter;
     private RecyclerView recyclerview;
     private Boolean isPetitioner = false;
     private List<ServicePetition> servicePetitionArrayList;
     private Map<String, ServiceType> serviceTypesList;
+    private EditText__SF_Pro_Display_Regular searchInput;
+    private Boolean isSearching = false;
+    private String searchValue;
+    private MyTextView_SF_Pro_Display_Semibold searchResults;
+    private View view;
 
     public ServicePetitionsList(boolean isPetitioner) {
         this.isPetitioner = isPetitioner;
@@ -56,17 +65,16 @@ public class ServicePetitionsList extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_service_petitions_list, container, false);
+        view = inflater.inflate(R.layout.fragment_service_petitions_list, container, false);
+        initContent();
+        setContent();
+        chargeServicePetitions();
 
+        return view;
 
-        recyclerview = (view).findViewById(R.id.recycler5);
-        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-        recyclerview.setLayoutManager(layoutManager);
-        recyclerview.setItemAnimator(new DefaultItemAnimator());
+    }
 
-        sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-        userId = sharedPreferences.getString("userId", "");
-
+    private void chargeServicePetitions() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query getServicePetitionsQuery;
         if(isPetitioner){
@@ -75,26 +83,38 @@ public class ServicePetitionsList extends Fragment {
         }else{
             getServicePetitionsQuery = databaseReference.child("ServicePetitions");
         }
-        servicePetitionArrayList = new ArrayList<>();
-        serviceTypesList = new HashMap<>();
+
         getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 servicePetitionArrayList.clear();
                 for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
                     ServicePetition servicePetition = servicePetitionSnapshot.getValue(ServicePetition.class);
-                    if(isPetitioner){
-                        servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
-                    }else {
-                        if (servicePetition.getAcceptedOfferId() != null) {
-                            if (servicePetition.getAcceptedOfferId().equals("")) {
-                                servicePetitionArrayList.add(servicePetition);
+                    if((isSearching && servicePetition.getName().toLowerCase().contains(searchValue.toLowerCase()))|| !isSearching) {
+                        if (isPetitioner) {
+                            servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
+                        } else {
+                            if (servicePetition.getAcceptedOfferId() != null) {
+                                if (servicePetition.getAcceptedOfferId().equals("")) {
+                                    servicePetitionArrayList.add(servicePetition);
+                                }
                             }
                         }
                     }
+
+                }
+                if(isSearching){
+                    searchResults.setVisibility(View.VISIBLE);
+                    searchResults.setText((servicePetitionArrayList.size()+" Resultados..."));
+                }else{
+                    searchResults.setVisibility(View.INVISIBLE);
                 }
 //                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
-                chargeTypes();
+                if(serviceTypesList.isEmpty()){
+                    chargeTypes();
+                }else{
+                    servicePetitionCard_adapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -102,17 +122,55 @@ public class ServicePetitionsList extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+    }
 
-
+    private void setContent() {
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(), servicePetitionArrayList, serviceTypesList,isPetitioner);
-        recyclerview.setAdapter(servicePetitionCard_adapter);
 
-        return view;
+        recyclerview.setLayoutManager(layoutManager);
+        recyclerview.setItemAnimator(new DefaultItemAnimator());
+        recyclerview.setAdapter(servicePetitionCard_adapter);
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!s.toString().equals("")&&s.length()>0) {
+                    isSearching = true;
+                    searchValue = s.toString();
+                    chargeServicePetitions();
+                }else{
+                    isSearching = false;
+                    searchValue = s.toString();
+                    chargeServicePetitions();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
+
+    private void initContent() {
+        searchInput = view.findViewById(R.id.searchInput);
+        recyclerview = (view).findViewById(R.id.recycler5);
+        searchResults = view.findViewById(R.id.searchResults);
+        sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        userId = sharedPreferences.getString("userId", "");
+        servicePetitionArrayList = new ArrayList<>();
+        serviceTypesList = new HashMap<>();
 
     }
 
     private void chargeTypes() {
-
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
         Query getServiceTypesQuery = databaseReference.child("ServiceTypes");
         getServiceTypesQuery.addValueEventListener(new ValueEventListener() {
