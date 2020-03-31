@@ -28,14 +28,11 @@ public class TabLayoutAdapter_BidderHome extends FragmentStatePagerAdapter {
         switch (actViewPos) {
             //a case for fragment
             case 0:
-                BidderHome tab1 = new BidderHome();
+                ServicePetitionBidderList tab1 = new ServicePetitionBidderList();
                 return tab1;
-            case 1:
-                ServicePetitionBidderList tab2 = new ServicePetitionBidderList();
-                return tab2;
-            case 2:
-                BidderProfileFragment tab3 = new BidderProfileFragment();
-                return tab3;
+            case 4:
+                BidderProfileFragment tab4 = new BidderProfileFragment();
+                return tab4;
             default:
                 return null;
         }

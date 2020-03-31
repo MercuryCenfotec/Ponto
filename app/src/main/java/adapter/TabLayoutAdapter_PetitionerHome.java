@@ -28,14 +28,11 @@ public class TabLayoutAdapter_PetitionerHome extends FragmentStatePagerAdapter {
         switch (actViewPos) {
             //a case for fragment
             case 0:
-                PetitionerHome tab1 = new PetitionerHome();
+                ServicePetitionPetitionerList tab1 = new ServicePetitionPetitionerList();
                 return tab1;
-            case 1:
-                ServicePetitionPetitionerList tab2 = new ServicePetitionPetitionerList();
-                return tab2;
-            case 2:
-                PetitionerProfileFragment tab3 = new PetitionerProfileFragment();
-                return tab3;
+            case 4:
+                PetitionerProfileFragment tab4 = new PetitionerProfileFragment();
+                return tab4;
             default:
                 return null;
         }

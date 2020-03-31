@@ -81,19 +81,7 @@ public class GeneratedContractActivity extends AppCompatActivity {
         getPetitionerById();
         getBidderByUserId();
         getContractById();
-        //registerContractToDB();
     }
-
-    /*private void registerContractToDB(){
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Contracts");
-        String contractId = databaseReference.push().getKey();
-        Contract contract = new Contract(contractId, petitionerId, "-M2qxRy4WTlHbkuRoWfS", "", "");
-        contract.setName("Contrato #2");
-        contract.setDateCreated("20/3/2020");
-        contract.setServicePetitionId("-M3DsvgWh6XMw3i_yf_J");
-        contract.setOfferId("-M3SkK7pJjDo5T1ebpAJ");
-        databaseReference.child(contractId).setValue(contract);
-    }*/
 
     //Init statements start here
     private void catchIntent() {

@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.offer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,8 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,8 +26,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener {
 
+    private static SharedPreferences sharedpreferences;
     DatabaseReference offerDBReference;
     DatabaseReference bidderDBReference;
     public static final String MY_PREFERENCES = "MyPrefs";
@@ -117,6 +124,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
         final String offerId = myPrefs.getString("offerId", "none");
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offers");
+        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("ServicePetitions");
 
         Query offersQuery = ref.orderByChild("servicePetitionId").equalTo(servicePetitionId);
 
@@ -131,6 +139,8 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                 }
 
                 Toast.makeText(OfferDetailActivity.this, "La oferta fue aceptada", Toast.LENGTH_LONG).show();
+                registerContractToDB();
+
             }
 
             @Override
@@ -139,6 +149,38 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
             }
         });
 
+        ref2.child(servicePetitionId).child("acceptedOfferId").setValue(offerId);
+
+    }
+
+    private void registerContractToDB(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Contracts");
+        String contractId = databaseReference.push().getKey();
+        sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        String petitionerId = sharedpreferences.getString("userId", "");
+        String bidderUserId = activeOffer.getUserId();
+        Contract contract = new Contract(contractId, petitionerId, bidderUserId,
+                "", "");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+        Date now = new Date();
+        String timestamp = sdf.format(now);
+        String timestamp2 = sdf2.format(now);
+        contract.setName("CTR-" + timestamp);
+        contract.setDateCreated(timestamp2);
+        contract.setServicePetitionId(activeOffer.getServicePetitionId());
+        contract.setOfferId(activeOffer.getId());
+        databaseReference.child(contractId).setValue(contract);
+
+
+
+        myPrefs.edit().putString("contractId", contractId).commit();
+        Intent intent = new Intent(this, GeneratedContractActivity.class);
+        intent.putExtra("petitionerId", contract.getPetitionerId());
+        intent.putExtra("bidderUserId", contract.getBidderId());
+        intent.putExtra("contractId", contract.getId());
+        startActivity(intent);
+        finish();
     }
 
     public void createCounterOffer(String newCost) {
