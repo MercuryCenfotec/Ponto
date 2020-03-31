@@ -143,7 +143,7 @@
         android:paddingBottom="11dp"
         android:text="Enviar oferta"
         android:textAllCaps="false"
-        android:textColor="#3b3b3b"
+        android:textColor="#fff"
         android:textSize="12sp"
         android:onClick="createOffer"
         app:layout_constraintBottom_toBottomOf="parent"

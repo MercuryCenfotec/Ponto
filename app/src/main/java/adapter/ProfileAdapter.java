@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
@@ -45,7 +47,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ProfileAdapter.ViewHolder holder, final int position) {
-
         holder.inbox.setImageResource(profileModelArrayList.get(position).getInbox());
         holder.arrow.setImageResource(profileModelArrayList.get(position).getArrow());
         holder.txttrades.setText(profileModelArrayList.get(position).getTxttrades());

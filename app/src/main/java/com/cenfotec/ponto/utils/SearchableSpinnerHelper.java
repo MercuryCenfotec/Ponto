@@ -32,4 +32,15 @@ public class SearchableSpinnerHelper {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, spinnerKeys);
         spinner.setAdapter(adapter);
     }
+
+    public void fillSpinnerAndSelect(List<SpinnerItem> array, String selection) {
+        List<String> spinnerKeys = new ArrayList<>();
+        for (SpinnerItem item : array) {
+            spinnerKeys.add(item.getKey());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, spinnerKeys);
+        spinner.setAdapter(adapter);
+        int spinnerPosition = adapter.getPosition(selection);
+        spinner.setSelection(0);
+    }
 }

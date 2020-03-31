@@ -22,16 +22,19 @@
             androidicon="@drawable/ic_message_square"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:icon="@drawable/ic_message_square" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:icon="@drawable/ic_plus" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
             android:icon="@drawable/ic_tag" />
 
         <com.google.android.material.tabs.TabItem

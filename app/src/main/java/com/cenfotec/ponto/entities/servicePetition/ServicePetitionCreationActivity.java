@@ -133,7 +133,6 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         serviceTypeEditText.setText(spinnerValues.get(position));
-                        Toast.makeText(ServicePetitionCreationActivity.this, serviceTypeEditText.getText().toString(), Toast.LENGTH_LONG).show();
                     }
 
                     @Override
