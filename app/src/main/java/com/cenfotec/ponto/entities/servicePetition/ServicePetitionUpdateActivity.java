@@ -138,6 +138,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 prePetitionUpdate();
+                goToPetitionDetail();
             }
         });
     }
@@ -207,14 +208,14 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{titleEditText, descriptionEditText,
                 serviceTypeEditText};
-        for (int matchKey = 0; matchKey < editTextsList.length; matchKey++) {
-            if (editTextsList[matchKey].getText().toString().equals("")) {
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#c0392b"));
-                editTextsList[matchKey].setBackgroundResource(R.drawable.edittext_error);
+        for (EditText editText : editTextsList) {
+            if (editText.getText().toString().equals("")) {
+                editText.setHintTextColor(Color.parseColor("#c0392b"));
+                editText.setBackgroundResource(R.drawable.edittext_error);
                 isEmpty = true;
             } else {
-                editTextsList[matchKey].setBackgroundResource(R.drawable.rect);
-                editTextsList[matchKey].setHintTextColor(Color.parseColor("#ffffff"));
+                editText.setBackgroundResource(R.drawable.rect_black);
+                editText.setHintTextColor(Color.parseColor("#000000"));
             }
         }
         return isEmpty;
