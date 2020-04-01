@@ -13,25 +13,26 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.cenfotec.ponto.MainActivity;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.SpinnerItem;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.cenfotec.ponto.data.model.ServicePetition;
-import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import customfonts.MyTextView_SF_Pro_Display_Medium;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
@@ -45,15 +46,16 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
     EditText serviceTypeEditText;
     MyTextView_SF_Pro_Display_Medium btnPostPetition;
     DatabaseReference serviceTypesRef;
-    SearchableSpinnerHelper spinnerHelper;
-    SearchableSpinner spinner;
-    List<String> spinnerValues;
+    ArrayList<String> spinnerKeys;
+    ArrayList<String> spinnerValues;
+    SpinnerDialog spinnerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_petition_update);
         initFormControls();
+        initSpinnerData();
         catchIntentContent();
         getServicePetitionByIntentToken();
         Locale spanish = new Locale("es", "ES");
@@ -72,52 +74,29 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
         descriptionEditText = findViewById(R.id.descriptionEditText);
         serviceTypeEditText = findViewById(R.id.serviceTypeEditText);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
-        spinner = findViewById(R.id.serviceTypeSpinner);
-        serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
-        spinnerHelper = new SearchableSpinnerHelper(this, spinner);
     }
 
-    private void loadSpinnerData() {
-        final String[] serviceTypeKey = new String[1];
-        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+    private void initSpinnerData() {
+        serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+        spinnerKeys = new ArrayList<>();
+        spinnerValues = new ArrayList<>();
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Select item");
+
+        for (int i = 0; i < 10; i++) {
+            spinnerKeys.add("Item " + i);
+            spinnerValues.add("Item " + i);
+        }
+
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<SpinnerItem> spinnerItemList = new ArrayList<>();
-                spinnerValues = new ArrayList<>();
-                for (DataSnapshot serviceTypeSnapshot : dataSnapshot.getChildren()) {
-                    if(serviceTypeSnapshot.child("id").getValue().toString().equals(servicePetition.getServiceTypeId())) {
-                        serviceTypeKey[0] = serviceTypeSnapshot.child("serviceType").getValue().toString();
-                    }
-                    spinnerItemList.add(
-                            new SpinnerItem(
-                                    serviceTypeSnapshot.child("serviceType").getValue().toString(),
-                                    serviceTypeSnapshot.child("id").getValue().toString()
-                            ));
-                    spinnerValues.add(serviceTypeSnapshot.child("id").getValue().toString());
-                }
-
-
-                spinnerHelper.fillSpinnerAndSelect(spinnerItemList, serviceTypeKey[0]);
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        serviceTypeEditText.setText(spinnerValues.get(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                    }
-                });
-                ;
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(String item, int position) {
+                showToaster("Selected: " + item);
             }
         });
+    }
+
+    public void showSpinnerDialog(View view) {
+        spinnerDialog.showSpinerDialog();
     }
 
     private void initPetitionUpdateControlsListener() {
@@ -133,7 +112,6 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
         titleEditText.setText(servicePetition.getName());
         descriptionEditText.setText(servicePetition.getDescription());
         serviceTypeEditText.setText(servicePetition.getServiceTypeId());
-        loadSpinnerData();
     }
 
     private void getServicePetitionByIntentToken() {

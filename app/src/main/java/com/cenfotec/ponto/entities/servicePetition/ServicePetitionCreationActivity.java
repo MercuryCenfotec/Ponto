@@ -47,7 +47,6 @@ import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
-import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,7 +59,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,8 +89,6 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     List<Uri> filesToUpload = new ArrayList<>();
     List<String> realFilesToUpload = new ArrayList<>();
     DatabaseReference serviceTypesRef;
-    SearchableSpinnerHelper spinnerHelper;
-    SearchableSpinner spinner;
     List<String> spinnerValues;
 
     @Override
@@ -101,7 +97,6 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_petition_creation);
         initFormControls();
         getUserId();
-        setSpinnerData();
         initServicePetitionCreationControlsListener();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
@@ -111,45 +106,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         activeUserId = sharedPreferences.getString("userId", "");
     }
 
-    private void setSpinnerData() {
-        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<SpinnerItem> spinnerItemList = new ArrayList<>();
-                spinnerValues = new ArrayList<>();
-                for (DataSnapshot serviceTypeSnapshot : dataSnapshot.getChildren()) {
-                    spinnerItemList.add(
-                            new SpinnerItem(
-                                    serviceTypeSnapshot.child("serviceType").getValue().toString(),
-                                    serviceTypeSnapshot.child("id").getValue().toString()
-                            ));
-                    spinnerValues.add(serviceTypeSnapshot.child("id").getValue().toString());
-                }
 
-
-                spinnerHelper.fillSpinner(spinnerItemList);
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        serviceTypeEditText.setText(spinnerValues.get(position));
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                ;
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void initFormControls() {
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -159,9 +116,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         serviceTypeEditText = findViewById(R.id.serviceTypeEditText);
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
-        spinner = findViewById(R.id.serviceTypeSpinner);
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
-        spinnerHelper = new SearchableSpinnerHelper(this, spinner);
     }
 
     private void initServicePetitionCreationControlsListener() {

@@ -53,21 +53,7 @@
             android:paddingBottom="14dp"
             android:textColor="#000000"
             android:textColorHint="#000000"
-            android:textSize="15sp"
-            android:visibility="gone" />
-
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/serviceTypeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect_black"
-            app:hintText="Categoría del servicio"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnOfferDetail" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/descriptionEditText"
