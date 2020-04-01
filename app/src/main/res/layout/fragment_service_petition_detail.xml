@@ -26,16 +26,6 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
@@ -82,7 +72,8 @@
                         android:id="@+id/carrousellViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left">
+                        android:layout_gravity="left"
+                        android:background="@color/common_google_signin_btn_text_light_disabled">
 
                     </androidx.viewpager.widget.ViewPager>
 
@@ -116,6 +107,7 @@
                     android:id="@+id/petitionServiceType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Categoria"
                     android:textColor="#a9a9b0"
                     android:textSize="12sp" />

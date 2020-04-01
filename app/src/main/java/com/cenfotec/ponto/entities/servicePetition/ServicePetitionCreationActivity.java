@@ -47,7 +47,6 @@ import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
-import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,7 +59,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,6 +70,8 @@ import java.util.List;
 import java.util.Locale;
 
 import customfonts.MyTextView_SF_Pro_Display_Medium;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class ServicePetitionCreationActivity extends AppCompatActivity {
 
@@ -91,9 +91,11 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     List<Uri> filesToUpload = new ArrayList<>();
     List<String> realFilesToUpload = new ArrayList<>();
     DatabaseReference serviceTypesRef;
-    SearchableSpinnerHelper spinnerHelper;
-    SearchableSpinner spinner;
-    List<String> spinnerValues;
+    ArrayList<String> spinnerKeys;
+    ArrayList<String> spinnerValues;
+    SpinnerDialog spinnerDialog;
+    String serviceTypeId;
+    ImageView returnIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_petition_creation);
         initFormControls();
         getUserId();
-        setSpinnerData();
+        initSpinnerData();
         initServicePetitionCreationControlsListener();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
@@ -111,48 +113,10 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         activeUserId = sharedPreferences.getString("userId", "");
     }
 
-    private void setSpinnerData() {
-        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                List<SpinnerItem> spinnerItemList = new ArrayList<>();
-                spinnerValues = new ArrayList<>();
-                for (DataSnapshot serviceTypeSnapshot : dataSnapshot.getChildren()) {
-                    spinnerItemList.add(
-                            new SpinnerItem(
-                                    serviceTypeSnapshot.child("serviceType").getValue().toString(),
-                                    serviceTypeSnapshot.child("id").getValue().toString()
-                            ));
-                    spinnerValues.add(serviceTypeSnapshot.child("id").getValue().toString());
-                }
 
-
-                spinnerHelper.fillSpinner(spinnerItemList);
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-                    @Override
-                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        serviceTypeEditText.setText(spinnerValues.get(position));
-                        Toast.makeText(ServicePetitionCreationActivity.this, serviceTypeEditText.getText().toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-                    }
-                });
-                ;
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     private void initFormControls() {
+        returnIcon = findViewById(R.id.returnIcon);
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         titleEditText = findViewById(R.id.petitionTitleEditText);
@@ -160,9 +124,50 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         serviceTypeEditText = findViewById(R.id.serviceTypeEditText);
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
-        spinner = findViewById(R.id.serviceTypeSpinner);
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
-        spinnerHelper = new SearchableSpinnerHelper(this, spinner);
+
+        returnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHomePetitioner();
+            }
+        });
+    }
+
+    private void initSpinnerData() {
+        serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+        spinnerKeys = new ArrayList<>();
+        spinnerValues = new ArrayList<>();
+
+        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot serviceType : dataSnapshot.getChildren()) {
+                    spinnerValues.add(serviceType.child("id").getValue().toString());
+                    spinnerKeys.add(serviceType.child("serviceType").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
+
+
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+            @Override
+            public void onClick(String item, int position) {
+                serviceTypeEditText.setText(item);
+                serviceTypeId = spinnerValues.get(position);
+            }
+        });
+    }
+
+    public void showSpinnerDialog(View view) {
+        spinnerDialog.showSpinerDialog();
     }
 
     private void initServicePetitionCreationControlsListener() {
@@ -383,7 +388,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 activeUserId,
                 titleEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
-                serviceTypeEditText.getText().toString(),
+                serviceTypeId,
                 false
         );
         servicePetition.setFiles(realFilesToUpload);
@@ -429,4 +434,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         return isEmpty;
     }
 
+    private void goToHomePetitioner() {
+        Intent intent = new Intent(this, PetitionerHomeActivity.class);
+        startActivity(intent);
+    }
 }

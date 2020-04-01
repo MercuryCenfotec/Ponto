@@ -21,14 +21,12 @@ import com.cenfotec.ponto.data.model.SpinnerItem;
 import com.cenfotec.ponto.entities.offer.OfferCreationActivity;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
-import com.cenfotec.ponto.utils.SearchableSpinnerHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

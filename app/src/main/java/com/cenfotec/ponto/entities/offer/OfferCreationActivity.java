@@ -100,4 +100,8 @@ public class OfferCreationActivity extends AppCompatActivity {
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
+    public void finishActivity(View view) {
+        finish();
+    }
 }

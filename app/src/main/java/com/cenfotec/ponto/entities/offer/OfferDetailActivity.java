@@ -17,7 +17,9 @@ import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
+import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,6 +51,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     String offerId;
     Offer activeOffer;
     TextView counterOfferButton;
+    TextView acceptOfferButton;
 
     // Counter offer
     View divisorLineOfferDetail;
@@ -78,6 +81,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         createOfferButton = findViewById(R.id.createOfferButton);
         viewTitle = findViewById(R.id.viewTitle);
         counterOfferButton = findViewById(R.id.btnOfferCreation);
+        acceptOfferButton = findViewById(R.id.acceptOfferButton);
 
         // Counter offer
         divisorLineOfferDetail = findViewById(R.id.divisorLineOfferDetail);
@@ -140,13 +144,19 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                     // Counter offer end
 
                     if (!data.child("userId").getValue().toString().equals(userId)) {
+                        // Petitioner
+                        if (!data.child("accepted").getValue().toString().equals("accepted")) {
+                            counterOfferButton.setVisibility(View.VISIBLE);
+                            acceptOfferButton.setVisibility(View.VISIBLE);
+                        }
                         bidderDetail.setVisibility(View.VISIBLE);
-                        counterOfferButton.setVisibility(View.VISIBLE);
                         createOfferButton.setVisibility(View.GONE);
                         userName.setText(data.child("bidderName").getValue().toString());
                         if (!data.child("bidderImageUrl").getValue().toString().equals("")) {
                             Picasso.get().load(data.child("bidderImageUrl").getValue().toString()).into(userImage);
                         }
+                    } else if (data.child("accepted").getValue().toString().equals("accepted")) {
+                        createOfferButton.setVisibility(View.GONE);
                     }
                 }
             }
@@ -261,5 +271,14 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     public void acceptCounterOffer(View view) {
         offerDBReference.child(activeOffer.getId()).child("cost").setValue(activeOffer.getCounterOfferCost());
         Toast.makeText(this, "Se aceptó la contraoferta", Toast.LENGTH_LONG).show();
+
+    public void goToHome(View view) {
+        if (myPrefs.getString("userType","none").equals("bidder")) {
+            Intent intent = new Intent(this, BidderHomeActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, PetitionerHomeActivity.class);
+            startActivity(intent);
+        }
     }
 }

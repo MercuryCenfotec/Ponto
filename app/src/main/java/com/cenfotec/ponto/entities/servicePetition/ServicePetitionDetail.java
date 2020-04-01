@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.servicePetition;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import adapter.Carousel_Adapter;
 import customfonts.MyTextView_SF_Pro_Display_Bold;
 import customfonts.MyTextView_SF_Pro_Display_Semibold;
@@ -45,6 +49,7 @@ public class ServicePetitionDetail extends Fragment {
     MyTextView_SF_Pro_Display_Semibold btnPetitionUpdate;
     ServicePetition servicePetition;
     ServiceType serviceType;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class ServicePetitionDetail extends Fragment {
         chargePetition();
         return view;
     }
+
     private void getPetitionId() {
         sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
         petitionId = sharedPreferences.getString("servicePetitionId", "");
@@ -95,14 +101,13 @@ public class ServicePetitionDetail extends Fragment {
     private void initContent() {
         carrousellViewPager = view.findViewById(R.id.carrousellViewPager);
         circleIndicator = view.findViewById(R.id.circleIndicator);
-        petitionServiceType =  view.findViewById(R.id.petitionServiceType);
-        petitionName =  view.findViewById(R.id.petitionName);
-        petitionDescription =  view.findViewById(R.id.petitionDescription);
-        btnPetitionUpdate =  view.findViewById(R.id.btnPetitionUpdate);
+        petitionServiceType = view.findViewById(R.id.petitionServiceType);
+        petitionName = view.findViewById(R.id.petitionName);
+        petitionDescription = view.findViewById(R.id.petitionDescription);
+        btnPetitionUpdate = view.findViewById(R.id.btnPetitionUpdate);
     }
 
     private void setContent() {
-
         setCarousel();
         petitionName.setText(servicePetition.getName());
         petitionServiceType.setText(serviceType.getServiceType());
@@ -115,17 +120,23 @@ public class ServicePetitionDetail extends Fragment {
         });
     }
 
-    private void setCarousel(){
-        if(!(servicePetition.getFiles() == null)) {
-            if(!servicePetition.getFiles().isEmpty()) {
-                carousel_adapter = new Carousel_Adapter(getChildFragmentManager(), servicePetition.getFiles());
-                carrousellViewPager.setAdapter(carousel_adapter);
-                circleIndicator.setViewPager(carrousellViewPager);
-            }
+    private void setCarousel() {
+        List<String> images = new ArrayList<>();
+        if (!(servicePetition.getFiles() == null)) {
+            carousel_adapter = new Carousel_Adapter(getChildFragmentManager(), servicePetition.getFiles());
+            carrousellViewPager.setAdapter(carousel_adapter);
+            circleIndicator.setViewPager(carrousellViewPager);
+        } else {
+            images.add(serviceType.getImgUrl());
+            carousel_adapter = new Carousel_Adapter(getChildFragmentManager(), images);
+            carrousellViewPager.setAdapter(carousel_adapter);
+            carrousellViewPager.setBackgroundColor(Color.parseColor(serviceType.getColor()));
+            circleIndicator.setVisibility(View.GONE);
         }
+        circleIndicator.setViewPager(carrousellViewPager);
     }
 
-    public void goToPetitionUpdate(){
+    public void goToPetitionUpdate() {
         Intent intent = new Intent(getActivity(), ServicePetitionUpdateActivity.class);
         startActivity(intent);
     }

@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".entities.offer.OfferUpdateActivity">
 
+    <ImageView
+        android:id="@+id/returnIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:onClick="finishActivity"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <customfonts.EditText__SF_Pro_Display_Medium
         android:id="@+id/costEditText"
         android:layout_width="0dp"
@@ -143,7 +156,7 @@
         android:paddingBottom="11dp"
         android:text="Confirmar"
         android:textAllCaps="false"
-        android:textColor="#3b3b3b"
+        android:textColor="#fff"
         android:textSize="12sp"
         android:onClick="updateOffer"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -156,10 +169,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
+        android:text="Modificar oferta de proyecto"
         android:textColor="#000"
         android:textSize="20sp"
-        android:text="Modificar oferta de proyecto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

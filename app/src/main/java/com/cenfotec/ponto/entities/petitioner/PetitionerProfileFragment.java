@@ -17,12 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import adapter.ProfileAdapter;
+import customfonts.MyTextView_SF_Pro_Display_Medium;
 import model.ProfileModel;
 
 /**
@@ -39,17 +42,19 @@ public class PetitionerProfileFragment extends Fragment {
 
     private static SharedPreferences sharedpreferences;
     private String activeUserId;
-    TextView profilePetitionerFullName;
+    private TextView profilePetitionerFullName;
     //    TextView profilePetitionerBirthDate;
-    TextView profilePetitionerEmail;
+    private TextView profilePetitionerEmail;
     //    TextView profilePetitionerIdentification;
-    TextView profilePetitionerRating;
-    ImageView profilePetitionerImage;
-    User user;
+    private TextView profilePetitionerRating;
+    private ImageView profilePetitionerImage;
+    private User user;
+    private Integer servicePetitionsNumber = 0;
 
     private ProfileAdapter profileAdapter;
     private RecyclerView recyclerview;
     private ArrayList<ProfileModel> profileModelArrayList;
+    private MyTextView_SF_Pro_Display_Medium servicePetitionNumber;
 
     Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star, R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
@@ -71,7 +76,28 @@ public class PetitionerProfileFragment extends Fragment {
         initProfileControls();
         getPetitionerByActiveUserId();
         showRecyclerViewOptions();
+        getServicePetitionsNumber();
         return view;
+    }
+
+    private void getServicePetitionsNumber() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+        Query getServicePetitionsQuery = databaseReference.orderByChild("petitionerId").equalTo(activeUserId);
+
+        getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
+                            servicePetitionsNumber++;
+                }
+                servicePetitionNumber.setText(""+servicePetitionsNumber);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
     private void showRecyclerViewOptions() {
@@ -97,6 +123,7 @@ public class PetitionerProfileFragment extends Fragment {
         profilePetitionerEmail = view.findViewById(R.id.petitionerMailProfile);
 //        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
         profilePetitionerRating = view.findViewById(R.id.petitionerRatingProfile);
+        servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
         profilePetitionerImage = view.findViewById(R.id.profile_image);
         user = new User();
     }
