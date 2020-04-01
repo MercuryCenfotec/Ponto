@@ -27,6 +27,7 @@ public class BidderHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bidder_home);
         bindContent();
         initContent();
+        catchIntent();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
     }
@@ -34,6 +35,13 @@ public class BidderHomeActivity extends AppCompatActivity {
     private void bindContent() {
         viewPager = findViewById(R.id.homeView);
         tabLayout = findViewById(R.id.bidderHomeNavbar);
+    }
+
+    private void catchIntent(){
+        if (getIntent().getExtras() != null) {
+            TabLayout.Tab tab = tabLayout.getTabAt(4);
+            tab.select();
+        }
     }
 
     private void initContent() {
@@ -59,7 +67,5 @@ public class BidderHomeActivity extends AppCompatActivity {
         adapter.setActViewPos(position);
         viewPager.setAdapter(adapter);
     }
-
-
 
 }

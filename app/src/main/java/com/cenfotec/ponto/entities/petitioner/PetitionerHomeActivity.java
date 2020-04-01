@@ -27,6 +27,7 @@ public class PetitionerHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_petitioner_home);
         bindContent();
         initContent();
+        catchIntent();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
     }
@@ -34,6 +35,13 @@ public class PetitionerHomeActivity extends AppCompatActivity {
     private void bindContent() {
         viewPager = findViewById(R.id.homeView);
         tabLayout = findViewById(R.id.petitionerHomeNavbar);
+    }
+
+    private void catchIntent(){
+        if (getIntent().getExtras() != null) {
+            TabLayout.Tab tab = tabLayout.getTabAt(4);
+            tab.select();
+        }
     }
 
     private void initContent() {

@@ -49,7 +49,7 @@
             android:layout_marginRight="41dp"
             android:background="@drawable/rect"
             android:hint="Número de cédula"
-            android:inputType="number"
+            android:inputType="text"
             android:paddingLeft="20dp"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"

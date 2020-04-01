@@ -343,6 +343,9 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
 
     private void openPetitionerProfile(String id) {
         finish();
+        Intent intent = new Intent(this, PetitionerHomeActivity.class);
+        intent.putExtra("forceProfileAction", 4);
+        startActivity(intent);
     }
 
     //Validation statements start here

@@ -70,8 +70,6 @@ import java.util.List;
 import java.util.Locale;
 
 import customfonts.MyTextView_SF_Pro_Display_Medium;
-import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
-import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class ServicePetitionCreationActivity extends AppCompatActivity {
 
@@ -95,6 +93,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     ArrayList<String> spinnerValues;
     SpinnerDialog spinnerDialog;
     String serviceTypeId;
+    ImageView returnIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +114,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
 
     private void initFormControls() {
+        returnIcon = findViewById(R.id.returnIcon);
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         titleEditText = findViewById(R.id.petitionTitleEditText);
@@ -123,6 +123,13 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+
+        returnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHomePetitioner();
+            }
+        });
     }
 
     private void initSpinnerData() {
@@ -425,4 +432,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         return isEmpty;
     }
 
+    private void goToHomePetitioner() {
+        Intent intent = new Intent(this, PetitionerHomeActivity.class);
+        startActivity(intent);
+    }
 }

@@ -20,9 +20,16 @@ public class CarouselImage extends Fragment {
     View view;
     ImageView detailImage;
     String imageUrl;
+    Boolean isDefault = false;
 
     public CarouselImage(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public CarouselImage(String imageUrl, boolean isDefault) {
+        this.imageUrl = imageUrl;
+        this.isDefault = isDefault;
+
     }
 
     @Override
@@ -33,9 +40,10 @@ public class CarouselImage extends Fragment {
         detailImage = view.findViewById(R.id.detailImage);
         detailImage.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         Picasso.get().load(imageUrl).into(detailImage);
-
-//        LightingColorFilter filter = new LightingColorFilter(Color.BLACK, Color.WHITE);
-//        detailImage.setColorFilter(filter);
+        if(isDefault) {
+            LightingColorFilter filter = new LightingColorFilter(Color.BLACK, Color.WHITE);
+            detailImage.setColorFilter(filter);
+        }
         return view;
     }
 }

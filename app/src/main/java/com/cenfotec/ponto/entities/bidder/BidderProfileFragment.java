@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
+import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import adapter.ProfileAdapter;
+import customfonts.MyTextView_SF_Pro_Display_Medium;
 import model.ProfileModel;
 
 /**
@@ -61,6 +63,8 @@ public class BidderProfileFragment extends Fragment {
     Bidder bidder;
     CustomDatePickerDialog customDatePickerDialog;
     View view;
+    MyTextView_SF_Pro_Display_Medium  offersNumberView;
+    Integer offersNumber = 0;
 
     public BidderProfileFragment() {
         // Required empty public constructor
@@ -76,10 +80,32 @@ public class BidderProfileFragment extends Fragment {
         getActiveUserId();
         getUserByActiveUserId();
         showRecyclerViewOptions();
+        getOffersNumber();
         return view;
     }
 
+    private void getOffersNumber() {
+        final DatabaseReference offerDBReference = FirebaseDatabase.getInstance().getReference("Offers");
+        Query query = offerDBReference.orderByChild("userId").equalTo(activeUserId);
+
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    offersNumber++;
+                }
+                offersNumberView.setText(""+offersNumber);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The offers read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
     private void initProfileControls() {
+        offersNumberView=view.findViewById(R.id.offersNumberView);
         profileFullName = view.findViewById(R.id.bidderFullNameProfile);
         profileEmail = view.findViewById(R.id.bidderMailProfile);
         profileRating = view.findViewById(R.id.bidderRatingProfile);

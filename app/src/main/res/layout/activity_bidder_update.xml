@@ -7,14 +7,15 @@
     tools:context=".entities.bidder.BidderUpdateActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/ic_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_left_arrow"
         android:onClick="goBack"/>
 
     <de.hdodenhof.circleimageview.CircleImageView

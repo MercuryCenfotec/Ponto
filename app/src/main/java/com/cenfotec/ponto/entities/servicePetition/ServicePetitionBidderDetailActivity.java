@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,6 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import adapter.Carousel_Adapter;
 import customfonts.MyTextView_SF_Pro_Display_Bold;
@@ -66,6 +70,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
         petitionId = sharedPreferences.getString("servicePetitionId", "");
     }
+
     private void chargePetition() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         ref.child(petitionId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -118,10 +123,10 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         returnIcon = findViewById(R.id.returnIcon);
         carrousellViewPager = findViewById(R.id.carrousellViewPager);
         circleIndicator = findViewById(R.id.circleIndicator);
-        petitionServiceType =  findViewById(R.id.petitionServiceType);
-        petitionName =  findViewById(R.id.petitionName);
-        petitionDescription =  findViewById(R.id.petitionDescription);
-        btnOfferCreation =  findViewById(R.id.btnOfferCreation);
+        petitionServiceType = findViewById(R.id.petitionServiceType);
+        petitionName = findViewById(R.id.petitionName);
+        petitionDescription = findViewById(R.id.petitionDescription);
+        btnOfferCreation = findViewById(R.id.btnOfferCreation);
         petitionUserImage = findViewById(R.id.petitionUserImage);
         petitionUserName = findViewById(R.id.petitionUserName);
     }
@@ -138,7 +143,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         petitionName.setText(servicePetition.getName());
         petitionServiceType.setText(serviceType.getServiceType());
         petitionDescription.setText(servicePetition.getDescription());
-        if(!petitionUser.getProfileImageUrl().equals("")){
+        if (!petitionUser.getProfileImageUrl().equals("")) {
             Picasso.get().load(petitionUser.getProfileImageUrl()).into(petitionUserImage);
         }
         petitionUserName.setText(petitionUser.getFullName());
@@ -169,21 +174,27 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void setCarousel(){
-        if(!(servicePetition.getFiles() == null)) {
-            if(!servicePetition.getFiles().isEmpty()) {
-                    carousel_adapter = new Carousel_Adapter(getSupportFragmentManager(), servicePetition.getFiles());
-                    carrousellViewPager.setAdapter(carousel_adapter);
-                    circleIndicator.setViewPager(carrousellViewPager);
-            }
+    private void setCarousel() {
+        List<String> images = new ArrayList<>();
+        if (!(servicePetition.getFiles() == null)) {
+            carousel_adapter = new Carousel_Adapter(getSupportFragmentManager(), servicePetition.getFiles());
+        } else {
+            images.add(serviceType.getImgUrl());
+            carousel_adapter = new Carousel_Adapter(getSupportFragmentManager(), images);
+            carrousellViewPager.setBackgroundColor(Color.parseColor(serviceType.getColor()));
+            circleIndicator.setVisibility(View.GONE);
         }
+        carrousellViewPager.setAdapter(carousel_adapter);
+        circleIndicator.setViewPager(carrousellViewPager);
+
     }
+
     private void goToHomeBidder() {
         Intent intent = new Intent(this, BidderHomeActivity.class);
         startActivity(intent);
     }
 
-    public void goToOfferCreation(){
+    public void goToOfferCreation() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("servicePetitionTitle", servicePetition.getName());
         editor.commit();

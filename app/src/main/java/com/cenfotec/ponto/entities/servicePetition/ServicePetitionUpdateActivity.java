@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.MainActivity;
@@ -49,6 +50,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
     ArrayList<String> spinnerKeys;
     ArrayList<String> spinnerValues;
     SpinnerDialog spinnerDialog;
+    ImageView returnIcon;
     String serviceTypeId;
 
     @Override
@@ -68,12 +70,27 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
 
     private void initFormControls() {
+        returnIcon = findViewById(R.id.returnIcon);
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         titleEditText = findViewById(R.id.petitionTitleEditText);
         descriptionEditText = findViewById(R.id.descriptionEditText);
         serviceTypeEditText = findViewById(R.id.serviceTypeEditText);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
+
+
+        returnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPetitionDetail();
+            }
+        });
+    }
+
+    private void goToPetitionDetail() {
+
+        Intent intent = new Intent(this, ServicePetitionPetitionerDetailActivity.class);
+        startActivity(intent);
     }
 
     private void initSpinnerData() {
