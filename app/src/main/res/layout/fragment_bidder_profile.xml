@@ -157,6 +157,7 @@
                     android:paddingBottom="13dp">
 
                     <customfonts.MyTextView_SF_Pro_Display_Medium
+                        android:id="@+id/offersNumberView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -168,7 +169,7 @@
                     <customfonts.TextViewSFProDisplayRegular
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Solicitudes"
+                        android:text="Ofertas"
                         android:textColor="#a9a9b0"
                         android:textSize="12sp" />
                 </LinearLayout>
