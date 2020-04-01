@@ -21,7 +21,7 @@
             android:paddingTop="7dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
-            android:text="Crear Solicitud"
+            android:text="Crear solicitud"
             android:textColor="#ffffff"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/viewpager1"

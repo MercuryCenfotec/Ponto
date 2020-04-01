@@ -171,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:text="Solicitudes"
                         android:textColor="#a9a9b0"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
                 </LinearLayout>
 
             </LinearLayout>
