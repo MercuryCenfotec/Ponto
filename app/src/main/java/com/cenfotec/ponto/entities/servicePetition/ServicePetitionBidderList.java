@@ -41,8 +41,8 @@ public class ServicePetitionBidderList extends Fragment {
 
     private void setContent() {
         //Set the elements function by id
-        tabLayout1.addTab(tabLayout1.newTab().setText("Peticiones"));
-        tabLayout1.addTab(tabLayout1.newTab().setText("Mis ofertas"));
+        tabLayout1.addTab(tabLayout1.newTab().setText("PETICIONES"));
+        tabLayout1.addTab(tabLayout1.newTab().setText("MIS OFERTAS"));
         TabLayoutAdapter_BidderList adapter = new TabLayoutAdapter_BidderList(getChildFragmentManager(), tabLayout1.getTabCount());
         viewPager1.setAdapter(adapter);
         viewPager1.setOffscreenPageLimit(1);
