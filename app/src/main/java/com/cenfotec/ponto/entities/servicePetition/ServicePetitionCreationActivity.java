@@ -90,6 +90,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     List<String> realFilesToUpload = new ArrayList<>();
     DatabaseReference serviceTypesRef;
     List<String> spinnerValues;
+    ImageView returnIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
 
 
     private void initFormControls() {
+        returnIcon = findViewById(R.id.returnIcon);
         sharedPreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
         titleEditText = findViewById(R.id.petitionTitleEditText);
@@ -117,6 +119,13 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+
+        returnIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToHomePetitioner();
+            }
+        });
     }
 
     private void initServicePetitionCreationControlsListener() {
@@ -383,4 +392,8 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         return isEmpty;
     }
 
+    private void goToHomePetitioner() {
+        Intent intent = new Intent(this, PetitionerHomeActivity.class);
+        startActivity(intent);
+    }
 }
