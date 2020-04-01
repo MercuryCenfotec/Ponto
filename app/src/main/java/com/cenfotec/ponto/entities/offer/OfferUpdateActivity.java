@@ -71,7 +71,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
                     offer.setDescription(data.child("description").getValue().toString());
                     offer.setDuration(Float.parseFloat(data.child("duration").getValue().toString()));
                     offer.setServicePetitionId(data.child("servicePetitionId").getValue().toString());
-                    offer.setUserId(data.child("bidderId").getValue().toString());
+                    offer.setUserId(data.child("userId").getValue().toString());
                     offer.setDurationType(data.child("durationType").getValue().toString());
                     offer.setBidderName(data.child("bidderName").getValue().toString());
                     // Terminar de llenar los nuevos campos
@@ -128,5 +128,9 @@ public class OfferUpdateActivity extends AppCompatActivity {
         showToaster("Oferta modificada exitosamente");
         Intent intent = new Intent(this, OfferDetailActivity.class);
         startActivity(intent);
+    }
+
+    public void finishActivity(View view) {
+        finish();
     }
 }

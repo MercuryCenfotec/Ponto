@@ -49,13 +49,13 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
     ArrayList<String> spinnerKeys;
     ArrayList<String> spinnerValues;
     SpinnerDialog spinnerDialog;
+    String serviceTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_petition_update);
         initFormControls();
-        initSpinnerData();
         catchIntentContent();
         getServicePetitionByIntentToken();
         Locale spanish = new Locale("es", "ES");
@@ -80,17 +80,34 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
         spinnerKeys = new ArrayList<>();
         spinnerValues = new ArrayList<>();
-        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Select item");
 
-        for (int i = 0; i < 10; i++) {
-            spinnerKeys.add("Item " + i);
-            spinnerValues.add("Item " + i);
-        }
+        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot serviceType : dataSnapshot.getChildren()) {
+                    spinnerValues.add(serviceType.child("id").getValue().toString());
+                    spinnerKeys.add(serviceType.child("serviceType").getValue().toString());
+
+                    if(serviceType.child("id").getValue().toString().equals(servicePetition.getServiceTypeId())) {
+                        serviceTypeEditText.setText(serviceType.child("serviceType").getValue().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
+
 
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
             public void onClick(String item, int position) {
-                showToaster("Selected: " + item);
+                serviceTypeEditText.setText(item);
+                serviceTypeId = spinnerValues.get(position);
             }
         });
     }
@@ -111,7 +128,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
     private void showFormInformation() {
         titleEditText.setText(servicePetition.getName());
         descriptionEditText.setText(servicePetition.getDescription());
-        serviceTypeEditText.setText(servicePetition.getServiceTypeId());
+        initSpinnerData();
     }
 
     private void getServicePetitionByIntentToken() {
@@ -158,7 +175,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
         servicePetition.setName(titleEditText.getText().toString());
         servicePetition.setDescription(descriptionEditText.getText().toString());
-        servicePetition.setServiceTypeId(serviceTypeEditText.getText().toString());
+        servicePetition.setServiceTypeId(serviceTypeId);
         ServicePetition updatedServicePetition = servicePetition;
         databaseReference.child(servicePetition.getId()).setValue(updatedServicePetition);
 

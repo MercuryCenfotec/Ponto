@@ -70,6 +70,8 @@ import java.util.List;
 import java.util.Locale;
 
 import customfonts.MyTextView_SF_Pro_Display_Medium;
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class ServicePetitionCreationActivity extends AppCompatActivity {
 
@@ -89,7 +91,10 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
     List<Uri> filesToUpload = new ArrayList<>();
     List<String> realFilesToUpload = new ArrayList<>();
     DatabaseReference serviceTypesRef;
-    List<String> spinnerValues;
+    ArrayList<String> spinnerKeys;
+    ArrayList<String> spinnerValues;
+    SpinnerDialog spinnerDialog;
+    String serviceTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +102,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_petition_creation);
         initFormControls();
         getUserId();
+        initSpinnerData();
         initServicePetitionCreationControlsListener();
         Locale spanish = new Locale("es", "ES");
         Locale.setDefault(spanish);
@@ -117,6 +123,42 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         fileTextView = findViewById(R.id.filesTextView);
         btnPostPetition = findViewById(R.id.btnPetitionCreation);
         serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+    }
+
+    private void initSpinnerData() {
+        serviceTypesRef = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+        spinnerKeys = new ArrayList<>();
+        spinnerValues = new ArrayList<>();
+
+        serviceTypesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot serviceType : dataSnapshot.getChildren()) {
+                    spinnerValues.add(serviceType.child("id").getValue().toString());
+                    spinnerKeys.add(serviceType.child("serviceType").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
+
+
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+            @Override
+            public void onClick(String item, int position) {
+                serviceTypeEditText.setText(item);
+                serviceTypeId = spinnerValues.get(position);
+            }
+        });
+    }
+
+    public void showSpinnerDialog(View view) {
+        spinnerDialog.showSpinerDialog();
     }
 
     private void initServicePetitionCreationControlsListener() {
@@ -337,7 +379,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                 activeUserId,
                 titleEditText.getText().toString(),
                 descriptionEditText.getText().toString(),
-                serviceTypeEditText.getText().toString(),
+                serviceTypeId,
                 false
         );
         servicePetition.setFiles(realFilesToUpload);
