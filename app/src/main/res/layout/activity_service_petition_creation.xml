@@ -95,7 +95,6 @@
         android:onClick="showSpinnerDialog"
         android:inputType="textNoSuggestions"
         android:hint="Categoria del servicio"
-        android:inputType="text"
         android:paddingLeft="20dp"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
