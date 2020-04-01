@@ -119,6 +119,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
 
         spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
 
+        serviceTypeId = servicePetition.getServiceTypeId();
 
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
