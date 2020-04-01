@@ -50,6 +50,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     Offer activeOffer;
     TextView counterOfferButton;
 
+    // Counter offer
+    View divisorLineOfferDetail;
+    ImageView counterOfferIconDetail;
+    TextView counterOfferTextDetail;
+    TextView counterOfferDescDetail;
+    TextView counterOfferCostTitleDetail;
+    TextView counterOfferCostDetail;
+    TextView btnAcceptCounterOffer;
+    // Counter offer end
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +78,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         createOfferButton = findViewById(R.id.createOfferButton);
         viewTitle = findViewById(R.id.viewTitle);
         counterOfferButton = findViewById(R.id.btnOfferCreation);
+
+        // Counter offer
+        divisorLineOfferDetail = findViewById(R.id.divisorLineOfferDetail);
+        counterOfferIconDetail = findViewById(R.id.counterOfferIconDetail);
+        counterOfferTextDetail = findViewById(R.id.counterOfferTextDetail);
+        counterOfferDescDetail = findViewById(R.id.counterOfferDescDetail);
+        counterOfferCostTitleDetail = findViewById(R.id.counterOfferCostTitleDetail);
+        counterOfferCostDetail = findViewById(R.id.counterOfferCostDetail);
+        btnAcceptCounterOffer = findViewById(R.id.btnAcceptCounterOffer);
+        // Counter offer end
 
         String userId = myPrefs.getString("userId", "none");
         offerId = myPrefs.getString("offerId","none");
@@ -92,9 +112,32 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                     durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
                     viewTitle.setText(data.child("servicePetitionTitle").getValue().toString());
 
+                    // Counter offer
+                    counterOfferCostDetail.setText("₡" + data.child("counterOfferCost").getValue().toString());
+
                     if (data.child("counterOffer").getValue() != null) {
                         hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
+
+                        if (hasCounterOffer) {
+                            divisorLineOfferDetail.setVisibility(View.VISIBLE);
+                            counterOfferIconDetail.setVisibility(View.VISIBLE);
+                            counterOfferTextDetail.setVisibility(View.VISIBLE);
+                            counterOfferDescDetail.setVisibility(View.VISIBLE);
+                            counterOfferCostTitleDetail.setVisibility(View.VISIBLE);
+                            counterOfferCostDetail.setVisibility(View.VISIBLE);
+                            btnAcceptCounterOffer.setVisibility(View.VISIBLE);
+                        } else {
+                            divisorLineOfferDetail.setVisibility(View.GONE);
+                            counterOfferIconDetail.setVisibility(View.GONE);
+                            counterOfferTextDetail.setVisibility(View.GONE);
+                            counterOfferDescDetail.setVisibility(View.GONE);
+                            counterOfferCostTitleDetail.setVisibility(View.GONE);
+                            counterOfferCostDetail.setVisibility(View.GONE);
+                            btnAcceptCounterOffer.setVisibility(View.GONE);
+                        }
+
                     }
+                    // Counter offer end
 
                     if (!data.child("userId").getValue().toString().equals(userId)) {
                         bidderDetail.setVisibility(View.VISIBLE);
@@ -213,5 +256,10 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     @Override
     public void dialogOfferAccepted() {
         acceptOffer();
+    }
+
+    public void acceptCounterOffer(View view) {
+        offerDBReference.child(activeOffer.getId()).child("cost").setValue(activeOffer.getCounterOfferCost());
+        Toast.makeText(this, "Se aceptó la contraoferta", Toast.LENGTH_LONG).show();
     }
 }

@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/offerCard"
         android:layout_width="364dp"
-        android:layout_height="136dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="24dp"
@@ -18,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/cardTitle"
@@ -64,9 +64,9 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="Descripcion de la actividad que puede ser bien grande"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/counterOfferIcon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/cardDuration"
                 app:layout_constraintTop_toBottomOf="@+id/cardDuration" />
@@ -75,13 +75,38 @@
                 android:id="@+id/bidderImage"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:visibility="gone"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:src="@drawable/profile"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/cardDescription"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/cardTitle" />
+
+            <ImageView
+                android:id="@+id/counterOfferIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/ic_bell"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cardDescription"
+                app:layout_constraintTop_toBottomOf="@+id/cardDescription" />
+
+            <TextView
+                android:id="@+id/counterOfferText"
+                android:layout_width="wrap_content"
+                android:layout_height="19dp"
+                android:text="Tiene una contraoferta"
+                android:textColor="#000000"
+                android:textFontWeight="700"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/counterOfferIcon"
+                app:layout_constraintStart_toEndOf="@+id/counterOfferIcon"
+                app:layout_constraintTop_toTopOf="@+id/counterOfferIcon" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

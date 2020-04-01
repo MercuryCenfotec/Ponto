@@ -40,9 +40,11 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newCost = editTextCost.getText().toString();
-                listener.applyText(newCost);
-                dismiss();
+                if (verifyNewCost()) {
+                    String newCost = editTextCost.getText().toString();
+                    listener.applyText(newCost);
+                    dismiss();
+                }
             }
         });
 
@@ -54,6 +56,10 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         });
 
         return builder.create();
+    }
+
+    private boolean verifyNewCost() {
+        return !editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("");
     }
 
     @Override

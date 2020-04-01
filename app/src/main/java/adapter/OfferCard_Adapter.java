@@ -40,6 +40,15 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
         holder.cardCost.setText("₡ " + offerList.get(position).getCost().toString());
         holder.cardDuration.setText(offerList.get(position).getDuration() + (offerList.get(position).getDurationType().equals("hour") ? " horas" : " dias"));
         holder.cardDescription.setText(offerList.get(position).getDescription());
+
+        if (offerList.get(position).getCounterOffer()) {
+            holder.counterOfferIcon.setVisibility(View.VISIBLE);
+            holder.counterOfferText.setVisibility(View.VISIBLE);
+        } else {
+            holder.counterOfferIcon.setVisibility(View.GONE);
+            holder.counterOfferText.setVisibility(View.GONE);
+        }
+
         holder.offerCard.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -65,9 +74,9 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView cardTitle, cardDuration, cardCost, cardDescription;
+        TextView cardTitle, cardDuration, cardCost, cardDescription, counterOfferText;
         CardView offerCard;
-        ImageView cardImage;
+        ImageView cardImage, counterOfferIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -77,6 +86,9 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
             cardCost = itemView.findViewById(R.id.cardCost);
             cardDescription = itemView.findViewById(R.id.cardDescription);
             cardImage = itemView.findViewById(R.id.bidderImage);
+
+            counterOfferIcon = itemView.findViewById(R.id.counterOfferIcon);
+            counterOfferText = itemView.findViewById(R.id.counterOfferText);
         }
     }
 }
