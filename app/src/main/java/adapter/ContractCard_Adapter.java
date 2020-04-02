@@ -53,6 +53,7 @@ public class ContractCard_Adapter extends RecyclerView.Adapter<ContractCard_Adap
                         intent.putExtra("petitionerId", contractList.get(position).getPetitionerId());
                         intent.putExtra("bidderUserId", contractList.get(position).getBidderId());
                         intent.putExtra("contractId", contractList.get(position).getId());
+                        intent.putExtra("finalCost", contractList.get(position).getFinalCost());
                         context.startActivity(intent);
                     }
                 });

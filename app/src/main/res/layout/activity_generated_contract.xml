@@ -149,6 +149,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/bidderContractIdDefinitionTV" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/bothPartsAgreedCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:text="Pago"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bidderContractIdentificationTV" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/petitionerSignatureTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,7 +171,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Firma del solicitante:"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bidderContractIdentificationTV" />
+                app:layout_constraintTop_toBottomOf="@+id/bothPartsAgreedCost" />
 
             <ImageView
                 android:id="@+id/petitionerContractSignatureIV"

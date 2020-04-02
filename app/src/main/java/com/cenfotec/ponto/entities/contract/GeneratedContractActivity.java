@@ -39,6 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -53,12 +54,14 @@ public class GeneratedContractActivity extends AppCompatActivity {
     MyTextView_SF_Pro_Display_Bold petitionerIdentification;
     MyTextView_SF_Pro_Display_Bold bidderName;
     MyTextView_SF_Pro_Display_Bold bidderIdentification;
+    MyTextView_SF_Pro_Display_Medium bothPartsAgreedCost;
     ImageView petitionerSignature;
     ImageView bidderSignature;
     MyTextView_SF_Pro_Display_Medium btnSignature;
     String petitionerId;
     String bidderUserId;
     String contractId;
+    Float finalCost;
     User bidderUser;
     User petitionerUser;
     Bidder bidder;
@@ -91,6 +94,7 @@ public class GeneratedContractActivity extends AppCompatActivity {
             petitionerId = getIntent().getStringExtra("petitionerId");
             bidderUserId = getIntent().getStringExtra("bidderUserId");
             contractId = getIntent().getStringExtra("contractId");
+            finalCost = getIntent().getFloatExtra("finalCost", 0);
         }
     }
 
@@ -102,6 +106,7 @@ public class GeneratedContractActivity extends AppCompatActivity {
         petitionerSignature = findViewById(R.id.petitionerContractSignatureIV);
         bidderSignature = findViewById(R.id.bidderContractSignatureIV);
         btnSignature = findViewById(R.id.btnContractSignature);
+        bothPartsAgreedCost = findViewById(R.id.bothPartsAgreedCost);
     }
 
     //User information retrieval statements start here
@@ -213,6 +218,10 @@ public class GeneratedContractActivity extends AppCompatActivity {
         if (!contract.getBidderSignatureUrl().equals("")) {
             Picasso.get().load(contract.getBidderSignatureUrl()).fit().into(bidderSignature);
         }
+
+        DecimalFormat decim = new DecimalFormat("#,###.##");
+        bothPartsAgreedCost.setText("Y se compromete a pagar el monto establecido de ₡" +
+                decim.format(finalCost) + " colones.");
     }
 
     //Signature statements start here
@@ -341,6 +350,7 @@ public class GeneratedContractActivity extends AppCompatActivity {
         intent.putExtra("petitionerId", petitionerId);
         intent.putExtra("bidderUserId", bidderUserId);
         intent.putExtra("contractId", contract.getId());
+        intent.putExtra("finalCost", contract.getFinalCost());
         startActivity(intent);
     }
 
@@ -355,6 +365,8 @@ public class GeneratedContractActivity extends AppCompatActivity {
         intent.putExtra("petitionerId", petitionerId);
         intent.putExtra("bidderUserId", bidderUserId);
         intent.putExtra("contractId", contract.getId());
+        intent.putExtra("finalCost", contract.getFinalCost());
+
         startActivity(intent);
     }
 

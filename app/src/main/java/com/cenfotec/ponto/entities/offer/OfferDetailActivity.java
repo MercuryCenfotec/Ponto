@@ -258,6 +258,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         contract.setDateCreated(timestamp2);
         contract.setServicePetitionId(activeOffer.getServicePetitionId());
         contract.setOfferId(activeOffer.getId());
+        contract.setFinalCost(activeOffer.getCost());
         databaseReference.child(contractId).setValue(contract);
 
 
@@ -267,6 +268,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         intent.putExtra("petitionerId", contract.getPetitionerId());
         intent.putExtra("bidderUserId", contract.getBidderId());
         intent.putExtra("contractId", contract.getId());
+        intent.putExtra("finalCost", contract.getFinalCost());
         startActivity(intent);
         finish();
     }

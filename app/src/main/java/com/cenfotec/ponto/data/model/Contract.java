@@ -11,6 +11,7 @@ public class Contract {
     private String offerId;
     private String petitionerSignatureUrl;
     private String bidderSignatureUrl;
+    private Float finalCost;
 
     public Contract() {
 
@@ -109,5 +110,13 @@ public class Contract {
 
     public void setBidderSignatureUrl(String bidderSignatureUrl) {
         this.bidderSignatureUrl = bidderSignatureUrl;
+    }
+
+    public Float getFinalCost() {
+        return finalCost;
+    }
+
+    public void setFinalCost(Float finalCost) {
+        this.finalCost = finalCost;
     }
 }
