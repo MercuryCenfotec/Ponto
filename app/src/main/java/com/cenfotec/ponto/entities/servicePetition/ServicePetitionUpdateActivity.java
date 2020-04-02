@@ -139,7 +139,6 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 prePetitionUpdate();
-                goToPetitionDetail();
             }
         });
     }
@@ -186,7 +185,7 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
                     });
 
         } else {
-            showToaster("Error");
+            showToaster("Verificar campos");
         }
     }
 
@@ -198,7 +197,8 @@ public class ServicePetitionUpdateActivity extends AppCompatActivity {
         ServicePetition updatedServicePetition = servicePetition;
         databaseReference.child(servicePetition.getId()).setValue(updatedServicePetition);
 
-        showToaster("Solicitud de servicio modificada!");
+        showToaster("Solicitud de servicio modificada");
+        goToPetitionDetail();
     }
 
     private void showToaster(String message) {

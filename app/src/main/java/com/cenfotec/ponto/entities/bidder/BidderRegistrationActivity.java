@@ -137,7 +137,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                     });
 
         } else {
-            showToaster("Revisa los campos señalados");
+            showToaster("Verificar campos");
         }
     }
 
@@ -164,7 +164,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         Bidder bidder = new Bidder(bidderId, biographyEditText.getText().toString(), userId);
         bidderDataReference.child(bidderId).setValue(bidder);
         clearBidderRegistrationInputs();
-        showToaster("Oferente agregado");
+        showToaster("Registro exitoso");
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
 

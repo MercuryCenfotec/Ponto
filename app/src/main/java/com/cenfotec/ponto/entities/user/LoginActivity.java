@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean validForm() {
         if (emailEditText.getText().toString().equals("") || passwordEditText.getText().toString().equals("")) {
-            showToaster("Campos vacíos.");
+            showToaster("Verificar campos");
             return false;
         }
         return true;
