@@ -173,6 +173,9 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                         counterOfferTextDetail.setText("Aceptó una contraoferta");
                         counterOfferDescDetail.setText("Usted aceptó la contraoferta que realizó el creador de la solicitud.");
                         btnAcceptCounterOffer.setVisibility(View.GONE);
+                    } else {
+                        counterOfferTextDetail.setText("Tiene una contraoferta");
+                        counterOfferDescDetail.setText("El creador de la solicitud está interesado en su oferta, pero realizó una contraoferta.");
                     }
 
                     // Counter offer end
