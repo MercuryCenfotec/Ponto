@@ -36,7 +36,7 @@
         android:paddingTop="14dp"
         android:paddingRight="20dp"
         android:paddingBottom="14dp"
-        android:textColor="#000"
+        android:textColor="#FAFAFA"
         android:textColorHint="#b6b6b6"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -175,5 +175,18 @@
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/costInputLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/costEditText"
+        app:layout_constraintStart_toStartOf="@+id/costEditText"
+        app:layout_constraintTop_toTopOf="@+id/costEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
