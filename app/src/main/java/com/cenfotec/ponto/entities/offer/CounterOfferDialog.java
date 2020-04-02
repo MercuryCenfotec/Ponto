@@ -62,7 +62,7 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
     }
 
     private boolean verifyNewCost() {
-        if (!editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("") && !editTextCost.getText().toString().equals(((OfferDetailActivity)getActivity()).activeOffer.getCost().toString())) {
+        if (!editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("") && !Float.valueOf(editTextCost.getText().toString()).equals(((OfferDetailActivity)getActivity()).activeOffer.getCost())) {
             return true;
         } else {
             editTextCost.setBackgroundResource(R.drawable.edittext_error);
