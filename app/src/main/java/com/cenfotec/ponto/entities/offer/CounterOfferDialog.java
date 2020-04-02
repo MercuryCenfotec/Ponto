@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,12 +19,16 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.cenfotec.ponto.R;
 
+import java.text.DecimalFormat;
+
 public class CounterOfferDialog extends AppCompatDialogFragment {
 
     private EditText editTextCost;
     private TextView acceptButton;
     private TextView cancelButton;
     private CounterOfferDialogListener listener;
+    final DecimalFormat costFormat = new DecimalFormat("###,###.###");
+    TextView costInputLabel;
 
     @NonNull
     @Override
@@ -35,10 +41,32 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         builder.setView(view);
 
         editTextCost = view.findViewById(R.id.counterOfferCost);
-        editTextCost.setHint(((OfferDetailActivity)getActivity()).activeOffer.getCost().toString());
+        editTextCost.setHint(costFormat.format(Double.parseDouble(((OfferDetailActivity)getActivity()).activeOffer.getCost().toString())));
         editTextCost.setHintTextColor(Color.parseColor("#808080"));
         acceptButton = view.findViewById(R.id.btnSaveCounterOfferDialog);
         cancelButton = view.findViewById(R.id.btnCancelCounterOfferDialog);
+        costInputLabel = view.findViewById(R.id.costInputLabel);
+
+        editTextCost.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length()!=0) {
+                    String cost = costFormat.format(Double.parseDouble(s.toString()));
+                    costInputLabel.setText(cost);
+                } else {
+                    costInputLabel.setText(" ");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override

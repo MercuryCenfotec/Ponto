@@ -28,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,6 +53,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     Offer activeOffer;
     TextView counterOfferButton;
     TextView acceptOfferButton;
+    final DecimalFormat costFormat = new DecimalFormat("###,###.###");
 
     // Counter offer
     View divisorLineOfferDetail;
@@ -116,14 +118,14 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
                     activeOffer = data.getValue(Offer.class);
 
-                    costText.setText("₡" + data.child("cost").getValue().toString());
+                    costText.setText("₡" + costFormat.format(Double.parseDouble(data.child("cost").getValue().toString())));
                     descriptionText.setText(data.child("description").getValue().toString());
                     durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
                     durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
                     viewTitle.setText(data.child("servicePetitionTitle").getValue().toString());
 
                     // Counter offer
-                    counterOfferCostDetail.setText("₡" + data.child("counterOfferCost").getValue().toString());
+                    counterOfferCostDetail.setText("₡" + costFormat.format(Double.parseDouble(data.child("counterOfferCost").getValue().toString())));
 
                     if (data.child("counterOffer").getValue() != null) {
                         hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
@@ -133,6 +135,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             counterOfferIconDetail.setVisibility(View.VISIBLE);
                             counterOfferTextDetail.setVisibility(View.VISIBLE);
+                            counterOfferDescDetail.setVisibility(View.VISIBLE);
                             counterOfferDescDetail.setVisibility(View.VISIBLE);
                             counterOfferCostTitleDetail.setVisibility(View.VISIBLE);
                             counterOfferCostDetail.setVisibility(View.VISIBLE);
@@ -148,7 +151,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             btnAcceptCounterOffer.setVisibility(View.GONE);
 
                             counterOfferButton.setText("Modificar contraoferta");
-                            petitionerCostDetail.setText(data.child("counterOfferCost").getValue().toString());
+                            petitionerCostDetail.setText("₡" + costFormat.format(Double.parseDouble(data.child("counterOfferCost").getValue().toString())));
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             petitionerCostTitle.setVisibility(View.VISIBLE);
                             petitionerCostDetail.setVisibility(View.VISIBLE);
