@@ -129,6 +129,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                         hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
 
                         if (hasCounterOffer && data.child("userId").getValue().toString().equals(userId)) {
+                            // BIDDER WITH COUNTER OFFER
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             counterOfferIconDetail.setVisibility(View.VISIBLE);
                             counterOfferTextDetail.setVisibility(View.VISIBLE);
@@ -137,12 +138,8 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             counterOfferCostDetail.setVisibility(View.VISIBLE);
                             btnAcceptCounterOffer.setVisibility(View.VISIBLE);
 
-                            counterOfferButton.setText("Contraofertar");
-                            petitionerCostDetail.setText("");
-                            petitionerCostTitle.setVisibility(View.GONE);
-                            petitionerCostDetail.setVisibility(View.GONE);
-
-                        } else {
+                        } else if (hasCounterOffer && !data.child("userId").getValue().toString().equals(userId)) {
+                            // PETITIONER WITH COUNTER OFFER
                             counterOfferIconDetail.setVisibility(View.GONE);
                             counterOfferTextDetail.setVisibility(View.GONE);
                             counterOfferDescDetail.setVisibility(View.GONE);
@@ -155,14 +152,25 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             petitionerCostTitle.setVisibility(View.VISIBLE);
                             petitionerCostDetail.setVisibility(View.VISIBLE);
+
+                        } else if (!hasCounterOffer) {
+                            counterOfferIconDetail.setVisibility(View.GONE);
+                            counterOfferTextDetail.setVisibility(View.GONE);
+                            counterOfferDescDetail.setVisibility(View.GONE);
+                            counterOfferCostTitleDetail.setVisibility(View.GONE);
+                            counterOfferCostDetail.setVisibility(View.GONE);
+                            btnAcceptCounterOffer.setVisibility(View.GONE);
+                            divisorLineOfferDetail.setVisibility(View.GONE);
+                            petitionerCostTitle.setVisibility(View.GONE);
+                            petitionerCostDetail.setVisibility(View.GONE);
                         }
 
                     }
 
                     if (data.child("counterOfferCost").getValue().equals(data.child("cost").getValue())) {
+                        counterOfferTextDetail.setText("Aceptó una contraoferta");
+                        counterOfferDescDetail.setText("Usted aceptó la contraoferta que realizó el creador de la solicitud.");
                         btnAcceptCounterOffer.setVisibility(View.GONE);
-                    } else {
-                        btnAcceptCounterOffer.setVisibility(View.VISIBLE);
                     }
 
                     // Counter offer end

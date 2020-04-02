@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.offer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,8 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         builder.setView(view);
 
         editTextCost = view.findViewById(R.id.counterOfferCost);
+        editTextCost.setHint(((OfferDetailActivity)getActivity()).activeOffer.getCost().toString());
+        editTextCost.setHintTextColor(Color.parseColor("#808080"));
         acceptButton = view.findViewById(R.id.btnSaveCounterOfferDialog);
         cancelButton = view.findViewById(R.id.btnCancelCounterOfferDialog);
 
@@ -59,7 +62,12 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
     }
 
     private boolean verifyNewCost() {
-        return !editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("");
+        if (!editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("") && !editTextCost.getText().toString().equals(((OfferDetailActivity)getActivity()).activeOffer.getCost().toString())) {
+            return true;
+        } else {
+            editTextCost.setBackgroundResource(R.drawable.edittext_error);
+            return false;
+        }
     }
 
     @Override
