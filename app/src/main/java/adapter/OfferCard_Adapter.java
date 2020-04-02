@@ -41,7 +41,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
         holder.cardDuration.setText(offerList.get(position).getDuration() + (offerList.get(position).getDurationType().equals("hour") ? " horas" : " dias"));
         holder.cardDescription.setText(offerList.get(position).getDescription());
 
-        if (offerList.get(position).getCounterOffer()) {
+        if (offerList.get(position).getCounterOffer() && myPrefs.getString("userId", "none").equals(offerList.get(position).getUserId()) && !offerList.get(position).getCounterOfferCost().equals(offerList.get(position).getCost())) {
             holder.counterOfferIcon.setVisibility(View.VISIBLE);
             holder.counterOfferText.setVisibility(View.VISIBLE);
         } else {

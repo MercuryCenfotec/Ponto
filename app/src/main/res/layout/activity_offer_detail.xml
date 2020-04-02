@@ -170,6 +170,32 @@
         app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
 
     <TextView
+        android:id="@+id/petCounterOfferDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Costo de la contraoferta"
+        android:textColor="#000"
+        android:textFontWeight="700"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
+        app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+
+    <TextView
+        android:id="@+id/petCounterOfferCostDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="000"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/petCounterOfferDetail"
+        app:layout_constraintTop_toBottomOf="@+id/petCounterOfferDetail" />
+
+    <TextView
         android:id="@+id/counterOfferTextDetail"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
@@ -225,7 +251,7 @@
         android:layout_marginRight="32dp"
         android:background="@drawable/rect_blue"
         android:gravity="center"
-        android:onClick="acceptCounterOffer"
+        android:onClick="openConfirmCounterOfferDialog"
         android:paddingLeft="8dp"
         android:paddingTop="7dp"
         android:paddingRight="8dp"
@@ -325,8 +351,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/rect_blue"
         android:gravity="center"
         android:onClick="openCounterOfferDialog"
@@ -339,7 +365,7 @@
         android:textSize="12sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/costValue"
-        app:layout_constraintStart_toEndOf="@+id/costTitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/costTitle"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

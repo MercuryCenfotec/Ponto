@@ -6,8 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,12 +14,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.cenfotec.ponto.R;
 
-public class CounterOfferDialog extends AppCompatDialogFragment {
+public class CounterOfferConfirmDialog extends AppCompatDialogFragment {
 
-    private EditText editTextCost;
     private TextView acceptButton;
     private TextView cancelButton;
-    private CounterOfferDialogListener listener;
+    private CounterOfferDialogConfirmListener listener;
 
     @NonNull
     @Override
@@ -29,22 +26,18 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_counter_offer_dialog, null);
+        View view = inflater.inflate(R.layout.layout_confirm_counter_offer_dialog, null);
 
         builder.setView(view);
 
-        editTextCost = view.findViewById(R.id.counterOfferCost);
-        acceptButton = view.findViewById(R.id.btnSaveCounterOfferDialog);
-        cancelButton = view.findViewById(R.id.btnCancelCounterOfferDialog);
+        acceptButton = view.findViewById(R.id.btnAcceptCounterOfferConfirmDialog);
+        cancelButton = view.findViewById(R.id.btnCancelCounterOfferConfirmDialog);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (verifyNewCost()) {
-                    String newCost = editTextCost.getText().toString();
-                    listener.applyText(newCost);
-                    dismiss();
-                }
+                listener.dialogConfirmCounterOffer();
+                dismiss();
             }
         });
 
@@ -58,22 +51,18 @@ public class CounterOfferDialog extends AppCompatDialogFragment {
         return builder.create();
     }
 
-    private boolean verifyNewCost() {
-        return !editTextCost.getText().toString().equals("0") && !editTextCost.getText().toString().equals("");
-    }
-
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         try {
-            listener = (CounterOfferDialogListener) context;
+            listener = (CounterOfferDialogConfirmListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement CounterOfferDialogListener");
         }
     }
 
-    public interface CounterOfferDialogListener {
-        void applyText(String newCost);
+    public interface CounterOfferDialogConfirmListener {
+        void dialogConfirmCounterOffer();
     }
 }

@@ -31,7 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener {
+public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener, CounterOfferConfirmDialog.CounterOfferDialogConfirmListener {
 
     private static SharedPreferences sharedpreferences;
     DatabaseReference offerDBReference;
@@ -61,6 +61,9 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     TextView counterOfferCostTitleDetail;
     TextView counterOfferCostDetail;
     TextView btnAcceptCounterOffer;
+
+    TextView petitionerCostTitle;
+    TextView petitionerCostDetail;
     // Counter offer end
 
     @Override
@@ -91,6 +94,9 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         counterOfferCostTitleDetail = findViewById(R.id.counterOfferCostTitleDetail);
         counterOfferCostDetail = findViewById(R.id.counterOfferCostDetail);
         btnAcceptCounterOffer = findViewById(R.id.btnAcceptCounterOffer);
+
+        petitionerCostTitle = findViewById(R.id.petCounterOfferDetail);
+        petitionerCostDetail = findViewById(R.id.petCounterOfferCostDetail);
         // Counter offer end
 
         String userId = myPrefs.getString("userId", "none");
@@ -122,7 +128,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                     if (data.child("counterOffer").getValue() != null) {
                         hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
 
-                        if (hasCounterOffer) {
+                        if (hasCounterOffer && data.child("userId").getValue().toString().equals(userId)) {
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             counterOfferIconDetail.setVisibility(View.VISIBLE);
                             counterOfferTextDetail.setVisibility(View.VISIBLE);
@@ -130,17 +136,35 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             counterOfferCostTitleDetail.setVisibility(View.VISIBLE);
                             counterOfferCostDetail.setVisibility(View.VISIBLE);
                             btnAcceptCounterOffer.setVisibility(View.VISIBLE);
+
+                            counterOfferButton.setText("Contraofertar");
+                            petitionerCostDetail.setText("");
+                            petitionerCostTitle.setVisibility(View.GONE);
+                            petitionerCostDetail.setVisibility(View.GONE);
+
                         } else {
-                            divisorLineOfferDetail.setVisibility(View.GONE);
                             counterOfferIconDetail.setVisibility(View.GONE);
                             counterOfferTextDetail.setVisibility(View.GONE);
                             counterOfferDescDetail.setVisibility(View.GONE);
                             counterOfferCostTitleDetail.setVisibility(View.GONE);
                             counterOfferCostDetail.setVisibility(View.GONE);
                             btnAcceptCounterOffer.setVisibility(View.GONE);
+
+                            counterOfferButton.setText("Modificar contraoferta");
+                            petitionerCostDetail.setText(data.child("counterOfferCost").getValue().toString());
+                            divisorLineOfferDetail.setVisibility(View.VISIBLE);
+                            petitionerCostTitle.setVisibility(View.VISIBLE);
+                            petitionerCostDetail.setVisibility(View.VISIBLE);
                         }
 
                     }
+
+                    if (data.child("counterOfferCost").getValue().equals(data.child("cost").getValue())) {
+                        btnAcceptCounterOffer.setVisibility(View.GONE);
+                    } else {
+                        btnAcceptCounterOffer.setVisibility(View.VISIBLE);
+                    }
+
                     // Counter offer end
 
                     if (!data.child("userId").getValue().toString().equals(userId)) {
@@ -241,6 +265,13 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         activeOffer.setCounterOfferCost(Float.parseFloat(newCost));
         offerDBReference.child(offerId).setValue(activeOffer);
         hasCounterOffer = true;
+
+        counterOfferButton.setText("Modificar contraoferta");
+        petitionerCostDetail.setText(newCost);
+        divisorLineOfferDetail.setVisibility(View.VISIBLE);
+        petitionerCostTitle.setVisibility(View.VISIBLE);
+        petitionerCostDetail.setVisibility(View.VISIBLE);
+
         Toast.makeText(this, "Contraoferta exitosa", Toast.LENGTH_LONG).show();
     }
 
@@ -250,12 +281,8 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     }
 
     public void openCounterOfferDialog(View view) {
-        if (!hasCounterOffer) {
-            CounterOfferDialog counterDialog = new CounterOfferDialog();
-            counterDialog.show(getSupportFragmentManager(), "counter offer dialog");
-        } else {
-            Toast.makeText(this, "Ya hizo una contraoferta", Toast.LENGTH_LONG).show();
-        }
+        CounterOfferDialog counterDialog = new CounterOfferDialog();
+        counterDialog.show(getSupportFragmentManager(), "counter offer dialog");
     }
 
     public void openAcceptOfferDialog(View view) {
@@ -263,14 +290,15 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         offerDialog.show(getSupportFragmentManager(), "accept offer dialog");
     }
 
+    public void openConfirmCounterOfferDialog(View view) {
+        CounterOfferConfirmDialog counterOfferConfirmDialogfferDialog = new CounterOfferConfirmDialog();
+        counterOfferConfirmDialogfferDialog.show(getSupportFragmentManager(), "accept counter offer dialog");
+    }
+
     @Override
     public void dialogOfferAccepted() {
         acceptOffer();
     }
-
-    public void acceptCounterOffer(View view) {
-        offerDBReference.child(activeOffer.getId()).child("cost").setValue(activeOffer.getCounterOfferCost());
-        Toast.makeText(this, "Se aceptó la contraoferta", Toast.LENGTH_LONG).show();
 
     public void goToHome(View view) {
         if (myPrefs.getString("userType","none").equals("bidder")) {
@@ -280,5 +308,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
             Intent intent = new Intent(this, PetitionerHomeActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void dialogConfirmCounterOffer() {
+        acceptCounterOffer();
+    }
+
+    public void acceptCounterOffer() {
+        offerDBReference.child(activeOffer.getId()).child("cost").setValue(activeOffer.getCounterOfferCost());
+        btnAcceptCounterOffer.setVisibility(View.GONE);
+        Toast.makeText(this, "Se aceptó la contraoferta", Toast.LENGTH_LONG).show();
     }
 }
