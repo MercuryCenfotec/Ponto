@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Categoria"
+                    android:text="Categoría"
                     android:textColor="#a9a9b0"
                     android:textSize="12sp" />
 
@@ -125,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Nombre de la peticion"
+                        android:text="Nombre de la petición"
                         android:textColor="#3b3b3b"
                         android:textSize="23sp" />
 
@@ -145,7 +145,7 @@
                     android:layout_marginBottom="20dp"
                     android:lineSpacingExtra="4dp"
                     android:minHeight="100dp"
-                    android:text="Este lugar seria donde se encuentra la descripcion de la solicitud lorem cosa ipsum dolor sit amet en nombre del patris el philis espiritu santis"
+                    android:text="Este lugar sería donde se encuentra la descripción de la solicitud lorem cosa ipsum dolor sit amet en nombre del patris el philis espiritu santis"
                     android:textColor="#a9a9b0"
                     android:textSize="12.3sp" />
 

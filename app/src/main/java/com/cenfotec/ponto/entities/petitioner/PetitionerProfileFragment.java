@@ -58,8 +58,8 @@ public class PetitionerProfileFragment extends Fragment {
 
     Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star, R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
-    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos", "Mi Perfil", "Cerrar sesión"};
-    String txthistory[] = {"Revisá tus contrataciones", "Administrá tus recomendaciones", "Tu colección", "Tu colección", "Cambiá la información de tu perfil", "Cierra la sesión"};
+    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos", "Mi perfil", "Cerrar sesión"};
+    String txthistory[] = {"Revisa las contrataciones", "Administra las recomendaciones", "La colección", "Contratos realizados", "Cambia la información del perfil", "Cierra la sesión"};
     View view;
 
     public PetitionerProfileFragment() {

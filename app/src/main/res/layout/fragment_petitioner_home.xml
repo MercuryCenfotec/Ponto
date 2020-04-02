@@ -18,7 +18,7 @@
             android:layout_marginStart="152dp"
             android:layout_marginLeft="152dp"
             android:layout_marginTop="32dp"
-            android:text="Petitioner home"
+            android:text="Home de solicitante"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
