@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -22,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+
 public class OfferUpdateActivity extends AppCompatActivity {
 
     public static final String MY_PREFERENCES = "MyPrefs";
@@ -31,7 +35,9 @@ public class OfferUpdateActivity extends AppCompatActivity {
     EditText costInput;
     EditText durationInput;
     EditText descriptionInput;
+    TextView costInputLabel;
     Offer offer = new Offer();
+    final DecimalFormat costFormat = new DecimalFormat("###,###.###");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_update);
         costInput = findViewById(R.id.costEditText);
+        costInputLabel = findViewById(R.id.costInputLabel);
         durationInput = findViewById(R.id.durationEditText);
         updateOfferButton = findViewById(R.id.createOfferButton);
         descriptionInput = findViewById(R.id.descriptionEditText);
@@ -52,6 +59,28 @@ public class OfferUpdateActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     costInput.setText(data.child("cost").getValue().toString());
+                    costInputLabel.setText(costFormat.format(Double.parseDouble(data.child("cost").getValue().toString())));
+                    costInput.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            if (s.length()!=0) {
+                                String cost = costFormat.format(Double.parseDouble(s.toString()));
+                                costInputLabel.setText(cost);
+                            } else {
+                                costInputLabel.setText(" ");
+                            }
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                        }
+                    });
+
                     durationInput.setText(data.child("duration").getValue().toString());
                     descriptionInput.setText(data.child("description").getValue().toString());
                     switch (data.child("durationType").getValue().toString()) {

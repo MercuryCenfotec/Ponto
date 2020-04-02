@@ -37,7 +37,7 @@
         android:paddingLeft="20dp"
         android:paddingTop="14dp"
         android:paddingBottom="14dp"
-        android:textColor="#000"
+        android:textColor="#00000000"
         android:textColorHint="#000"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +78,19 @@
             android:textSize="15sp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/costInputLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/counterOfferCost"
+        app:layout_constraintStart_toStartOf="@+id/counterOfferCost"
+        app:layout_constraintTop_toTopOf="@+id/counterOfferCost" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

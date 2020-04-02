@@ -28,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,6 +53,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     Offer activeOffer;
     TextView counterOfferButton;
     TextView acceptOfferButton;
+    final DecimalFormat costFormat = new DecimalFormat("###,###.###");
 
     // Counter offer
     View divisorLineOfferDetail;
@@ -116,7 +118,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
                     activeOffer = data.getValue(Offer.class);
 
-                    costText.setText("₡" + data.child("cost").getValue().toString());
+                    costText.setText("₡" + costFormat.format(Double.parseDouble(data.child("cost").getValue().toString())));
                     descriptionText.setText(data.child("description").getValue().toString());
                     durationText.setText(data.child("duration").getValue().toString() + (data.child("durationType").getValue().toString().equals("hour") ? " horas" : " días"));
                     durationTypeText.setText(data.child("durationType").getValue().toString().equals("hour") ? "Por hora" : "Por día");
