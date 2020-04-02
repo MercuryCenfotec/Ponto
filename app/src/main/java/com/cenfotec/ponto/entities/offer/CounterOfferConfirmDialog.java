@@ -3,8 +3,6 @@ package com.cenfotec.ponto.entities.offer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +14,11 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.cenfotec.ponto.R;
 
-public class AcceptOfferDialog extends AppCompatDialogFragment {
+public class CounterOfferConfirmDialog extends AppCompatDialogFragment {
 
     private TextView acceptButton;
     private TextView cancelButton;
-    private AcceptOfferDialogListener listener;
+    private CounterOfferDialogConfirmListener listener;
 
     @NonNull
     @Override
@@ -28,17 +26,17 @@ public class AcceptOfferDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomAlertDialog);
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.layout_accept_offer_dialog, null);
+        View view = inflater.inflate(R.layout.layout_confirm_counter_offer_dialog, null);
 
         builder.setView(view);
 
-        acceptButton = view.findViewById(R.id.btnAcceptOfferDialog);
-        cancelButton = view.findViewById(R.id.btnCancelOfferDialog);
+        acceptButton = view.findViewById(R.id.btnAcceptCounterOfferConfirmDialog);
+        cancelButton = view.findViewById(R.id.btnCancelCounterOfferConfirmDialog);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.dialogOfferAccepted();
+                listener.dialogConfirmCounterOffer();
                 dismiss();
             }
         });
@@ -58,13 +56,13 @@ public class AcceptOfferDialog extends AppCompatDialogFragment {
         super.onAttach(context);
 
         try {
-            listener = (AcceptOfferDialogListener) context;
+            listener = (CounterOfferDialogConfirmListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement CounterOfferDialogListener");
         }
     }
 
-    public interface AcceptOfferDialogListener {
-        void dialogOfferAccepted();
+    public interface CounterOfferDialogConfirmListener {
+        void dialogConfirmCounterOffer();
     }
 }

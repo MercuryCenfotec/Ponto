@@ -145,12 +145,124 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <View
-        android:id="@+id/view2"
+        android:id="@+id/divisorLineOfferDetail"
         android:layout_width="match_parent"
         android:layout_height="0.3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="#A3979797"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionValue" />
+
+    <ImageView
+        android:id="@+id/counterOfferIconDetail"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/ic_bell"
+        app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
+        app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+
+    <TextView
+        android:id="@+id/petCounterOfferDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:text="Costo de la contraoferta"
+        android:textColor="#000"
+        android:textFontWeight="700"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
+        app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+
+    <TextView
+        android:id="@+id/petCounterOfferCostDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="000"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="@+id/petCounterOfferDetail"
+        app:layout_constraintTop_toBottomOf="@+id/petCounterOfferDetail" />
+
+    <TextView
+        android:id="@+id/counterOfferTextDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:text="Tiene una contraoferta"
+        android:textColor="#000000"
+        android:textFontWeight="700"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/counterOfferIconDetail"
+        app:layout_constraintStart_toEndOf="@+id/counterOfferIconDetail"
+        app:layout_constraintTop_toTopOf="@+id/counterOfferIconDetail" />
+
+    <TextView
+        android:id="@+id/counterOfferDescDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="El creador de la solicitud está interesado en su oferta, pero realizó una contraoferta."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/counterOfferIconDetail"
+        app:layout_constraintTop_toBottomOf="@+id/counterOfferTextDetail" />
+
+    <TextView
+        android:id="@+id/counterOfferCostTitleDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Costo de la contraoferta"
+        android:textColor="#000"
+        android:textFontWeight="700"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/counterOfferDescDetail"
+        app:layout_constraintTop_toBottomOf="@+id/counterOfferDescDetail" />
+
+    <TextView
+        android:id="@+id/counterOfferCostDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:text="000"
+        app:layout_constraintStart_toStartOf="@+id/counterOfferCostTitleDetail"
+        app:layout_constraintTop_toBottomOf="@+id/counterOfferCostTitleDetail" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Semibold
+        android:id="@+id/btnAcceptCounterOffer"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/rect_blue"
+        android:gravity="center"
+        android:onClick="openConfirmCounterOfferDialog"
+        android:paddingLeft="8dp"
+        android:paddingTop="7dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="8dp"
+        android:text="Aceptar contraoferta"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/counterOfferCostDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/counterOfferCostTitleDetail" />
 
     <LinearLayout
         android:id="@+id/bidderDetail"
@@ -239,8 +351,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/rect_blue"
         android:gravity="center"
         android:onClick="openCounterOfferDialog"
@@ -253,7 +365,7 @@
         android:textSize="12sp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/costValue"
-        app:layout_constraintStart_toEndOf="@+id/costTitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/costTitle"
         app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
