@@ -125,7 +125,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                     viewTitle.setText(data.child("servicePetitionTitle").getValue().toString());
 
                     // Counter offer
-                    counterOfferCostDetail.setText("₡" + data.child("counterOfferCost").getValue().toString());
+                    counterOfferCostDetail.setText("₡" + costFormat.format(Double.parseDouble(data.child("counterOfferCost").getValue().toString())));
 
                     if (data.child("counterOffer").getValue() != null) {
                         hasCounterOffer = data.child("counterOffer").getValue().toString().equals("true");
@@ -135,6 +135,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             counterOfferIconDetail.setVisibility(View.VISIBLE);
                             counterOfferTextDetail.setVisibility(View.VISIBLE);
+                            counterOfferDescDetail.setVisibility(View.VISIBLE);
                             counterOfferDescDetail.setVisibility(View.VISIBLE);
                             counterOfferCostTitleDetail.setVisibility(View.VISIBLE);
                             counterOfferCostDetail.setVisibility(View.VISIBLE);
@@ -150,7 +151,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
                             btnAcceptCounterOffer.setVisibility(View.GONE);
 
                             counterOfferButton.setText("Modificar contraoferta");
-                            petitionerCostDetail.setText(data.child("counterOfferCost").getValue().toString());
+                            petitionerCostDetail.setText("₡" + costFormat.format(Double.parseDouble(data.child("counterOfferCost").getValue().toString())));
                             divisorLineOfferDetail.setVisibility(View.VISIBLE);
                             petitionerCostTitle.setVisibility(View.VISIBLE);
                             petitionerCostDetail.setVisibility(View.VISIBLE);
