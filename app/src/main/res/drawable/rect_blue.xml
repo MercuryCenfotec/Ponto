@@ -6,6 +6,6 @@
     <!--android:bottom="4dp"-->
     <!--android:right="13dp"-->
     <!--/>-->
-    <corners android:radius="30dp" />
+    <corners android:radius="20dp" />
     <solid android:color="#15B1D7" />
 </shape>
