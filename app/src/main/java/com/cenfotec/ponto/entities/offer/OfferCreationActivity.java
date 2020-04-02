@@ -2,6 +2,7 @@ package com.cenfotec.ponto.entities.offer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -90,7 +91,7 @@ public class OfferCreationActivity extends AppCompatActivity {
     }
 
     public void createOffer(View view) {
-        if (validForm()) {
+        if (!validForm()) {
             SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
             String key = offerDBReference.push().getKey();
 
@@ -109,6 +110,8 @@ public class OfferCreationActivity extends AppCompatActivity {
 
             offerDBReference.child(key).setValue(offer);
             goToHome();
+        } else {
+            showToaster("Verificar campos");
         }
     }
 
@@ -119,11 +122,20 @@ public class OfferCreationActivity extends AppCompatActivity {
     }
 
     private boolean validForm() {
-        if (costInput.getText().toString().equals("") || durationInput.getText().toString().equals("") || descriptionInput.getText().toString().equals("")) {
-            showToaster("Campos vacíos.");
-            return false;
+        boolean isEmpty = false;
+        EditText[] editTextsList = new EditText[]{costInput, durationInput,
+                descriptionInput};
+        for (EditText editText : editTextsList) {
+            if (editText.getText().toString().equals("")) {
+                editText.setHintTextColor(Color.parseColor("#c0392b"));
+                editText.setBackgroundResource(R.drawable.edittext_error);
+                isEmpty = true;
+            } else {
+                editText.setBackgroundResource(R.drawable.rect_black);
+                editText.setHintTextColor(Color.parseColor("#b6b6b6"));
+            }
         }
-        return true;
+        return isEmpty;
     }
 
     private void showToaster(String message) {

@@ -375,7 +375,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
                         });
 
             } else {
-                showToaster("Error");
+                showToaster("Verificar campos");
             }
         }
     }
@@ -396,7 +396,7 @@ public class ServicePetitionCreationActivity extends AppCompatActivity {
         databaseReference.child(id).setValue(servicePetition);
 
         clearServicePetitionInputs();
-        showToaster("Solicitud de servicio creada!");
+        showToaster("Solicitud de servicio creada");
     }
 
     private void showToaster(String message) {

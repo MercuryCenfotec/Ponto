@@ -111,7 +111,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                     });
 
         } else {
-            showToaster("Revisa los campos señalados");
+            showToaster("Verificar campos");
         }
     }
 
