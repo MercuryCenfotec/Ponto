@@ -17,6 +17,7 @@ import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.ViewHolder> {
@@ -36,9 +37,12 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
 
     @Override
     public void onBindViewHolder(OfferCard_Adapter.ViewHolder holder, final int position) {
+        DecimalFormat costFormat = new DecimalFormat("###,###.###");
+        DecimalFormat durationFormat = new DecimalFormat("###.###");
+
         final SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        holder.cardCost.setText("₡ " + offerList.get(position).getCost().toString());
-        holder.cardDuration.setText(offerList.get(position).getDuration() + (offerList.get(position).getDurationType().equals("hour") ? " horas" : " dias"));
+        holder.cardCost.setText("₡ " + costFormat.format(offerList.get(position).getCost()));
+        holder.cardDuration.setText(durationFormat.format(offerList.get(position).getDuration()) + (offerList.get(position).getDurationType().equals("hour") ? " horas" : " dias"));
         holder.cardDescription.setText(offerList.get(position).getDescription());
         holder.offerCard.setOnClickListener(
                 new View.OnClickListener() {

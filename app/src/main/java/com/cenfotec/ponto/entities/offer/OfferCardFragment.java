@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
 
+import java.text.DecimalFormat;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**

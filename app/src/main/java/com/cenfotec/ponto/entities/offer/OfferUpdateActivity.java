@@ -63,18 +63,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
                             dayRadio.setChecked(true);
                             break;
                     }
-                    offer.setId(data.child("id").getValue().toString());
-                    offer.setAccepted(data.child("accepted").getValue().toString());
-                    offer.setCost(Float.parseFloat(data.child("cost").getValue().toString()));
-                    offer.setCounterOffer(data.child("accepted").getValue().toString().equals(true));
-                    offer.setCounterOfferCost(Float.parseFloat(data.child("counterOfferCost").getValue().toString()));
-                    offer.setDescription(data.child("description").getValue().toString());
-                    offer.setDuration(Float.parseFloat(data.child("duration").getValue().toString()));
-                    offer.setServicePetitionId(data.child("servicePetitionId").getValue().toString());
-                    offer.setUserId(data.child("userId").getValue().toString());
-                    offer.setDurationType(data.child("durationType").getValue().toString());
-                    offer.setBidderName(data.child("bidderName").getValue().toString());
-                    // Terminar de llenar los nuevos campos
+                    offer = data.getValue(Offer.class);
                 }
             }
 

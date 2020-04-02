@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
@@ -24,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class ServicePetitionDetail extends Fragment {
     MyTextView_SF_Pro_Display_Semibold btnPetitionUpdate;
     ServicePetition servicePetition;
     ServiceType serviceType;
+    LinearLayout modifyLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +75,7 @@ public class ServicePetitionDetail extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 servicePetition = dataSnapshot.getValue(ServicePetition.class);
+                isModifiable();
                 chargeServiceType();
             }
 
@@ -105,6 +109,7 @@ public class ServicePetitionDetail extends Fragment {
         petitionName = view.findViewById(R.id.petitionName);
         petitionDescription = view.findViewById(R.id.petitionDescription);
         btnPetitionUpdate = view.findViewById(R.id.btnPetitionUpdate);
+        modifyLayout = view.findViewById(R.id.modifyLayout);
     }
 
     private void setContent() {
@@ -139,5 +144,24 @@ public class ServicePetitionDetail extends Fragment {
     public void goToPetitionUpdate() {
         Intent intent = new Intent(getActivity(), ServicePetitionUpdateActivity.class);
         startActivity(intent);
+    }
+
+    private void isModifiable() {
+        DatabaseReference offerRef = FirebaseDatabase.getInstance().getReference("Offers");
+        Query offersQuery = offerRef.orderByChild("servicePetitionId").equalTo(servicePetition.getId());
+
+        offersQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    modifyLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
