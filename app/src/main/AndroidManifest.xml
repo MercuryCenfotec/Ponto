@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.contract.ContractsListActivity"></activity>
+        <activity android:name=".entities.appointment.AppointmentUpdateActivity"></activity>
+        <activity android:name=".entities.appointment.AppointmentAgendaActivity" />
+        <activity android:name=".entities.appointment.AppointmentCreationActivity" />
+        <activity android:name=".entities.contract.ContractsListActivity" />
         <activity android:name=".entities.contract.GeneratedContractActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionPetitionerDetailActivity" />
         <activity android:name=".entities.servicePetition.ServicePetitionBidderDetailActivity" />

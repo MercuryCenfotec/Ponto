@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
+import com.cenfotec.ponto.entities.appointment.AppointmentCreationActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
@@ -58,8 +60,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                 switch (position) {
                     case 0:
-                        //Intent i = new Intent(context, CLASE DE AGENDA PROYECTOS.class);
-                        //context.startActivity(i);
+                        if(profileModelArrayList.get(position).getUserType().equals("petitioner")){
+                            Intent iac = new Intent(context, AppointmentAgendaActivity.class);
+                            iac.putExtra("userId", profileModelArrayList.get(position).getUserId());
+                            iac.putExtra("userType", "petitioner");
+                            context.startActivity(iac);
+                        }else{
+                            Intent iac = new Intent(context, AppointmentAgendaActivity.class);
+                            iac.putExtra("userId", profileModelArrayList.get(position).getUserId());
+                            iac.putExtra("userType", "bidder");
+                            context.startActivity(iac);
+                        }
                         break;
 
                     case 1:
