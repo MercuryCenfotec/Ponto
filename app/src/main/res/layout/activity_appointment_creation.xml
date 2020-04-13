@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".entities.appointment.AppointmentCreationActivity">
 
+    <ImageView
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_left_arrow"
+        android:onClick="goBackFromAppoCreation"/>
 
     <customfonts.EditText__SF_Pro_Display_Medium
         android:id="@+id/appointmentTitleEditText"
@@ -114,19 +125,20 @@
 
     <customfonts.MyTextView_SF_Pro_Display_Medium
         android:id="@+id/btnAppointmentCreation"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="42dp"
         android:layout_gravity="center"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginRight="124dp"
+        android:textAlignment="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/rect_blue"
+        android:onClick="preCreateAppointment"
         android:paddingLeft="48dp"
         android:paddingTop="11dp"
         android:paddingRight="48dp"
-        android:onClick="createAppointment"
         android:paddingBottom="11dp"
         android:text="Crear"
         android:textAllCaps="false"

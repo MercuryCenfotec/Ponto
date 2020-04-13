@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Appointment;
@@ -29,55 +28,61 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-public class AppointmentAgendaActivity extends AppCompatActivity implements CalendarPickerController{
-
+public class AppointmentAgendaActivity extends AppCompatActivity implements CalendarPickerController {
+    DatabaseReference databaseReference;
     AgendaCalendarView mAgendaCalendarView;
     String userId;
     String userType;
-    final List<Appointment> appointmentList = new ArrayList<>();
-    List<CalendarEvent> eventList = new ArrayList<>();
-    Calendar minDate = Calendar.getInstance();
-    Calendar maxDate = Calendar.getInstance();
+    List<Appointment> appointmentList;
+    List<CalendarEvent> eventList;
+    Calendar minDate;
+    Calendar maxDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_agenda);
+        initControls();
+        catchIntent();
+    }
 
-        if(getIntent().getExtras() != null){
-            userId = getIntent().getStringExtra("userId");
-            userType = getIntent().getStringExtra("userType");
-        }
-
-        if(userType.equals("petitioner")){
-            getPetitionerAppointments();
-        }else{
-            getBidderAppointments();
-        }
-
-        // minimum and maximum date of our calendar
+    private void initControls() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
+        appointmentList = new ArrayList<>();
+        eventList = new ArrayList<>();
+        minDate = Calendar.getInstance();
+        maxDate = Calendar.getInstance();
+        // minimum and maximum date of the calendar
         // 2 month behind, one year ahead, example: March 2015 <-> May 2015 <-> May 2016
         minDate.add(Calendar.MONTH, -2);
         minDate.set(Calendar.DAY_OF_MONTH, 1);
         maxDate.add(Calendar.YEAR, 1);
-
         mAgendaCalendarView = findViewById(R.id.agenda_calendar_view);
     }
 
-    private void getPetitionerAppointments() {
-        final DatabaseReference usersDBReference = FirebaseDatabase.getInstance().getReference("Appointments");
-        Query query = usersDBReference.orderByChild("petitionerId").equalTo(userId);
+    private void catchIntent() {
+        if (getIntent().getExtras() != null) {
+            userId = getIntent().getStringExtra("userId");
+            userType = getIntent().getStringExtra("userType");
+        }
 
-        query.addValueEventListener(new ValueEventListener() {
+        if (userType.equals("petitioner")) {
+            getUserAppointments("petitionerId");
+        } else {
+            getUserAppointments("bidderId");
+        }
+    }
+
+    //CalendarView statements start here
+    private void getUserAppointments(String refUserId) {
+        Query getUserAppointmentsQuery = databaseReference.orderByChild(refUserId).equalTo(userId);
+        getUserAppointmentsQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    //fill the calendar appointments list
-                    appointmentList.add(data.getValue(Appointment.class));
+                for (DataSnapshot userAppointmentSnapshot : snapshot.getChildren()) {
+                    appointmentList.add(userAppointmentSnapshot.getValue(Appointment.class));
                 }
-                //fill the calendar
-                mockList(eventList);
-
+                mockEventsToCalendar(eventList);
             }
 
             @Override
@@ -87,51 +92,15 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         });
     }
 
-    private void getBidderAppointments() {
-        final DatabaseReference usersDBReference = FirebaseDatabase.getInstance().getReference("Appointments");
-        Query query = usersDBReference.orderByChild("bidderId").equalTo(userId);
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    //fill the calendar appointments list
-                    appointmentList.add(data.getValue(Appointment.class));
-                }
-                //fill the calendar
-                mockList(eventList);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                System.out.println("The appointments read failed: " + databaseError.getCode());
-            }
-        });
-    }
-
+    //CalendarPickerController statements start here
     @Override
     public void onDaySelected(DayItem dayItem) {
-        showToaster("day selected: " + dayItem);
-        Intent intent = new Intent(this, AppointmentCreationActivity.class);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String formatedDate = sdf.format(dayItem.getDate());
-
-        intent.putExtra("dateSelected", formatedDate);
-        startActivity(intent);
+        openAppointmentCreation(dayItem);
     }
 
     @Override
     public void onEventSelected(CalendarEvent event) {
-        Intent intent = new Intent(this, AppointmentUpdateActivity.class);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String df = event.getStartTime().get(Calendar.DAY_OF_MONTH) + "/" + (event.getStartTime().get(Calendar.MONTH) + 1) + "/"
-                + event.getStartTime().get(Calendar.YEAR) + " " + event.getStartTime().get(Calendar.HOUR_OF_DAY) + ":"
-                + event.getStartTime().get(Calendar.MINUTE);
-        intent.putExtra("dateSelected", df);
-        intent.putExtra("appointmentTitle", event.getTitle());
-        startActivity(intent);
+        openAppointmentUpdate(event);
     }
 
     @Override
@@ -141,11 +110,38 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         }
     }
 
-    private void showToaster(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    //Other statements start here
+    private void openAppointmentCreation(DayItem dayItem) {
+        Intent intent = new Intent(this, AppointmentCreationActivity.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = sdf.format(dayItem.getDate());
+        intent.putExtra("dateSelected", formattedDate);
+        startActivity(intent);
     }
 
-    private void mockList(List<CalendarEvent> eventList) {
+    private void openAppointmentUpdate(CalendarEvent event) {
+        String newDay;
+        String newMonth;
+        if (event.getStartTime().get(Calendar.DAY_OF_MONTH) < 10) {
+            newDay = "0" + event.getStartTime().get(Calendar.DAY_OF_MONTH);
+        } else {
+            newDay = "" + event.getStartTime().get(Calendar.DAY_OF_MONTH);
+        }
+        if (event.getStartTime().get(Calendar.MONTH) + 1 < 10) {
+            newMonth = "0" + (event.getStartTime().get(Calendar.MONTH) + 1);
+        } else {
+            newMonth = "" + (event.getStartTime().get(Calendar.MONTH) + 1);
+        }
+        String formattedLongDate = newDay + "/" + newMonth + "/" + event.getStartTime().get(Calendar.YEAR)
+                + " " + event.getStartTime().get(Calendar.HOUR_OF_DAY) + ":"
+                + event.getStartTime().get(Calendar.MINUTE);
+        Intent intent = new Intent(this, AppointmentUpdateActivity.class);
+        intent.putExtra("dateSelected", formattedLongDate);
+        intent.putExtra("appointmentTitle", event.getTitle());
+        startActivity(intent);
+    }
+
+    private void mockEventsToCalendar(List<CalendarEvent> eventList) {
         try {
             for (Appointment appointment : appointmentList) {
                 Calendar startTime = Calendar.getInstance();
@@ -153,26 +149,25 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
                 startTime.setTime(sdf.parse(appointment.getStartDateTime()));
                 int startHour = startTime.get(Calendar.HOUR_OF_DAY);
                 String amPm;
-                if(startHour >= 12){
+                if (startHour >= 12) {
                     amPm = "PM";
-                }else{
+                } else {
                     amPm = "AM";
                 }
-                String fs = String.format("%02d", startTime.get(Calendar.MINUTE));
-                String fullTime = startHour + ":" + fs + amPm;
-                BaseCalendarEvent event = new BaseCalendarEvent(appointment.getTitle(), appointment.getDescription(), fullTime,
-                        randomColor(), startTime, startTime, true);
+                String formattedMinutes = String.format("%02d", startTime.get(Calendar.MINUTE));
+                String fullTime = startHour + ":" + formattedMinutes + amPm;
+                BaseCalendarEvent event = new BaseCalendarEvent(appointment.getTitle(),
+                        appointment.getDescription(), fullTime, pickRandomColor(), startTime,
+                        startTime, true);
                 eventList.add(event);
-
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
     }
 
-    private int randomColor(){
+    private int pickRandomColor() {
         String[] colorsToPick = new String[]{"#F97304", "#D44206", "#023D67", "#03749C"};
         String randomStr = colorsToPick[new Random().nextInt(colorsToPick.length)];
         return Color.parseColor(randomStr);
