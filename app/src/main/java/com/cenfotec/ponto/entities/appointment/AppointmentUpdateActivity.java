@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.appointment;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -35,11 +37,13 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     EditText appointmentTitleUpdEditText;
     EditText appointmentLocationUpdEditText;
+    EditText appointmentDateUpdEditText;
     EditText appointmentHourUpdEditText;
     EditText appointmentDescriptionUpdEditText;
     CustomDatePickerDialog customDatePickerDialog;
     String selectedDate;
     String appointmentTitle;
+    int colorToDisplay;
     Calendar calendar;
     int currentHour;
     int currentMinute;
@@ -47,6 +51,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     Appointment updatedAppointment;
     String activeUserId;
     String activeUserType;
+    DatePickerDialog.OnDateSetListener birthDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
         appointmentTitleUpdEditText = findViewById(R.id.appointmentTitleUpdEditText);
         appointmentLocationUpdEditText = findViewById(R.id.appointmentLocationUpdEditText);
+        appointmentDateUpdEditText = findViewById(R.id.appointmentDateUpdEditText);
         appointmentHourUpdEditText = findViewById(R.id.appointmentHourUpdEditText);
         appointmentDescriptionUpdEditText = findViewById(R.id.appointmentDescriptionUpdEditText);
         customDatePickerDialog = new CustomDatePickerDialog();
@@ -76,6 +82,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             selectedDate = getIntent().getStringExtra("dateSelected");
             appointmentTitle = getIntent().getStringExtra("appointmentTitle");
+            colorToDisplay = getIntent().getIntExtra("colorToDisplay", 0);
         }
     }
 
@@ -115,8 +122,26 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         }
         String longHourFormat = String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE)) + amPm;
+        String[] separated = selectedDate.split(" ");
+        appointmentDateUpdEditText.setText(separated[0]);
         appointmentHourUpdEditText.setText(longHourFormat);
         appointmentDescriptionUpdEditText.setText(updatedAppointment.getDescription());
+    }
+
+    //CustomDatePickerDialog statements start here
+    public void startAppointmentDateInput(View view){
+        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month += 1;
+                String formatDate = String.format("%02d/%02d/", dayOfMonth,
+                        month) + year;
+                appointmentDateUpdEditText.setText(formatDate);
+            }
+        };
+
+        customDatePickerDialog.openAgendaDateDialog(appointmentDateUpdEditText,
+                AppointmentUpdateActivity.this, birthDateSetListener);
     }
 
     //TimePickerDialog statements start here
@@ -183,7 +208,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     }
 
     private void checkIfAppoDateTimeExists() {
-        final String longDate = getFormattedLongDate();
+       final String longDate = getFormattedLongDate();
         if (isCurrentAppointmentDate()) {
             updateAppointment(longDate);
         } else {
@@ -220,16 +245,17 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         updatedAppointment.setDescription(appointmentDescriptionUpdEditText.getText().toString());
         updateUserReference.setValue(updatedAppointment);
         showToaster("Actualización exitosa");
-        openAppointmentAgenda();
+        openAppointmentDetail();
     }
 
     //Other statements start here
-    private void openAppointmentAgenda() {
+    private void openAppointmentDetail() {
         finish();
-        Intent iac = new Intent(this, AppointmentAgendaActivity.class);
-        iac.putExtra("userId", activeUserId);
-        iac.putExtra("userType", activeUserType);
-        startActivity(iac);
+        Intent intent = new Intent(this, AppointmentDetailActivity.class);
+        intent.putExtra("dateSelected", selectedDate);
+        intent.putExtra("appointmentTitle", updatedAppointment.getTitle());
+        intent.putExtra("colorToDisplay", colorToDisplay);
+        startActivity(intent);
     }
 
     private void showToaster(String message) {
@@ -238,13 +264,16 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
 
     public void goBackFromAppoUpdate(View view) {
         finish();
+        Intent intent = new Intent(this, AppointmentDetailActivity.class);
+        intent.putExtra("dateSelected", selectedDate);
+        intent.putExtra("appointmentTitle", updatedAppointment.getTitle());
+        intent.putExtra("colorToDisplay", colorToDisplay);
+        startActivity(intent);
     }
 
     private String getFormattedLongDate() {
         String hour = appointmentHourUpdEditText.getText().toString();
-        String currentString = selectedDate;
-        String[] separated = currentString.split(" ");
-        String newDate = separated[0];
+        String newDate = appointmentDateUpdEditText.getText().toString();
         return newDate + " " + hour.substring(0, hour.length() - 2);
     }
 
@@ -252,7 +281,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{appointmentTitleUpdEditText, appointmentLocationUpdEditText,
-                appointmentHourUpdEditText, appointmentDescriptionUpdEditText};
+                appointmentDateUpdEditText, appointmentHourUpdEditText, appointmentDescriptionUpdEditText};
         for (EditText editText : editTextsList) {
             if (editText.getText().toString().equals("")) {
                 editText.setHintTextColor(Color.parseColor("#c0392b"));

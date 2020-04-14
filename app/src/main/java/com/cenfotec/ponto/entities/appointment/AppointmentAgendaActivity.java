@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Appointment;
@@ -35,6 +36,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     String userType;
     List<Appointment> appointmentList;
     List<CalendarEvent> eventList;
+    List<BaseCalendarEvent> tempEventList;
     Calendar minDate;
     Calendar maxDate;
 
@@ -50,6 +52,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
         appointmentList = new ArrayList<>();
         eventList = new ArrayList<>();
+        tempEventList = new ArrayList<>();
         minDate = Calendar.getInstance();
         maxDate = Calendar.getInstance();
         // minimum and maximum date of the calendar
@@ -100,7 +103,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
 
     @Override
     public void onEventSelected(CalendarEvent event) {
-        openAppointmentUpdate(event);
+        openAppointmentDetail(event);
     }
 
     @Override
@@ -111,6 +114,10 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     }
 
     //Other statements start here
+    public void goBackFromAppoAgenda(View view){
+        finish();
+    }
+
     private void openAppointmentCreation(DayItem dayItem) {
         Intent intent = new Intent(this, AppointmentCreationActivity.class);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -119,7 +126,13 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         startActivity(intent);
     }
 
-    private void openAppointmentUpdate(CalendarEvent event) {
+    private void openAppointmentDetail(CalendarEvent event) {
+        int colorOfEvent = 0;
+        for (BaseCalendarEvent baseCalendarEvent : tempEventList) {
+            if (baseCalendarEvent.getTitle().equals(event.getTitle())) {
+                colorOfEvent = baseCalendarEvent.getColor();
+            }
+        }
         String newDay;
         String newMonth;
         if (event.getStartTime().get(Calendar.DAY_OF_MONTH) < 10) {
@@ -135,9 +148,11 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         String formattedLongDate = newDay + "/" + newMonth + "/" + event.getStartTime().get(Calendar.YEAR)
                 + " " + event.getStartTime().get(Calendar.HOUR_OF_DAY) + ":"
                 + event.getStartTime().get(Calendar.MINUTE);
-        Intent intent = new Intent(this, AppointmentUpdateActivity.class);
+        finish();
+        Intent intent = new Intent(this, AppointmentDetailActivity.class);
         intent.putExtra("dateSelected", formattedLongDate);
         intent.putExtra("appointmentTitle", event.getTitle());
+        intent.putExtra("colorToDisplay", colorOfEvent);
         startActivity(intent);
     }
 
@@ -160,6 +175,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
                         appointment.getDescription(), fullTime, pickRandomColor(), startTime,
                         startTime, true);
                 eventList.add(event);
+                tempEventList.add(event);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
