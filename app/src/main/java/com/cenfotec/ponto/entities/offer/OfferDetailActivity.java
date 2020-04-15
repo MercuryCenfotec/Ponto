@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Appointment;
 import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
+import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
@@ -68,6 +71,10 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     TextView petitionerCostDetail;
     // Counter offer end
 
+    //Appointment
+    TextView btnCreateAppointment;
+    //Appointment end
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,11 +108,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         petitionerCostDetail = findViewById(R.id.petCounterOfferCostDetail);
         // Counter offer end
 
+        btnCreateAppointment = findViewById(R.id.btnCreateAppointment);
+
         String userId = myPrefs.getString("userId", "none");
         offerId = myPrefs.getString("offerId","none");
 
         loadOfferData(userId, offerId);
 
+        //Appointment
+        checkIfServiceHasAcceptedOffer();
+        //Appointment end
     }
 
     private void loadOfferData(final String userId, String offerId) {
@@ -275,6 +287,42 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         startActivity(intent);
         finish();
     }
+
+    //Appointment
+    public void goToAppointmentAgenda(View view) {
+        //finish();
+        Intent iac = new Intent(this, AppointmentAgendaActivity.class);
+        iac.putExtra("userId", myPrefs.getString("userId", ""));
+        iac.putExtra("userType", myPrefs.getString("userType", ""));
+        iac.putExtra("petitionerId", myPrefs.getString("userId", ""));
+        iac.putExtra("bidderId", activeOffer.getUserId());
+
+        startActivity(iac);
+    }
+
+    private void checkIfServiceHasAcceptedOffer() {
+        String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
+        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+        Query getAppointmentByTitleQuery = ref2.orderByChild("id").equalTo(servicePetitionId);
+        getAppointmentByTitleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
+                    ServicePetition sp = appointmentSnapshot.getValue(ServicePetition.class);
+                    if(!sp.getAcceptedOfferId().equals("")) {
+                        btnCreateAppointment.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    //Appointment end
 
     public void createCounterOffer(String newCost) {
         activeOffer.setCounterOffer(true);

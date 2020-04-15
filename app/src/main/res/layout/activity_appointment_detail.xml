@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_margin="10dp"
-            android:src="@drawable/ic_left_arrow"
+            android:src="@drawable/ic_left_arrow_white"
             android:onClick="goBackFromAppoDetail"/>
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
@@ -34,8 +34,8 @@
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginRight="80dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
             android:layout_marginBottom="16dp"
             android:text="Título"
             android:textColor="#fff"
@@ -48,13 +48,28 @@
             android:id="@+id/imgUpdateAppointment"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="openAppoUpdate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_edit_regular" />
+
+        <ImageView
+            android:id="@+id/imgDeleteAppointment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
+            android:onClick="openAppoDelete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_edit_regular"
-            android:onClick="openAppoUpdate"/>
+            app:layout_constraintStart_toEndOf="@+id/imgUpdateAppointment"
+            app:srcCompat="@drawable/ic_eye" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

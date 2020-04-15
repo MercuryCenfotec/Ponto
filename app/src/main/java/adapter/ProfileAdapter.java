@@ -60,17 +60,16 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                 switch (position) {
                     case 0:
+                        Intent iac = new Intent(context, AppointmentAgendaActivity.class);
+                        iac.putExtra("userId", profileModelArrayList.get(position).getUserId());
+                        iac.putExtra("petitionerId", "");
+                        iac.putExtra("bidderId", "");
                         if(profileModelArrayList.get(position).getUserType().equals("petitioner")){
-                            Intent iac = new Intent(context, AppointmentAgendaActivity.class);
-                            iac.putExtra("userId", profileModelArrayList.get(position).getUserId());
                             iac.putExtra("userType", "petitioner");
-                            context.startActivity(iac);
                         }else{
-                            Intent iac = new Intent(context, AppointmentAgendaActivity.class);
-                            iac.putExtra("userId", profileModelArrayList.get(position).getUserId());
                             iac.putExtra("userType", "bidder");
-                            context.startActivity(iac);
                         }
+                        context.startActivity(iac);
                         break;
 
                     case 1:

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Appointment;
@@ -39,6 +40,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     AgendaCalendarView mAgendaCalendarView;
     String userId;
     String userType;
+    String petitionerId;
+    String bidderId;
     List<Appointment> appointmentList;
     List<CalendarEvent> eventList;
     List<BaseCalendarEvent> tempEventList;
@@ -77,6 +80,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         if (getIntent().getExtras() != null) {
             userId = getIntent().getStringExtra("userId");
             userType = getIntent().getStringExtra("userType");
+            petitionerId = getIntent().getStringExtra("petitionerId");
+            bidderId = getIntent().getStringExtra("bidderId");
         }
 
         if (userType.equals("petitioner")) {
@@ -84,6 +89,16 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         } else {
             getUserAppointments("bidderId");
         }
+
+        if (petitionerId.equals("") && bidderId.equals("")) {
+            showToaster("No hay usuarios, no muestro el botón");
+        } else {
+           showToaster("Hay usuarios, muestro el botón");
+        }
+    }
+
+    private void showToaster(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     //CalendarView statements start here
@@ -158,6 +173,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         intent.putExtra("dateSelected", formattedLongDate);
         intent.putExtra("appointmentTitle", eventTitle);
         intent.putExtra("colorToDisplay", colorOfEvent);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
 
@@ -169,6 +186,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         intent.putExtra("dateSelected", formattedDate);
         intent.putExtra("userId", userId);
         intent.putExtra("userType", userType);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
 
@@ -199,6 +218,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         intent.putExtra("dateSelected", formattedLongDate);
         intent.putExtra("appointmentTitle", event.getTitle());
         intent.putExtra("colorToDisplay", colorOfEvent);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
 

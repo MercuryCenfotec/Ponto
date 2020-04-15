@@ -51,6 +51,8 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     Appointment updatedAppointment;
     String activeUserId;
     String activeUserType;
+    String petitionerId;
+    String bidderId;
     DatePickerDialog.OnDateSetListener birthDateSetListener;
 
     @Override
@@ -83,6 +85,8 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
             selectedDate = getIntent().getStringExtra("dateSelected");
             appointmentTitle = getIntent().getStringExtra("appointmentTitle");
             colorToDisplay = getIntent().getIntExtra("colorToDisplay", 0);
+            petitionerId = getIntent().getStringExtra("petitionerId");
+            bidderId = getIntent().getStringExtra("bidderId");
         }
     }
 
@@ -220,7 +224,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
                     for (DataSnapshot appointmentSnapshot : snapshot.getChildren()) {
                         if (appointmentSnapshot != null) {
                             appointmentFound = true;
-                            showToaster("Cita con fecha existente");
+                            showToaster("Cita con fecha y hora existentes");
                         }
                     }
                     if (!appointmentFound) {
@@ -255,6 +259,8 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         intent.putExtra("dateSelected", selectedDate);
         intent.putExtra("appointmentTitle", updatedAppointment.getTitle());
         intent.putExtra("colorToDisplay", colorToDisplay);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
 
@@ -268,6 +274,8 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         intent.putExtra("dateSelected", selectedDate);
         intent.putExtra("appointmentTitle", updatedAppointment.getTitle());
         intent.putExtra("colorToDisplay", colorToDisplay);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
 

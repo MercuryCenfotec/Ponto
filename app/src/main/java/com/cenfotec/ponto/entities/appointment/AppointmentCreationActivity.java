@@ -25,8 +25,8 @@ import java.util.Calendar;
 
 public class AppointmentCreationActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
-    String petitionerId = "-M4QlQIvXVkax3q4yClP";
-    String bidderUserId = "-M4Qle-f_LPhyhCdOzhH";
+    String petitionerId;
+    String bidderUserId;
     EditText appointmentTitleEditText;
     EditText appointmentLocationEditText;
     EditText appointmentHourEditText;
@@ -63,6 +63,8 @@ public class AppointmentCreationActivity extends AppCompatActivity {
             selectedDate = getIntent().getStringExtra("dateSelected");
             userId = getIntent().getStringExtra("userId");
             userType = getIntent().getStringExtra("userType");
+            petitionerId = getIntent().getStringExtra("petitionerId");
+            bidderUserId = getIntent().getStringExtra("bidderId");
         }
     }
 
@@ -137,7 +139,7 @@ public class AppointmentCreationActivity extends AppCompatActivity {
                 for (DataSnapshot appointmentSnapshot : snapshot.getChildren()) {
                     if (appointmentSnapshot != null) {
                         appointmentFound = true;
-                        showToaster("Cita con fecha existente");
+                        showToaster("Cita con fecha y hora existentes");
                     }
                 }
                 if (!appointmentFound) {
@@ -164,6 +166,8 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AppointmentAgendaActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("userType", userType);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderUserId);
         startActivity(intent);
     }
 
@@ -177,6 +181,8 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AppointmentAgendaActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("userType", userType);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderUserId);
         startActivity(intent);
     }
 

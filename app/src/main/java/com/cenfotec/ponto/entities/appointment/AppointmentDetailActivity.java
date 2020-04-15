@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Appointment;
@@ -22,7 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import customfonts.MyTextView_SF_Pro_Display_Bold;
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 
-public class AppointmentDetailActivity extends AppCompatActivity {
+public class AppointmentDetailActivity extends AppCompatActivity
+        implements AppointmentDeletionConfirmDialog.AppointmentDeletionConfirmDialogListener {
 
     DatabaseReference databaseReference;
     SharedPreferences sharedpreferences;
@@ -36,6 +38,8 @@ public class AppointmentDetailActivity extends AppCompatActivity {
     String appointmentTitle;
     String activeUserId;
     String activeUserType;
+    String petitionerId;
+    String bidderId;
     String selectedDate;
     int colorToDisplay;
 
@@ -66,6 +70,8 @@ public class AppointmentDetailActivity extends AppCompatActivity {
             selectedDate = getIntent().getStringExtra("dateSelected");
             appointmentTitle = getIntent().getStringExtra("appointmentTitle");
             colorToDisplay = getIntent().getIntExtra("colorToDisplay",0);
+            petitionerId = getIntent().getStringExtra("petitionerId");
+            bidderId = getIntent().getStringExtra("bidderId");
         }
     }
 
@@ -108,11 +114,17 @@ public class AppointmentDetailActivity extends AppCompatActivity {
     }
 
     //Other statements start here
+    private void showToaster(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
     public void goBackFromAppoDetail(View view){
         finish();
         Intent iac = new Intent(this, AppointmentAgendaActivity.class);
         iac.putExtra("userId", activeUserId);
         iac.putExtra("userType", activeUserType);
+        iac.putExtra("petitionerId", petitionerId);
+        iac.putExtra("bidderId", bidderId);
         startActivity(iac);
     }
 
@@ -122,6 +134,29 @@ public class AppointmentDetailActivity extends AppCompatActivity {
         intent.putExtra("dateSelected", selectedDate);
         intent.putExtra("appointmentTitle", updatedAppointment.getTitle());
         intent.putExtra("colorToDisplay", colorToDisplay);
+        intent.putExtra("petitionerId", petitionerId);
+        intent.putExtra("bidderId", bidderId);
         startActivity(intent);
+    }
+
+    //AppointmentDeletionConfirmDialog statements start here
+    public void openAppoDelete(View view) {
+        AppointmentDeletionConfirmDialog appoDeleteDialog = new AppointmentDeletionConfirmDialog();
+        appoDeleteDialog.show(getSupportFragmentManager(), "delete appointment dialog");
+    }
+
+    //Delete statements start here
+    @Override
+    public void dialogAppointmentDeletionConfirmed() {
+        DatabaseReference db = databaseReference.child(updatedAppointment.getId());
+        db.removeValue();
+        finish();
+        Intent iac = new Intent(this, AppointmentAgendaActivity.class);
+        iac.putExtra("userId", activeUserId);
+        iac.putExtra("userType", activeUserType);
+        iac.putExtra("petitionerId", petitionerId);
+        iac.putExtra("bidderId", bidderId);
+        startActivity(iac);
+        showToaster("Cita eliminada exitosamente");
     }
 }

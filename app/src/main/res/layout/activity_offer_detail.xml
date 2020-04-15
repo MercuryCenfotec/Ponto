@@ -144,6 +144,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/btnCreateAppointment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="156dp"
+        android:layout_marginRight="156dp"
+        android:background="@drawable/rect_blue"
+        android:onClick="goToAppointmentAgenda"
+        android:paddingLeft="24dp"
+        android:paddingTop="8dp"
+        android:paddingRight="24dp"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        android:text="Crear cita"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counterOfferDescDetail" />
+
     <View
         android:id="@+id/divisorLineOfferDetail"
         android:layout_width="match_parent"
