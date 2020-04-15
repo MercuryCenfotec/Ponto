@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.appointment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,8 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     EditText appointmentDescriptionEditText;
     CustomDatePickerDialog customDatePickerDialog;
     String selectedDate;
+    String userId;
+    String userType;
     Calendar calendar;
     int currentHour;
     int currentMinute;
@@ -58,6 +61,8 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     private void catchIntent() {
         if (getIntent().getExtras() != null) {
             selectedDate = getIntent().getStringExtra("dateSelected");
+            userId = getIntent().getStringExtra("userId");
+            userType = getIntent().getStringExtra("userType");
         }
     }
 
@@ -155,6 +160,11 @@ public class AppointmentCreationActivity extends AppCompatActivity {
                 appointmentDescriptionEditText.getText().toString(), petitionerId, bidderUserId);
         databaseReference.child(appointmentId).setValue(appointment);
         showToaster("Registro exitoso");
+        finish();
+        Intent intent = new Intent(this, AppointmentAgendaActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("userType", userType);
+        startActivity(intent);
     }
 
     //Other statements start here
@@ -164,6 +174,10 @@ public class AppointmentCreationActivity extends AppCompatActivity {
 
     public void goBackFromAppoCreation(View view) {
         finish();
+        Intent intent = new Intent(this, AppointmentAgendaActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("userType", userType);
+        startActivity(intent);
     }
 
     //Validation statements start here

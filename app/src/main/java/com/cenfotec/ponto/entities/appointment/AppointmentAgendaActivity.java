@@ -25,9 +25,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+
+import in.galaxyofandroid.spinerdialog.OnSpinerItemClick;
+import in.galaxyofandroid.spinerdialog.SpinnerDialog;
 
 public class AppointmentAgendaActivity extends AppCompatActivity implements CalendarPickerController {
     DatabaseReference databaseReference;
@@ -39,6 +44,11 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     List<BaseCalendarEvent> tempEventList;
     Calendar minDate;
     Calendar maxDate;
+    SpinnerDialog spinnerDialog;
+    ArrayList<String> spinnerKeys;
+    ArrayList<Appointment> spinnerValues;
+    boolean isCalled = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
                     appointmentList.add(userAppointmentSnapshot.getValue(Appointment.class));
                 }
                 mockEventsToCalendar(eventList);
+                initSpinnerData();
             }
 
             @Override
@@ -98,7 +109,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     //CalendarPickerController statements start here
     @Override
     public void onDaySelected(DayItem dayItem) {
-        openAppointmentCreation(dayItem);
+        //openAppointmentCreation(dayItem);
     }
 
     @Override
@@ -118,15 +129,51 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         finish();
     }
 
+    public void openSearchSpinnerDialog(View view) {
+        spinnerDialog.showSpinerDialog();
+    }
+
+    private void initSpinnerData() {
+        spinnerKeys = new ArrayList<>();
+        spinnerValues = new ArrayList<>();
+
+        for (Appointment appointment : appointmentList) {
+            spinnerValues.add(appointment);
+            spinnerKeys.add(appointment.getTitle());
+        }
+
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
+
+        spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
+            @Override
+            public void onClick(String item, int position) {
+                openDetail(spinnerValues.get(position).getStartDateTime(), item, pickRandomColor());
+            }
+        });
+    }
+
+    private void openDetail(String formattedLongDate, String eventTitle, int colorOfEvent){
+        finish();
+        Intent intent = new Intent(this, AppointmentDetailActivity.class);
+        intent.putExtra("dateSelected", formattedLongDate);
+        intent.putExtra("appointmentTitle", eventTitle);
+        intent.putExtra("colorToDisplay", colorOfEvent);
+        startActivity(intent);
+    }
+
     private void openAppointmentCreation(DayItem dayItem) {
+        this.finish();
         Intent intent = new Intent(this, AppointmentCreationActivity.class);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = sdf.format(dayItem.getDate());
         intent.putExtra("dateSelected", formattedDate);
+        intent.putExtra("userId", userId);
+        intent.putExtra("userType", userType);
         startActivity(intent);
     }
 
     private void openAppointmentDetail(CalendarEvent event) {
+        finish();
         int colorOfEvent = 0;
         for (BaseCalendarEvent baseCalendarEvent : tempEventList) {
             if (baseCalendarEvent.getTitle().equals(event.getTitle())) {
@@ -148,7 +195,6 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         String formattedLongDate = newDay + "/" + newMonth + "/" + event.getStartTime().get(Calendar.YEAR)
                 + " " + event.getStartTime().get(Calendar.HOUR_OF_DAY) + ":"
                 + event.getStartTime().get(Calendar.MINUTE);
-        finish();
         Intent intent = new Intent(this, AppointmentDetailActivity.class);
         intent.putExtra("dateSelected", formattedLongDate);
         intent.putExtra("appointmentTitle", event.getTitle());
@@ -157,6 +203,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     }
 
     private void mockEventsToCalendar(List<CalendarEvent> eventList) {
+        sortList();
         try {
             for (Appointment appointment : appointmentList) {
                 Calendar startTime = Calendar.getInstance();
@@ -181,6 +228,20 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             System.out.println(e.getMessage());
         }
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
+    }
+
+    private void sortList(){
+        Collections.sort(appointmentList, new Comparator<Appointment>(){
+            public int compare(Appointment obj1, Appointment obj2) {
+                // ## Ascending order
+                return obj1.getStartDateTime().compareToIgnoreCase(obj2.getStartDateTime()); // To compare string values
+                // return Integer.valueOf(obj1.empId).compareTo(Integer.valueOf(obj2.empId)); // To compare integer values
+
+                // ## Descending order
+                // return obj2.firstName.compareToIgnoreCase(obj1.firstName); // To compare string values
+                // return Integer.valueOf(obj2.empId).compareTo(Integer.valueOf(obj1.empId)); // To compare integer values
+            }
+        });
     }
 
     private int pickRandomColor() {
