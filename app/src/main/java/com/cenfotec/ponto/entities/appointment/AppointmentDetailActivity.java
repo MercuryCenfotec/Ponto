@@ -2,13 +2,20 @@ package com.cenfotec.ponto.entities.appointment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
@@ -42,6 +49,7 @@ public class AppointmentDetailActivity extends AppCompatActivity
     String bidderId;
     String selectedDate;
     int colorToDisplay;
+    ImageView imgAppoSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +60,8 @@ public class AppointmentDetailActivity extends AppCompatActivity
         getAppointmentByTitle();
     }
 
-    private void initControls(){
+    // ## OnActivityCreation statements start here ##
+    private void initControls() {
         MY_PREFERENCES = "MyPrefs";
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -63,19 +72,25 @@ public class AppointmentDetailActivity extends AppCompatActivity
         appoDetailDate = findViewById(R.id.appoDetailDate);
         appoDetailLocation = findViewById(R.id.appoDetailLocation);
         appoDetailDescription = findViewById(R.id.appoDetailDescription);
+        imgAppoSettings = findViewById(R.id.imgAppoSettings);
     }
 
-    private void catchIntent(){
+    private void catchIntent() {
         if (getIntent().getExtras() != null) {
             selectedDate = getIntent().getStringExtra("dateSelected");
             appointmentTitle = getIntent().getStringExtra("appointmentTitle");
-            colorToDisplay = getIntent().getIntExtra("colorToDisplay",0);
+            colorToDisplay = getIntent().getIntExtra("colorToDisplay", 0);
             petitionerId = getIntent().getStringExtra("petitionerId");
             bidderId = getIntent().getStringExtra("bidderId");
         }
-    }
 
-    //Appointment detail information statements start here
+        if (activeUserType.equals("petitioner")) {
+            imgAppoSettings.setVisibility(View.VISIBLE);
+        }
+    }
+    // ## OnActivityCreation statements start here ##
+
+    // ## Appointment detail information statements start here ##
     private void getAppointmentByTitle() {
         Query getAppointmentByTitleQuery = databaseReference.orderByChild("title").equalTo(appointmentTitle);
         getAppointmentByTitleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,7 +109,7 @@ public class AppointmentDetailActivity extends AppCompatActivity
         });
     }
 
-    private void fillAppointmentData(){
+    private void fillAppointmentData() {
         topContainer.setBackgroundColor(colorToDisplay);
         appoDetailTitle.setText(updatedAppointment.getTitle());
         String fullDateTime = updatedAppointment.getStartDateTime();
@@ -112,13 +127,14 @@ public class AppointmentDetailActivity extends AppCompatActivity
         appoDetailLocation.setText(updatedAppointment.getLocation());
         appoDetailDescription.setText(updatedAppointment.getDescription());
     }
+    // ## Appointment detail information statements end ##
 
-    //Other statements start here
+    // ## Other statements start here ##
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-    public void goBackFromAppoDetail(View view){
+    public void goBackFromAppoDetail(View view) {
         finish();
         Intent iac = new Intent(this, AppointmentAgendaActivity.class);
         iac.putExtra("userId", activeUserId);
@@ -128,7 +144,7 @@ public class AppointmentDetailActivity extends AppCompatActivity
         startActivity(iac);
     }
 
-    public void openAppoUpdate(View view){
+    public void openAppoUpdate() {
         finish();
         Intent intent = new Intent(this, AppointmentUpdateActivity.class);
         intent.putExtra("dateSelected", selectedDate);
@@ -138,14 +154,37 @@ public class AppointmentDetailActivity extends AppCompatActivity
         intent.putExtra("bidderId", bidderId);
         startActivity(intent);
     }
+    // ## Other statements end ##
 
-    //AppointmentDeletionConfirmDialog statements start here
-    public void openAppoDelete(View view) {
+    // ## AppointmentSettingsMenu statements start here ##
+    public void openAppointmentSettings(View view) {
+        PopupMenu popupMenu = new PopupMenu(AppointmentDetailActivity.this, imgAppoSettings);
+        popupMenu.getMenuInflater().inflate(R.menu.appo_detail_settings, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.settingsOptionModify:
+                        openAppoUpdate();
+                        return true;
+                    case R.id.settingsOptionDelete:
+                        openAppoDelete();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        popupMenu.show();
+    }
+    // ## AppointmentSettingsMenu statements end ##
+
+    // ## AppointmentDeletionConfirmDialog statements start here ##
+    public void openAppoDelete() {
         AppointmentDeletionConfirmDialog appoDeleteDialog = new AppointmentDeletionConfirmDialog();
         appoDeleteDialog.show(getSupportFragmentManager(), "delete appointment dialog");
     }
 
-    //Delete statements start here
     @Override
     public void dialogAppointmentDeletionConfirmed() {
         DatabaseReference db = databaseReference.child(updatedAppointment.getId());
@@ -159,4 +198,5 @@ public class AppointmentDetailActivity extends AppCompatActivity
         startActivity(iac);
         showToaster("Cita eliminada exitosamente");
     }
+    // ## AppointmentDeletionConfirmDialog statements end ##
 }

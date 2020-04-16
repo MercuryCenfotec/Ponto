@@ -53,7 +53,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     String activeUserType;
     String petitionerId;
     String bidderId;
-    DatePickerDialog.OnDateSetListener birthDateSetListener;
+    DatePickerDialog.OnDateSetListener appointmentDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         getAppointmentByTitle();
     }
 
+    // ## OnActivityCreation statements start here ##
     private void initControls() {
         MY_PREFERENCES = "MyPrefs";
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
@@ -89,8 +90,9 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
             bidderId = getIntent().getStringExtra("bidderId");
         }
     }
+    // ## OnActivityCreation statements start here ##
 
-    //Form data statements start here
+    // ## Fill form data statements start here ##
     private void getAppointmentByTitle() {
         Query getAppointmentByTitleQuery = databaseReference.orderByChild("title").equalTo(appointmentTitle);
         getAppointmentByTitleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -131,10 +133,11 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         appointmentHourUpdEditText.setText(longHourFormat);
         appointmentDescriptionUpdEditText.setText(updatedAppointment.getDescription());
     }
+    // ## Fill form data statements end ##
 
-    //CustomDatePickerDialog statements start here
-    public void startAppointmentDateInput(View view){
-        birthDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    // ## CustomDatePickerDialog statements start here ##
+    public void startAppointmentDateInput(View view) {
+        appointmentDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 month += 1;
@@ -145,10 +148,11 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         };
 
         customDatePickerDialog.openAgendaDateDialog(appointmentDateUpdEditText,
-                AppointmentUpdateActivity.this, birthDateSetListener);
+                AppointmentUpdateActivity.this, appointmentDateSetListener);
     }
+    // ## CustomDatePickerDialog statements end ##
 
-    //TimePickerDialog statements start here
+    // ## TimePickerDialog statements start here ##
     public void startAppointmentInput(View view) {
         calendar = Calendar.getInstance();
         if (appointmentHourUpdEditText.getText().toString().equals("")) {
@@ -176,8 +180,9 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         }, currentHour, currentMinute, false);
         timePickerDialog.show();
     }
+    // ## TimePickerDialog statements end ##
 
-    //Update statements start here
+    // ## Update statements start here ##
     public void preUpdateAppointment(View view) {
         if (!showErrorOnBlankSpaces()) {
             if (isCurrentAppointmentTitle()) {
@@ -212,7 +217,7 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
     }
 
     private void checkIfAppoDateTimeExists() {
-       final String longDate = getFormattedLongDate();
+        final String longDate = getFormattedLongDate();
         if (isCurrentAppointmentDate()) {
             updateAppointment(longDate);
         } else {
@@ -251,8 +256,9 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         showToaster("Actualización exitosa");
         openAppointmentDetail();
     }
+    // ## Update statements end ##
 
-    //Other statements start here
+    // ## Other statements start here ##
     private void openAppointmentDetail() {
         finish();
         Intent intent = new Intent(this, AppointmentDetailActivity.class);
@@ -284,8 +290,9 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         String newDate = appointmentDateUpdEditText.getText().toString();
         return newDate + " " + hour.substring(0, hour.length() - 2);
     }
+    // ## Other statements end ##
 
-    //Validation statements start here
+    // ## Validation statements start here ##
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{appointmentTitleUpdEditText, appointmentLocationUpdEditText,
@@ -312,4 +319,5 @@ public class AppointmentUpdateActivity extends AppCompatActivity {
         String longDate = getFormattedLongDate();
         return longDate.equals(updatedAppointment.getStartDateTime());
     }
+    // ## Validation statements end ##
 }

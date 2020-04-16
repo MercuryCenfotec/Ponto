@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
@@ -50,8 +51,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
     SpinnerDialog spinnerDialog;
     ArrayList<String> spinnerKeys;
     ArrayList<Appointment> spinnerValues;
-    boolean isCalled = false;
-
+    ImageView imgAddAppoAgenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         catchIntent();
     }
 
+    // ## OnActivityCreation statements start here ##
     private void initControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
         appointmentList = new ArrayList<>();
@@ -68,6 +69,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         tempEventList = new ArrayList<>();
         minDate = Calendar.getInstance();
         maxDate = Calendar.getInstance();
+        imgAddAppoAgenda = findViewById(R.id.imgAddAppoAgenda);
         // minimum and maximum date of the calendar
         // 2 month behind, one year ahead, example: March 2015 <-> May 2015 <-> May 2016
         minDate.add(Calendar.MONTH, -2);
@@ -90,18 +92,13 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             getUserAppointments("bidderId");
         }
 
-        if (petitionerId.equals("") && bidderId.equals("")) {
-            showToaster("No hay usuarios, no muestro el botón");
-        } else {
-           showToaster("Hay usuarios, muestro el botón");
+        if (!petitionerId.equals("") && !bidderId.equals("")) {
+            imgAddAppoAgenda.setVisibility(View.VISIBLE);
         }
     }
+    // ## OnActivityCreation statements end ##
 
-    private void showToaster(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
-    //CalendarView statements start here
+    // ## CalendarView statements start here ##
     private void getUserAppointments(String refUserId) {
         Query getUserAppointmentsQuery = databaseReference.orderByChild(refUserId).equalTo(userId);
         getUserAppointmentsQuery.addValueEventListener(new ValueEventListener() {
@@ -120,11 +117,11 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             }
         });
     }
+    // ## CalendarView statements end ##
 
-    //CalendarPickerController statements start here
+    // ## CalendarPickerController statements start here ##
     @Override
     public void onDaySelected(DayItem dayItem) {
-        //openAppointmentCreation(dayItem);
     }
 
     @Override
@@ -138,12 +135,9 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             getSupportActionBar().setTitle(calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
         }
     }
+    // ## CalendarPickerController statements end ##
 
-    //Other statements start here
-    public void goBackFromAppoAgenda(View view){
-        finish();
-    }
-
+    // ## SearchSpinnerDialog statements start here ##
     public void openSearchSpinnerDialog(View view) {
         spinnerDialog.showSpinerDialog();
     }
@@ -157,7 +151,7 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             spinnerKeys.add(appointment.getTitle());
         }
 
-        spinnerDialog = new SpinnerDialog(this, spinnerKeys,"Buscar","Cancelar");
+        spinnerDialog = new SpinnerDialog(this, spinnerKeys, "Buscar", "Cancelar");
 
         spinnerDialog.bindOnSpinerListener(new OnSpinerItemClick() {
             @Override
@@ -166,8 +160,14 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
             }
         });
     }
+    // ## SearchSpinnerDialog statements end ##
 
-    private void openDetail(String formattedLongDate, String eventTitle, int colorOfEvent){
+    // ## Other statements start here ##
+    public void goBackFromAppoAgenda(View view) {
+        finish();
+    }
+
+    private void openDetail(String formattedLongDate, String eventTitle, int colorOfEvent) {
         finish();
         Intent intent = new Intent(this, AppointmentDetailActivity.class);
         intent.putExtra("dateSelected", formattedLongDate);
@@ -178,12 +178,9 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         startActivity(intent);
     }
 
-    private void openAppointmentCreation(DayItem dayItem) {
+    public void openAppointmentCreation(View view) {
         this.finish();
         Intent intent = new Intent(this, AppointmentCreationActivity.class);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = sdf.format(dayItem.getDate());
-        intent.putExtra("dateSelected", formattedDate);
         intent.putExtra("userId", userId);
         intent.putExtra("userType", userType);
         intent.putExtra("petitionerId", petitionerId);
@@ -251,8 +248,8 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
     }
 
-    private void sortList(){
-        Collections.sort(appointmentList, new Comparator<Appointment>(){
+    private void sortList() {
+        Collections.sort(appointmentList, new Comparator<Appointment>() {
             public int compare(Appointment obj1, Appointment obj2) {
                 // ## Ascending order
                 return obj1.getStartDateTime().compareToIgnoreCase(obj2.getStartDateTime()); // To compare string values
@@ -270,4 +267,5 @@ public class AppointmentAgendaActivity extends AppCompatActivity implements Cale
         String randomStr = colorsToPick[new Random().nextInt(colorsToPick.length)];
         return Color.parseColor(randomStr);
     }
+    // ## Other statements end ##
 }

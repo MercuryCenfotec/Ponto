@@ -71,9 +71,9 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     TextView petitionerCostDetail;
     // Counter offer end
 
-    //Appointment
+    // ## Appointment ##
     TextView btnCreateAppointment;
-    //Appointment end
+    // ## Appointment end ##
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +115,9 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
         loadOfferData(userId, offerId);
 
-        //Appointment
+        // ## Appointment ##
         checkIfServiceHasAcceptedOffer();
-        //Appointment end
+        // ## Appointment end ##
     }
 
     private void loadOfferData(final String userId, String offerId) {
@@ -256,6 +256,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
     }
 
+    // ## Contract statements start here ##
     private void registerContractToDB(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Contracts");
         String contractId = databaseReference.push().getKey();
@@ -276,8 +277,6 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         contract.setFinalCost(activeOffer.getCost());
         databaseReference.child(contractId).setValue(contract);
 
-
-
         myPrefs.edit().putString("contractId", contractId).commit();
         Intent intent = new Intent(this, GeneratedContractActivity.class);
         intent.putExtra("petitionerId", contract.getPetitionerId());
@@ -287,29 +286,28 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         startActivity(intent);
         finish();
     }
+    // ## Contract statements end ##
 
-    //Appointment
+    // ## Appointment statements start here ##
     public void goToAppointmentAgenda(View view) {
-        //finish();
         Intent iac = new Intent(this, AppointmentAgendaActivity.class);
         iac.putExtra("userId", myPrefs.getString("userId", ""));
         iac.putExtra("userType", myPrefs.getString("userType", ""));
         iac.putExtra("petitionerId", myPrefs.getString("userId", ""));
         iac.putExtra("bidderId", activeOffer.getUserId());
-
         startActivity(iac);
     }
 
     private void checkIfServiceHasAcceptedOffer() {
         String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
-        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("ServicePetitions");
-        Query getAppointmentByTitleQuery = ref2.orderByChild("id").equalTo(servicePetitionId);
-        getAppointmentByTitleQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+        final DatabaseReference servicePetitionsRef = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+        Query getServicePetitionByIdQuery = servicePetitionsRef.orderByChild("id").equalTo(servicePetitionId);
+        getServicePetitionByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot appointmentSnapshot : dataSnapshot.getChildren()) {
-                    ServicePetition sp = appointmentSnapshot.getValue(ServicePetition.class);
-                    if(!sp.getAcceptedOfferId().equals("")) {
+                for (DataSnapshot serviceSnapshot : dataSnapshot.getChildren()) {
+                    ServicePetition tempService = serviceSnapshot.getValue(ServicePetition.class);
+                    if(!tempService.getAcceptedOfferId().equals("")) {
                         btnCreateAppointment.setVisibility(View.VISIBLE);
                     }
                 }
@@ -317,12 +315,10 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-
     }
-    //Appointment end
+    // ## Appointment statements end ##
 
     public void createCounterOffer(String newCost) {
         activeOffer.setCounterOffer(true);

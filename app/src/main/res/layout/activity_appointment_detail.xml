@@ -16,16 +16,30 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
             android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="goBackFromAppoDetail"
             android:src="@drawable/ic_left_arrow_white"
-            android:onClick="goBackFromAppoDetail"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgAppoSettings"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="openAppointmentSettings"
+            android:src="@drawable/ic_elipsis_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone"/>
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
             android:id="@+id/appoDetailTitle"
@@ -34,44 +48,15 @@
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginRight="100dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:text="Título"
             android:textColor="#fff"
             android:textSize="23sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imgUpdateAppointment"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/imgUpdateAppointment"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="56dp"
-            android:layout_marginRight="56dp"
-            android:layout_marginBottom="16dp"
-            android:onClick="openAppoUpdate"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_edit_regular" />
-
-        <ImageView
-            android:id="@+id/imgDeleteAppointment"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:onClick="openAppoDelete"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imgUpdateAppointment"
-            app:srcCompat="@drawable/ic_eye" />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <customfonts.MyTextView_SF_Pro_Display_Medium
@@ -244,5 +229,4 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appoDetailDescription" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

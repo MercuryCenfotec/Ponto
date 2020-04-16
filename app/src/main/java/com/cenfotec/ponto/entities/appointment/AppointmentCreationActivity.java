@@ -2,11 +2,13 @@ package com.cenfotec.ponto.entities.appointment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,14 +33,16 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     EditText appointmentLocationEditText;
     EditText appointmentHourEditText;
     EditText appointmentDescriptionEditText;
+    EditText appointmentDateEditText;
     CustomDatePickerDialog customDatePickerDialog;
-    String selectedDate;
     String userId;
     String userType;
     Calendar calendar;
     int currentHour;
     int currentMinute;
     String amPm;
+    DatePickerDialog.OnDateSetListener appointmentDateSetListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,27 +52,45 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         catchIntent();
     }
 
+    // ## OnActivityCreation statements start here ##
     private void initControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Appointments");
         appointmentTitleEditText = findViewById(R.id.appointmentTitleEditText);
         appointmentLocationEditText = findViewById(R.id.appointmentLocationEditText);
+        appointmentDateEditText = findViewById(R.id.appointmentDateEditText);
         appointmentHourEditText = findViewById(R.id.appointmentHourEditText);
         appointmentDescriptionEditText = findViewById(R.id.appointmentDescriptionEditText);
         customDatePickerDialog = new CustomDatePickerDialog();
-        selectedDate = "";
     }
 
     private void catchIntent() {
         if (getIntent().getExtras() != null) {
-            selectedDate = getIntent().getStringExtra("dateSelected");
             userId = getIntent().getStringExtra("userId");
             userType = getIntent().getStringExtra("userType");
             petitionerId = getIntent().getStringExtra("petitionerId");
             bidderUserId = getIntent().getStringExtra("bidderId");
         }
     }
+    // ## OnActivityCreation statements end ##
 
-    //TimePickerDialog statements start here
+    // ## CustomDatePickerDialog statements start here ##
+    public void startAppointmentDateInput(View view) {
+        appointmentDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month += 1;
+                String formatDate = String.format("%02d/%02d/", dayOfMonth,
+                        month) + year;
+                appointmentDateEditText.setText(formatDate);
+            }
+        };
+
+        customDatePickerDialog.openAgendaDateDialog(appointmentDateEditText,
+                AppointmentCreationActivity.this, appointmentDateSetListener);
+    }
+    // ## CustomDatePickerDialog statements end ##
+
+    // ## TimePickerDialog statements start here ##
     public void startAppointmentInput(View view) {
         calendar = Calendar.getInstance();
         if (appointmentHourEditText.getText().toString().equals("")) {
@@ -96,8 +118,9 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         }, currentHour, currentMinute, false);
         timePickerDialog.show();
     }
+    // ## TimePickerDialog statements end ##
 
-    //Create statements start here
+    // ## Create statements start here ##
     public void preCreateAppointment(View view) {
         if (!showErrorOnBlankSpaces()) {
             Query getAppointmentByTitleQuery = databaseReference.orderByChild("title")
@@ -129,8 +152,9 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     }
 
     private void checkIfAppoDateTimeExists() {
+        String date = appointmentDateEditText.getText().toString();
         String hour = appointmentHourEditText.getText().toString();
-        final String longDate = selectedDate + " " + hour.substring(0, hour.length() - 2);
+        final String longDate = date + " " + hour.substring(0, hour.length() - 2);
         Query getAppointmentByDateTimeQuery = databaseReference.orderByChild("startDateTime").equalTo(longDate);
         getAppointmentByDateTimeQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -170,8 +194,9 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         intent.putExtra("bidderId", bidderUserId);
         startActivity(intent);
     }
+    // ## Create statements end ##
 
-    //Other statements start here
+    // ## Other statements start here ##
     private void showToaster(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -185,12 +210,13 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         intent.putExtra("bidderId", bidderUserId);
         startActivity(intent);
     }
+    // ## Other statements end ##
 
-    //Validation statements start here
+    // ## Validation statements start here ##
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         EditText[] editTextsList = new EditText[]{appointmentTitleEditText, appointmentLocationEditText,
-                appointmentHourEditText, appointmentDescriptionEditText};
+                appointmentDateEditText, appointmentHourEditText, appointmentDescriptionEditText};
         for (EditText editText : editTextsList) {
             if (editText.getText().toString().equals("")) {
                 editText.setHintTextColor(Color.parseColor("#c0392b"));
@@ -203,5 +229,5 @@ public class AppointmentCreationActivity extends AppCompatActivity {
         }
         return isEmpty;
     }
-
+    // ## Validation statements end ##
 }
