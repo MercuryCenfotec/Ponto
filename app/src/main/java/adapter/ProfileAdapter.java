@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.appointment.AppointmentCreationActivity;
+import com.cenfotec.ponto.entities.balanceAccount.RechargeAccountActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
@@ -73,8 +74,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 1:
-                        //Intent i = new Intent(context, CLASE DE RECOMENDACIONES.class);
-                        //context.startActivity(i);
+                        Intent ira = new Intent(context, RechargeAccountActivity.class);
+                        context.startActivity(ira);
                         break;
 
                     case 2:

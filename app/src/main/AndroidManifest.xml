@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".entities.appointment.AppointmentDetailActivity"></activity>
+        <activity android:name=".entities.balanceAccount.PaymentDetailsActivity"></activity>
+        <activity android:name=".entities.balanceAccount.RechargeAccountActivity" />
+        <activity android:name=".entities.appointment.AppointmentDetailActivity" />
         <activity android:name=".entities.appointment.AppointmentUpdateActivity" />
         <activity android:name=".entities.appointment.AppointmentAgendaActivity" />
         <activity android:name=".entities.appointment.AppointmentCreationActivity" />
