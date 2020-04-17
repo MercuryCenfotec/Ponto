@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.account.AccountActivity;
 import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
@@ -73,11 +74,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 3:
+                        Intent inte = new Intent(context, AccountActivity.class);
+                        inte.putExtra("userId", profileModelArrayList.get(position).getUserId());
+                        context.startActivity(inte);
+                        break;
+
+                    case 4:
                         Intent intent = new Intent(context, ContractsListActivity.class);
                         context.startActivity(intent);
                         break;
 
-                    case 4:
+                    case 5:
                         if(profileModelArrayList.get(position).getUserType().equals("petitioner")){
                             Intent i = new Intent(context, PetitionerUpdateActivity.class);
                             i.putExtra("petitionerId", profileModelArrayList.get(position).getUserId());
@@ -90,7 +97,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                         break;
 
-                    case 5:
+                    case 6:
                         LogoutHelper.logout(context);
                         break;
                 }
