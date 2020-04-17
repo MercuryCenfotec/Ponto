@@ -185,7 +185,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/petitionerSignatureTextView"
-                app:srcCompat="@drawable/fui_idp_button_background_twitter" />
+                app:srcCompat="@drawable/rect_dotted" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/bidderSignatureTextView"
@@ -210,7 +210,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bidderSignatureTextView"
-                app:srcCompat="@drawable/fui_idp_button_background_twitter" />
+                app:srcCompat="@drawable/rect_dotted" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/btnContractSignature"

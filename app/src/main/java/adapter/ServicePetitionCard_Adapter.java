@@ -51,29 +51,31 @@ public class ServicePetitionCard_Adapter extends RecyclerView.Adapter<ServicePet
         ServiceType serviceType = serviceTypesList.get(servicePetitionsArrayList.get(position).getServiceTypeId());
         LightingColorFilter filter = new LightingColorFilter(Color.BLACK, Color.WHITE);
 
-        holder.imageContainer.setBackgroundColor(Color.parseColor(serviceType.getColor()));
-        Picasso.get().load(serviceType.getImgUrl()).into(holder.servicePetitionImage);
-        holder.servicePetitionImage.setColorFilter(filter);
-        holder.servicePetitionName.setText(servicePetitionsArrayList.get(position).getName());
-        holder.servicePetitionDescription.setText(servicePetitionsArrayList.get(position).getDescription());
-        holder.servicePetitionServiceType.setText(serviceType.getServiceType());
-        holder.petitionCard.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-                Intent intent;
-                if(isPetitioner){
-                    intent = new Intent(context, ServicePetitionPetitionerDetailActivity.class);
-                }else{
-                    intent = new Intent(context, ServicePetitionBidderDetailActivity.class);
-                }
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+        if(serviceType!= null) {
+            holder.imageContainer.setBackgroundColor(Color.parseColor(serviceType.getColor()));
+            Picasso.get().load(serviceType.getImgUrl()).into(holder.servicePetitionImage);
+        }
+            holder.servicePetitionImage.setColorFilter(filter);
+            holder.servicePetitionName.setText(servicePetitionsArrayList.get(position).getName());
+            holder.servicePetitionDescription.setText(servicePetitionsArrayList.get(position).getDescription());
+            holder.servicePetitionServiceType.setText(serviceType.getServiceType());
+            holder.petitionCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+                    Intent intent;
+                    if (isPetitioner) {
+                        intent = new Intent(context, ServicePetitionPetitionerDetailActivity.class);
+                    } else {
+                        intent = new Intent(context, ServicePetitionBidderDetailActivity.class);
+                    }
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("servicePetitionId", servicePetitionsArrayList.get(position).getId());
-                editor.commit();
-                context.startActivity(intent);
-            }
-        });
+                    editor.putString("servicePetitionId", servicePetitionsArrayList.get(position).getId());
+                    editor.commit();
+                    context.startActivity(intent);
+                }
+            });
     }
 
     @Override

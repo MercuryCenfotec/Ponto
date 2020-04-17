@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:agendaCalendar="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".entities.appointment.AppointmentAgendaActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_margin="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="goBackFromAppoAgenda"
+            android:src="@drawable/ic_left_arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgAddAppoAgenda"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:onClick="openAppointmentCreation"
+            android:src="@drawable/ic_plus"
+            android:visibility="gone"
+            agendaCalendar:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintEnd_toStartOf="@+id/imgSearchAppoAgenda"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imgSearchAppoAgenda"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="openSearchSpinnerDialog"
+            android:src="@drawable/ic_search_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.github.tibolte.agendacalendarview.AgendaCalendarView
+        android:id="@+id/agenda_calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        agendaCalendar:agendaCurrentDayTextColor="@color/theme_primary"
+        agendaCalendar:calendarColor="@android:color/white"
+        agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
+        agendaCalendar:calendarDayTextColor="@color/theme_primary"
+        agendaCalendar:calendarHeaderColor="@color/theme_primary_dark"
+        agendaCalendar:calendarPastDayTextColor="@android:color/darker_gray"
+        agendaCalendar:fabColor="@color/theme_accent" />
+</LinearLayout>

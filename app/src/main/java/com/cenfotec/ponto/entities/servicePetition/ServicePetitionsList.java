@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -53,6 +54,7 @@ public class ServicePetitionsList extends Fragment {
     private Boolean isSearching = false;
     private String searchValue;
     private MyTextView_SF_Pro_Display_Semibold searchResults;
+    TextView listEmptyTextView;
     private View view;
 
     public ServicePetitionsList(boolean isPetitioner) {
@@ -109,11 +111,22 @@ public class ServicePetitionsList extends Fragment {
                 }else{
                     searchResults.setVisibility(View.INVISIBLE);
                 }
-//                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
                 if(serviceTypesList.isEmpty()){
                     chargeTypes();
                 }else{
                     servicePetitionCard_adapter.notifyDataSetChanged();
+                    if(!isSearching){
+                        if(servicePetitionArrayList.size() == 0){
+                            recyclerview.setVisibility(View.GONE);
+                            listEmptyTextView.setVisibility(View.VISIBLE);
+                        }else{
+                            recyclerview.setVisibility(View.VISIBLE);
+                            listEmptyTextView.setVisibility(View.GONE);
+                        }
+                    }else{
+                        recyclerview.setVisibility(View.VISIBLE);
+                        listEmptyTextView.setVisibility(View.GONE);
+                    }
                 }
             }
 
@@ -160,6 +173,7 @@ public class ServicePetitionsList extends Fragment {
 
 
     private void initContent() {
+        listEmptyTextView= view.findViewById(R.id.listEmptyTextView);
         searchInput = view.findViewById(R.id.searchInput);
         recyclerview = (view).findViewById(R.id.recycler5);
         searchResults = view.findViewById(R.id.searchResults);
@@ -180,7 +194,15 @@ public class ServicePetitionsList extends Fragment {
                     ServiceType serviceType = servicePetitionSnapshot.getValue(ServiceType.class);
                     serviceTypesList.put(serviceType.getId(),serviceType);
                 }
-//                recyclerview.setLayoutManager(new StaggeredGridLayoutManager(servicePetitionArrayList.size(), StaggeredGridLayoutManager.HORIZONTAL));
+                if(!isSearching){
+                    if(servicePetitionArrayList.size() == 0){
+                        recyclerview.setVisibility(View.GONE);
+                        listEmptyTextView.setVisibility(View.VISIBLE);
+                    }else{
+                        recyclerview.setVisibility(View.VISIBLE);
+                        listEmptyTextView.setVisibility(View.GONE);
+                    }
+                }
                 servicePetitionCard_adapter.notifyDataSetChanged();
             }
 

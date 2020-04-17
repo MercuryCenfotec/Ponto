@@ -3,26 +3,33 @@ package com.cenfotec.ponto.data.model;
 import java.time.LocalDateTime;
 
 public class Appointment {
-    private Integer id;
+    private String id;
     private String title;
-    private LocalDateTime dateTime;
+    private String location;
+    private String startDateTime;
     private String description;
+    private String petitionerId;
+    private String bidderId;
 
     public Appointment() {
     }
 
-    public Appointment(Integer id, String title, LocalDateTime dateTime, String description) {
+    public Appointment(String id, String title, String location, String startDateTime,
+                       String description, String petitionerId, String bidderId) {
         this.id = id;
         this.title = title;
-        this.dateTime = dateTime;
+        this.location = location;
+        this.startDateTime = startDateTime;
         this.description = description;
+        this.petitionerId = petitionerId;
+        this.bidderId = bidderId;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,12 +41,20 @@ public class Appointment {
         this.title = title;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public String getLocation() {
+        return location;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getStartDateTime() {
+        return startDateTime;
+    }
+
+    public void setStartDateTime(String startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
     public String getDescription() {
@@ -48,5 +63,21 @@ public class Appointment {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPetitionerId() {
+        return petitionerId;
+    }
+
+    public void setPetitionerId(String petitionerId) {
+        this.petitionerId = petitionerId;
+    }
+
+    public String getBidderId() {
+        return bidderId;
+    }
+
+    public void setBidderId(String bidderId) {
+        this.bidderId = bidderId;
     }
 }

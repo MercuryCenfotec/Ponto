@@ -14,9 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Appointment;
 import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
+import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
@@ -68,6 +71,10 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     TextView petitionerCostDetail;
     // Counter offer end
 
+    // ## Appointment ##
+    TextView btnCreateAppointment;
+    // ## Appointment end ##
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,11 +108,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         petitionerCostDetail = findViewById(R.id.petCounterOfferCostDetail);
         // Counter offer end
 
+        btnCreateAppointment = findViewById(R.id.btnCreateAppointment);
+
         String userId = myPrefs.getString("userId", "none");
         offerId = myPrefs.getString("offerId","none");
 
         loadOfferData(userId, offerId);
 
+        // ## Appointment ##
+        checkIfServiceHasAcceptedOffer();
+        // ## Appointment end ##
     }
 
     private void loadOfferData(final String userId, String offerId) {
@@ -244,6 +256,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
     }
 
+    // ## Contract statements start here ##
     private void registerContractToDB(){
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Contracts");
         String contractId = databaseReference.push().getKey();
@@ -264,8 +277,6 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         contract.setFinalCost(activeOffer.getCost());
         databaseReference.child(contractId).setValue(contract);
 
-
-
         myPrefs.edit().putString("contractId", contractId).commit();
         Intent intent = new Intent(this, GeneratedContractActivity.class);
         intent.putExtra("petitionerId", contract.getPetitionerId());
@@ -275,6 +286,39 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         startActivity(intent);
         finish();
     }
+    // ## Contract statements end ##
+
+    // ## Appointment statements start here ##
+    public void goToAppointmentAgenda(View view) {
+        Intent iac = new Intent(this, AppointmentAgendaActivity.class);
+        iac.putExtra("userId", myPrefs.getString("userId", ""));
+        iac.putExtra("userType", myPrefs.getString("userType", ""));
+        iac.putExtra("petitionerId", myPrefs.getString("userId", ""));
+        iac.putExtra("bidderId", activeOffer.getUserId());
+        startActivity(iac);
+    }
+
+    private void checkIfServiceHasAcceptedOffer() {
+        String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
+        final DatabaseReference servicePetitionsRef = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+        Query getServicePetitionByIdQuery = servicePetitionsRef.orderByChild("id").equalTo(servicePetitionId);
+        getServicePetitionByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot serviceSnapshot : dataSnapshot.getChildren()) {
+                    ServicePetition tempService = serviceSnapshot.getValue(ServicePetition.class);
+                    if(!tempService.getAcceptedOfferId().equals("")) {
+                        btnCreateAppointment.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+    // ## Appointment statements end ##
 
     public void createCounterOffer(String newCost) {
         activeOffer.setCounterOffer(true);
