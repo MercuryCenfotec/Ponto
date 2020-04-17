@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
@@ -32,6 +33,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     DatabaseReference bidderDataReference;
+    DatabaseReference accountDBReference;
     EditText fullNameEditText;
     EditText birthDateEditText;
     EditText emailEditText;
@@ -53,6 +55,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     private void initFormControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         bidderDataReference = FirebaseDatabase.getInstance().getReference("Bidders");
+        accountDBReference = FirebaseDatabase.getInstance().getReference("Accounts");
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         fullNameEditText = findViewById(R.id.fullNameEditText);
@@ -146,13 +149,24 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         String generatedSecuredPasswordHash = BCrypt.hashpw(password,
                 BCrypt.gensalt(12));
 
+        // Account creation start
+        String accountNumber = accountDBReference.push().getKey();
+        Account userAccount = new Account(accountNumber, (float) 0);
+        accountDBReference.child(accountNumber).setValue(userAccount);
+        // Account creation end
+
         String userId = databaseReference.push().getKey();
         User user = new User(userId,fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(),
-                generatedSecuredPasswordHash, 1, 0, true,
-                2, "");
+                generatedSecuredPasswordHash,
+                1,
+                0,
+                true,
+                2,
+                "",
+                accountNumber);
 
         databaseReference.child(userId).setValue(user);
         afterUserIsAdded(userId);
