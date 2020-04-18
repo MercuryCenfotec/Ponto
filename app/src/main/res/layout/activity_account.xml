@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".entities.account.AccountActivity">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="goBackToProfile"
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Bold
+        android:id="@+id/accountActivityTitle"
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="50dp"
+        android:text="Mi Cuenta"
+        android:textColor="#3b3b3b"
+        android:textSize="23sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnAddMoney"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="40dp"
+        android:onClick="goToAddFundsActivity"
+        android:background="@drawable/background_send_money"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnWithdrawMoney"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:id="@+id/addMoneyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agregar dinero"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:text="Ingresar dinero a mi cuenta para hacer el pago de los servicios"
+            android:textColor="#FFF"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/addMoneyTitle"
+            app:layout_constraintTop_toBottomOf="@+id/addMoneyTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btnWithdrawMoney"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/background_withdraw_money"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:id="@+id/withdrawMoneyTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retirar dinero"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:text="Retirar el dinero que se me ha pagado por los trabajos que he completado"
+            android:textColor="#FFF"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/withdrawMoneyTitle"
+            app:layout_constraintTop_toBottomOf="@+id/withdrawMoneyTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <customfonts.MyTextView_SF_Pro_Display_Light
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Balance disponible"
+        android:textColor="#a5a5a5"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/accountBalance"
+        app:layout_constraintEnd_toEndOf="@+id/accountBalance"
+        app:layout_constraintStart_toStartOf="@+id/accountBalance" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Bold
+        android:id="@+id/accountBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₡0.00 CRC"
+        android:textColor="#15B1D7"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnWithdrawMoney"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintVertical_bias="0.26" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="#3b3b3b"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountActivityTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

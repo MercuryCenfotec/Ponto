@@ -90,7 +90,20 @@
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
                 android:scrollbars="vertical"
-                android:verticalScrollbarPosition="defaultPosition" />
+                android:verticalScrollbarPosition="defaultPosition"
+                android:visibility="visible">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/listEmptyTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:text="No tienes solicitudes creadas..."
+                android:textSize="24sp"
+                android:visibility="gone" />
 
 
         </LinearLayout>

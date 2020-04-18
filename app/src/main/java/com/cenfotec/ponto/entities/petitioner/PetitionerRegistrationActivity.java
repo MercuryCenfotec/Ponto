@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
 import com.cenfotec.ponto.data.model.Petitioner;
@@ -33,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 public class PetitionerRegistrationActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
+    DatabaseReference accountDBReference;
     EditText identificationEditText;
     EditText fullNameEditText;
     EditText birthDateEditText;
@@ -72,6 +74,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 
     private void findViews() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        accountDBReference = FirebaseDatabase.getInstance().getReference("Accounts");
         fullNameEditText = findViewById(R.id.fullNamePetEditText);
         birthDateEditText = findViewById(R.id.birthDatePetEditText);
         emailEditText = findViewById(R.id.emailPetEditText);
@@ -119,6 +122,12 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
         String password = passwordEditText.getText().toString();
         String generatedSecuredPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt(12));
 
+        // Account creation start
+        String accountNumber = accountDBReference.push().getKey();
+        Account userAccount = new Account(accountNumber, (float) 0);
+        accountDBReference.child(accountNumber).setValue(userAccount);
+        // Account creation end
+
         String id = databaseReference.push().getKey();
         User user = new User(id,
                 fullNameEditText.getText().toString(),
@@ -129,7 +138,9 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                 1,
                 0,
                 true,
-                1, "");
+                1,
+                "",
+                accountNumber);
         user.setVerified(false);
         user.setMembershipId("none");
 
