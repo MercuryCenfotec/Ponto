@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".entities.balanceAccount.RechargeAccountActivity">
+    tools:context=".entities.account.RechargeAccountActivity">
 
     <ImageView
-        android:id="@+id/ueutw"
+        android:id="@+id/imgRechargeAccountReturn"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_margin="10dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:onClick="goBackFromRechargeAccount"
         android:src="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ueutw"
+        app:layout_constraintTop_toBottomOf="@+id/imgRechargeAccountReturn"
         tools:context=".">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +34,7 @@
             android:layout_height="match_parent">
 
             <customfonts.MyTextView_SF_Pro_Display_Bold
-                android:id="@+id/teucsfk"
+                android:id="@+id/myAccountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -46,8 +47,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/hwegt"
-                android:layout_width="match_parent"
+                android:id="@+id/balanceAccountContainer"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
@@ -57,10 +58,10 @@
                 android:background="@drawable/rect_dotted"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/teucsfk">
+                app:layout_constraintTop_toBottomOf="@+id/myAccountTextView">
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/yru"
+                    android:id="@+id/availableBalanceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -77,22 +78,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/eytw"
+                    android:id="@+id/realBalanceTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginEnd="30dp"
                     android:layout_marginRight="30dp"
-                    android:text="₡ 75,000.00 CRC"
+                    android:text="₡ 0,000.00 CRC"
                     android:textColor="#000"
                     android:textSize="23sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/yru" />
+                    app:layout_constraintTop_toBottomOf="@+id/availableBalanceTextView" />
 
                 <View
-                    android:id="@+id/yedy"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginStart="50dp"
@@ -106,7 +106,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/eytw" />
+                    app:layout_constraintTop_toBottomOf="@+id/realBalanceTextView" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -122,10 +122,9 @@
                 android:background="@drawable/payment_const_border"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/hwegt">
+                app:layout_constraintTop_toBottomOf="@+id/balanceAccountContainer">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/uregfxmgtj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -140,12 +139,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/jdhs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#03749C"
-                    android:onClick="processPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -154,18 +151,18 @@
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="13.5sp"
-                    app:layout_constraintEnd_toStartOf="@+id/yuyr"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddFirstQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/yuyr"
+                    android:id="@+id/btnAddFirstQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="#5CD4EF"
-                    android:onClick="processPayment"
+                    android:onClick="preProcessPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -193,7 +190,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/firstContainer">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/itrya"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -208,12 +204,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/eqggfj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#03749C"
-                    android:onClick="processPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -222,18 +216,18 @@
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="13.5sp"
-                    app:layout_constraintEnd_toStartOf="@+id/yuenb"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddSecondQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/yuenb"
+                    android:id="@+id/btnAddSecondQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="#5CD4EF"
-                    android:onClick="processPayment"
+                    android:onClick="preProcessPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -261,7 +255,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/secondContainer">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/oiutsga"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -276,12 +269,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/uyegfasmng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#03749C"
-                    android:onClick="processPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -290,18 +281,18 @@
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="13.5sp"
-                    app:layout_constraintEnd_toStartOf="@+id/fzahdqjhr"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddThirdQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/fzahdqjhr"
+                    android:id="@+id/btnAddThirdQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="#5CD4EF"
-                    android:onClick="processPayment"
+                    android:onClick="preProcessPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -329,7 +320,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/thirdContainer">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/texjfkjl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -344,12 +334,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/ersjhfejhf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#03749C"
-                    android:onClick="processPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -358,18 +346,18 @@
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="13.5sp"
-                    app:layout_constraintEnd_toStartOf="@+id/jyevcmndhg"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddFourthQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/jyevcmndhg"
+                    android:id="@+id/btnAddFourthQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="#5CD4EF"
-                    android:onClick="processPayment"
+                    android:onClick="preProcessPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -397,7 +385,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/fourthContainer">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/yurhcbnx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -412,12 +399,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/iuedavz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:background="#03749C"
-                    android:onClick="processPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -426,18 +411,18 @@
                     android:textAllCaps="false"
                     android:textColor="#fff"
                     android:textSize="13.5sp"
-                    app:layout_constraintEnd_toStartOf="@+id/davbxnvm"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAddFifthQuantity"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/davbxnvm"
+                    android:id="@+id/btnAddFifthQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:background="#5CD4EF"
-                    android:onClick="processPayment"
+                    android:onClick="preProcessPayment"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
                     android:paddingRight="20dp"
@@ -451,7 +436,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
-                android:id="@+id/urevcanhñ"
+                android:id="@+id/quantityContainerDivider"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginStart="20dp"
@@ -461,14 +446,15 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="#000"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fifthContainer" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/finallysgf"
-                android:layout_width="match_parent"
+                android:id="@+id/paymentDetailContainer"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
@@ -477,13 +463,14 @@
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rect_black"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/urevcanhñ">
+                app:layout_constraintTop_toBottomOf="@+id/quantityContainerDivider">
 
                 <customfonts.MyTextView_SF_Pro_Display_Bold
-                    android:id="@+id/sdjkgyg"
+                    android:id="@+id/paymentDetailTitleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="50dp"
@@ -491,15 +478,15 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="50dp"
                     android:layout_marginRight="50dp"
-                    android:text="Detalle"
+                    android:text="Detalle de recarga"
                     android:textColor="#000"
-                    android:textSize="23sp"
+                    android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/jghsgsdit"
+                    android:id="@+id/paymentDetailCodeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -509,10 +496,26 @@
                     android:textColor="#000"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sdjkgyg" />
+                    app:layout_constraintTop_toBottomOf="@+id/paymentDetailTitleTV" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/eritywotiy"
+                    android:id="@+id/payPalPaymentCodeTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="código paypal"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/paymentDetailCodeTV"
+                    app:layout_constraintTop_toBottomOf="@+id/paymentDetailTitleTV" />
+
+                <customfonts.MyTextView_SF_Pro_Display_Medium
+                    android:id="@+id/paymentDetailAmountTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -522,10 +525,26 @@
                     android:textColor="#000"
                     android:textSize="15sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/jghsgsdit" />
+                    app:layout_constraintTop_toBottomOf="@+id/payPalPaymentCodeTV" />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
-                    android:id="@+id/fgahkhsi"
+                    android:id="@+id/payPalPaymentAmountTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="monto paypal"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/paymentDetailAmountTV"
+                    app:layout_constraintTop_toBottomOf="@+id/payPalPaymentCodeTV" />
+
+                <customfonts.MyTextView_SF_Pro_Display_Medium
+                    android:id="@+id/paymentDetailStatusTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -537,7 +556,25 @@
                     android:textSize="15sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/eritywotiy" />
+                    app:layout_constraintTop_toBottomOf="@+id/paymentDetailAmountTV" />
+
+                <customfonts.MyTextView_SF_Pro_Display_Medium
+                    android:id="@+id/payPalPaymentStatusTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="estado paypal"
+                    android:textColor="#000"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/paymentDetailStatusTV"
+                    app:layout_constraintTop_toBottomOf="@+id/paymentDetailAmountTV" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
