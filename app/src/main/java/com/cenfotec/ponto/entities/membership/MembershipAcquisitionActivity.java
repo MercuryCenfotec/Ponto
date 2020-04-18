@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Membership;
@@ -27,17 +29,24 @@ public class MembershipAcquisitionActivity extends AppCompatActivity {
     private MembershipCard_Adapter membershipCard_adapter;
     private RecyclerView recyclerView;
     private List<Membership> membershipList;
+    private TextView activityTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         membershipList = new ArrayList<>();
         setContentView(R.layout.activity_membership_acquisition);
+        activityTitle = findViewById(R.id.membershipActivityTitle);
         final SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        String currentMembership = myPrefs.getString("userMembership", "none");
-        Query membershipsQuery = currentMembership.equals("none")
-                ? FirebaseDatabase.getInstance().getReference("Memberships").orderByChild("id")
-                : FirebaseDatabase.getInstance().getReference("Memberships").orderByChild("id").equalTo(currentMembership);
+        String currentMembership = myPrefs.getString("userMembershipId", "none");
+        Query membershipsQuery;
+        if (currentMembership.equals("none")) {
+            activityTitle.setText("Membresías");
+            membershipsQuery = FirebaseDatabase.getInstance().getReference("Memberships").orderByChild("id");
+        } else {
+            activityTitle.setText("Mi membresía");
+            membershipsQuery = FirebaseDatabase.getInstance().getReference("Memberships").orderByChild("id").equalTo(currentMembership);
+        }
         recyclerView = findViewById(R.id.cardListView);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -62,5 +71,9 @@ public class MembershipAcquisitionActivity extends AppCompatActivity {
 
         membershipCard_adapter = new MembershipCard_Adapter(this,membershipList);
         recyclerView.setAdapter(membershipCard_adapter);
+    }
+
+    public void goBackToProfile(View view) {
+        finish();
     }
 }

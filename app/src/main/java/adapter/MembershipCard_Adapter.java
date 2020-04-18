@@ -40,7 +40,7 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
 
         final SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         holder.membershipTitleView.setText(membershipList.get(position).getName());
-        if (myPrefs.getString("currentMembership","none").equals("none")) {
+        if (myPrefs.getString("userMembershipId","none").equals("none")) {
             holder.acquireMembershipBtn.setVisibility(View.VISIBLE);
             holder.acquireMembershipBtn.setText("₡ " + costFormat.format(membershipList.get(position).getPrice()));
         }
