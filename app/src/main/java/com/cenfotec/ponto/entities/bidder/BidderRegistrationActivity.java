@@ -153,6 +153,8 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                 identificationEditText.getText().toString(),
                 generatedSecuredPasswordHash, 1, 0, true,
                 2, "");
+        user.setVerified(false);
+        user.setMembershipId("none");
 
         databaseReference.child(userId).setValue(user);
         afterUserIsAdded(userId);

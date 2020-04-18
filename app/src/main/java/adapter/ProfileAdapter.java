@@ -19,6 +19,7 @@ import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
+import com.cenfotec.ponto.entities.membership.MembershipAcquisitionActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
@@ -73,8 +74,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 1:
-                        //Intent i = new Intent(context, CLASE DE RECOMENDACIONES.class);
-                        //context.startActivity(i);
+                        Intent membershipsIntent = new Intent(context, MembershipAcquisitionActivity.class);
+                        context.startActivity(membershipsIntent);
                         break;
 
                     case 2:

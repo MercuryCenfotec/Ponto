@@ -130,6 +130,8 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                 0,
                 true,
                 1, "");
+        user.setVerified(false);
+        user.setMembershipId("none");
 
         if (id != null)
             databaseReference.child(id).setValue(user);

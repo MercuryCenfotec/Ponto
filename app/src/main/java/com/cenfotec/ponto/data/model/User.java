@@ -13,6 +13,8 @@ public class User {
     private boolean allowsPushNotifications;
     private int userType;
     private String profileImageUrl;
+    private boolean isVerified;
+    private String membershipId;
 
     public User() {
     }
@@ -119,6 +121,22 @@ public class User {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(String membershipId) {
+        this.membershipId = membershipId;
     }
 }
 
