@@ -12,10 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
             android:id="@+id/myTextView_SF_Pro_Display_Bold"
@@ -170,24 +172,84 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-        <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/btnBidderRegistration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rect_white"
-            android:paddingLeft="48dp"
-            android:paddingTop="11dp"
-            android:paddingRight="48dp"
-            android:paddingBottom="11dp"
-            android:text="Registrarme"
-            android:textAllCaps="false"
-            android:textColor="#3b3b3b"
-            android:textSize="13.5sp" />
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:text="Para verificar su identidad, se requiere una foto de su cédula de identidad por el frente, una por el reverso y una fotografía reciente."
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutBidReg" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/btnPetitionUpload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:background="@drawable/rect_white"
+        android:onClick="askCameraPermissions"
+        android:paddingLeft="48dp"
+        android:paddingTop="11dp"
+        android:paddingRight="48dp"
+        android:paddingBottom="11dp"
+        android:text="Subir archivos"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#000"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/filesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="2dp"
+        android:paddingRight="2dp"
+        android:paddingBottom="2dp"
+        android:text="0 Archivos adjuntos"
+        android:textColor="#FAFAFA"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/btnPetitionUpload"
+        app:layout_constraintTop_toBottomOf="@+id/btnPetitionUpload" />
+
+    <customfonts.MyTextView_SF_Pro_Display_Medium
+        android:id="@+id/btnBidderRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rect_white"
+        android:paddingLeft="48dp"
+        android:paddingTop="11dp"
+        android:paddingRight="48dp"
+        android:paddingBottom="11dp"
+        android:text="Registrarme"
+        android:textAllCaps="false"
+        android:textColor="#3b3b3b"
+        android:textSize="13.5sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

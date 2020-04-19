@@ -48,7 +48,7 @@ public class BidderProfileFragment extends Fragment {
     private RecyclerView recyclerview;
     private ArrayList<ProfileModel> profileModelArrayList;
     User user;
-    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star, R.drawable.ic_paypal,
+    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_star, R.drawable.ic_like, R.drawable.ic_paypal,
             R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
     String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Cuenta interna", "Contratos",

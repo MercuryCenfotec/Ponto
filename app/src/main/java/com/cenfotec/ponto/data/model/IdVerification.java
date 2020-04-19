@@ -1,25 +1,23 @@
 package com.cenfotec.ponto.data.model;
 
+import java.util.List;
+
 public class IdVerification {
     private String id;
     private String userName;
     private String userIdNumber;
     private String userId;
-    private String idFrontImage;
-    private String idBackImage;
-    private String userRecentImage;
+    private List<String> files;
 
     public IdVerification() {
     }
 
-    public IdVerification(String id, String userName, String userIdNumber, String userId, String idFrontImage, String idBackImage, String userRecentImage) {
+    public IdVerification(String id, String userName, String userIdNumber, String userId, List<String> files) {
         this.id = id;
         this.userName = userName;
         this.userIdNumber = userIdNumber;
         this.userId = userId;
-        this.idFrontImage = idFrontImage;
-        this.idBackImage = idBackImage;
-        this.userRecentImage = userRecentImage;
+        this.files = files;
     }
 
     public String getId() {
@@ -54,27 +52,11 @@ public class IdVerification {
         this.userId = userId;
     }
 
-    public String getIdFrontImage() {
-        return idFrontImage;
+    public List<String> getFiles() {
+        return files;
     }
 
-    public void setIdFrontImage(String idFrontImage) {
-        this.idFrontImage = idFrontImage;
-    }
-
-    public String getIdBackImage() {
-        return idBackImage;
-    }
-
-    public void setIdBackImage(String idBackImage) {
-        this.idBackImage = idBackImage;
-    }
-
-    public String getUserRecentImage() {
-        return userRecentImage;
-    }
-
-    public void setUserRecentImage(String userRecentImage) {
-        this.userRecentImage = userRecentImage;
+    public void setFiles(List<String> files) {
+        this.files = files;
     }
 }
