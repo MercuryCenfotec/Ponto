@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
+import com.cenfotec.ponto.entities.notification.NotificationFactory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -217,6 +218,7 @@ public class RechargeAccountActivity extends AppCompatActivity {
                         intent.putExtra("paymentAmount", tempAmount);
                         intent.putExtra("userId", userId);
                         startActivity(intent);
+                        notifyUserOfRecharge();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -238,4 +240,19 @@ public class RechargeAccountActivity extends AppCompatActivity {
         updateBalanceReference.setValue(account);
     }
     // ## Update user balance account statements end ##
+
+    // ## Notification example statements start here ##
+    public void notifyUserOfRecharge(){
+        //If the notification wont lead to another activity
+        NotificationFactory.createNotificationWithoutExtras(this,"¡Recarga exitosa!",
+                "Su recarga ha sido exitosa.");
+
+        //If the notification will lead to another activity
+        //Extras that the Intent need in order to work
+        /*HashMap<String, String> extrasList = new HashMap<>();
+        extrasList.put("userId",userId);
+        NotificationFactory.createNotificationWithExtras(this, AccountActivity.class,
+                "¡Recarga exitosa!", "Su recarga ha sido exitosa.", extrasList);*/
+    }
+    // ## Notification example statements end ##
 }
