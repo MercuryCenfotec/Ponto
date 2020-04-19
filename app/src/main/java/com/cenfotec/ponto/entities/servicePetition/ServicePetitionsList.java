@@ -177,7 +177,7 @@ public class ServicePetitionsList extends Fragment {
         searchInput = view.findViewById(R.id.searchInput);
         recyclerview = (view).findViewById(R.id.recycler5);
         searchResults = view.findViewById(R.id.searchResults);
-        sharedPreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         userId = sharedPreferences.getString("userId", "");
         servicePetitionArrayList = new ArrayList<>();
         serviceTypesList = new HashMap<>();

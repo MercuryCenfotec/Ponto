@@ -2,6 +2,7 @@ package com.cenfotec.ponto.entities.bidder;
 
 import androidx.annotation.IntRange;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
@@ -10,43 +11,34 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.utils.GeneralActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
 
 import adapter.TabLayoutAdapter_BidderHome;
 
-public class BidderHomeActivity extends AppCompatActivity {
+public class BidderHomeActivity extends GeneralActivity {
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    TabLayoutAdapter_BidderHome adapter;
+
+    protected TabLayoutAdapter_BidderHome viewPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bidder_home);
-        bindContent();
-        initContent();
-        catchIntent();
-        Locale spanish = new Locale("es", "ES");
-        Locale.setDefault(spanish);
+        super.initComponents(R.id.homeView,R.id.bidderHomeNavbar);
+        setTabs();
     }
 
-    private void bindContent() {
-        viewPager = findViewById(R.id.homeView);
-        tabLayout = findViewById(R.id.bidderHomeNavbar);
+    @Override
+    protected void chargeAdapterViews(){
+        viewPagerAdapter = new TabLayoutAdapter_BidderHome(getSupportFragmentManager());
+        activityViewPager.setAdapter(viewPagerAdapter);
     }
 
-    private void catchIntent(){
-        if (getIntent().getExtras() != null) {
-            TabLayout.Tab tab = tabLayout.getTabAt(4);
-            tab.select();
-        }
-    }
-
-    private void initContent() {
-        adapter = new TabLayoutAdapter_BidderHome(getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+    @Override
+    protected void setTabs(){
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -61,11 +53,19 @@ public class BidderHomeActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+        catchIntent();
+    }
+
+    private void catchIntent(){
+        if (getIntent().getExtras() != null) {
+            TabLayout.Tab tab = tabLayout.getTabAt(4);
+            tab.select();
+        }
     }
 
     public void changeView(int position){
-        adapter.setActViewPos(position);
-        viewPager.setAdapter(adapter);
+        viewPagerAdapter.setActViewPos(position);
+        activityViewPager.setAdapter(viewPagerAdapter);
     }
 
 }

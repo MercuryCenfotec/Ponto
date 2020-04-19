@@ -3,10 +3,9 @@ package adapter;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-
-import com.cenfotec.ponto.entities.bidder.BidderHome;
 import com.cenfotec.ponto.entities.bidder.BidderProfileFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionBidderList;
+import com.cenfotec.ponto.entities.messages.UserChats;
 
 public class TabLayoutAdapter_BidderHome extends FragmentStatePagerAdapter {
     int mnooftabs;
@@ -30,6 +29,9 @@ public class TabLayoutAdapter_BidderHome extends FragmentStatePagerAdapter {
             case 0:
                 ServicePetitionBidderList tab1 = new ServicePetitionBidderList();
                 return tab1;
+            case 1:
+                UserChats tab2 = new UserChats();
+                return tab2;
             case 4:
                 BidderProfileFragment tab4 = new BidderProfileFragment();
                 return tab4;
