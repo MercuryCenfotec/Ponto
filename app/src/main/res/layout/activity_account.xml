@@ -61,6 +61,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:id="@+id/addMoneyDescription"
             android:layout_width="195dp"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
@@ -100,6 +101,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <customfonts.MyTextView_SF_Pro_Display_Semibold
+            android:id="@+id/withdrawMoneyDescription"
             android:layout_width="195dp"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"

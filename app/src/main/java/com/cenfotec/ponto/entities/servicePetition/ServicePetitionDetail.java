@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
+import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.ServiceType;
+import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -49,9 +54,13 @@ public class ServicePetitionDetail extends Fragment {
     MyTextView_SF_Pro_Display_Bold petitionName;
     TextViewSFProDisplayRegular petitionDescription;
     MyTextView_SF_Pro_Display_Semibold btnPetitionUpdate;
-    ServicePetition servicePetition;
+    public static ServicePetition servicePetition;
     ServiceType serviceType;
     LinearLayout modifyLayout;
+
+    private TextView endWorkHint;
+    private TextView btnEndWork;
+    private TextView btnEndWorkDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +70,32 @@ public class ServicePetitionDetail extends Fragment {
         initContent();
         getPetitionId();
         chargePetition();
+        checkIfServiceHasAcceptedOffer();
         return view;
+    }
+
+    private void checkIfServiceHasAcceptedOffer() {
+        FirebaseDatabase.getInstance().getReference().child("ServicePetitions").child(petitionId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ServicePetition tempService = dataSnapshot.getValue(ServicePetition.class);
+                if(!tempService.getAcceptedOfferId().equals("")) {
+                    endWorkHint.setVisibility(View.VISIBLE);
+                    btnEndWork.setVisibility(View.VISIBLE);
+                }
+
+                if (dataSnapshot.getValue(ServicePetition.class).getFinished()) {
+                    endWorkHint.setText("Ya acabó la contratación de este servicio");
+                    btnEndWork.setEnabled(false);
+                    btnEndWork.setBackgroundResource(R.drawable.rect_disabled);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     private void getPetitionId() {
@@ -110,6 +144,9 @@ public class ServicePetitionDetail extends Fragment {
         petitionDescription = view.findViewById(R.id.petitionDescription);
         btnPetitionUpdate = view.findViewById(R.id.btnPetitionUpdate);
         modifyLayout = view.findViewById(R.id.modifyLayout);
+
+        endWorkHint = view.findViewById(R.id.endPetitionWorkHint);
+        btnEndWork = view.findViewById(R.id.btnEndPetitionWork);
     }
 
     private void setContent() {
@@ -164,4 +201,5 @@ public class ServicePetitionDetail extends Fragment {
             }
         });
     }
+
 }

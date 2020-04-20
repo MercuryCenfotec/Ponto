@@ -99,8 +99,9 @@
                 android:orientation="vertical"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/endPetitionWorkHint"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/modifyLayout">
 
@@ -150,6 +151,41 @@
                     android:textSize="12.3sp" />
 
             </LinearLayout>
+
+            <customfonts.TextViewSFProDisplayRegular
+                android:id="@+id/endPetitionWorkHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Si ya el trabajo fue completado, presione el botón"
+                android:textColor="#B8B8B8"
+                android:textSize="12.3sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/btnEndPetitionWork"
+                app:layout_constraintEnd_toEndOf="@+id/btnEndPetitionWork"
+                app:layout_constraintStart_toStartOf="@+id/btnEndPetitionWork" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Semibold
+                android:id="@+id/btnEndPetitionWork"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/rect_blue"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="Finalizar trabajo"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:onClick="openEndWorkDialog"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

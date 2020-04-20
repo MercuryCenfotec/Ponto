@@ -30,6 +30,8 @@ public class AccountActivity extends AppCompatActivity {
     private User activeUser;
     private Account userAccount;
     private TextView accountBalanceText;
+    private TextView addMoneyText;
+    private TextView withdrawMoneyText;
     final DecimalFormat costFormat = new DecimalFormat("###,###.00");
 
     @Override
@@ -44,6 +46,8 @@ public class AccountActivity extends AppCompatActivity {
     //Initialization statements start here
     private void initViewControls() {
         accountBalanceText = findViewById(R.id.accountBalance);
+        addMoneyText = findViewById(R.id.addMoneyDescription);
+        withdrawMoneyText = findViewById(R.id.withdrawMoneyDescription);
 
         if (getIntent().getExtras() != null) {
             userId = getIntent().getStringExtra("userId");
@@ -62,6 +66,16 @@ public class AccountActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     activeUser = snapshot.getValue(User.class);
+
+                    if (activeUser.getUserType() == 1) { // Solicitante
+                        addMoneyText.setText("Ingresar dinero a mi cuenta para hacer el pago de los servicios");
+                        withdrawMoneyText.setText("Retirar el dinero que he ingresado a mi cuenta interna, en caso de error");
+
+                    } else {
+                        addMoneyText.setText("Ingresar dinero a mi cuenta para hacer el pago de las membresías");
+                        withdrawMoneyText.setText("Retirar el dinero que se me ha pagado por los trabajos que he completado");
+                    }
+
                     getUserAccount();
                 }
             }
