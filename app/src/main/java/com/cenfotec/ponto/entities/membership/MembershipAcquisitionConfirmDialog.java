@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.cenfotec.ponto.R;
 
-public class MembershipAdquisitionConfirmDialog extends AppCompatDialogFragment {
+public class MembershipAcquisitionConfirmDialog extends AppCompatDialogFragment {
 
     private TextView acceptButton;
     private TextView cancelButton;
