@@ -21,10 +21,12 @@ import java.util.List;
 public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_Adapter.ViewHolder> {
     Context context;
     private List<Membership> membershipList;
+    private ItemClickListener mListener;
 
-    public MembershipCard_Adapter(Context context, List<Membership> membershipList) {
+    public MembershipCard_Adapter(Context context, List<Membership> membershipList, ItemClickListener listener) {
         this.context = context;
         this.membershipList = membershipList;
+        this.mListener = listener;
     }
 
     @NonNull
@@ -35,7 +37,7 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         DecimalFormat costFormat = new DecimalFormat("###,###.###");
 
         final SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
@@ -47,6 +49,13 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
         holder.membershipBenefitsView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         holder.membershipBenefitsView.setItemAnimator(new DefaultItemAnimator());
         holder.membershipBenefitsView.setAdapter(new MembershipBenefit_Adapter(context,membershipList.get(position).getBenefits()));
+
+        holder.acquireMembershipBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onItemClicked(membershipList.get(position).getId());
+            }
+        });
     }
 
     @Override
@@ -64,5 +73,9 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
             acquireMembershipBtn = itemView.findViewById(R.id.acquireMembershipBtn);
             membershipBenefitsView = itemView.findViewById(R.id.benefitListView);
         }
+    }
+
+    public interface ItemClickListener {
+        void onItemClicked(String itemId);
     }
 }

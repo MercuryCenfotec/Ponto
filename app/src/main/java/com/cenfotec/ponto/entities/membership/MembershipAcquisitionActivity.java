@@ -2,17 +2,23 @@ package com.cenfotec.ponto.entities.membership;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Membership;
+import com.cenfotec.ponto.entities.account.AccountActivity;
+import com.cenfotec.ponto.entities.account.NotEnoughFundsDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,12 +30,13 @@ import java.util.List;
 
 import adapter.MembershipCard_Adapter;
 
-public class MembershipAcquisitionActivity extends AppCompatActivity {
+public class MembershipAcquisitionActivity extends AppCompatActivity implements MembershipCard_Adapter.ItemClickListener, MembershipAcquisitionConfirmDialog.MembershipAcquireDialogListener, NotEnoughFundsDialog.GoToAccountNoFundsDialogListener {
 
     private MembershipCard_Adapter membershipCard_adapter;
     private RecyclerView recyclerView;
     private List<Membership> membershipList;
     private TextView activityTitle;
+    private String membershipClicked = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,7 @@ public class MembershipAcquisitionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        membershipCard_adapter = new MembershipCard_Adapter(this,membershipList);
+        membershipCard_adapter = new MembershipCard_Adapter(this, membershipList, this);
 
         membershipsQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -69,11 +76,35 @@ public class MembershipAcquisitionActivity extends AppCompatActivity {
             }
         });
 
-        membershipCard_adapter = new MembershipCard_Adapter(this,membershipList);
+        membershipCard_adapter = new MembershipCard_Adapter(this,membershipList,this);
         recyclerView.setAdapter(membershipCard_adapter);
     }
 
     public void goBackToProfile(View view) {
         finish();
+    }
+
+    @Override
+    public void onItemClicked(String itemId) {
+        MembershipAcquisitionConfirmDialog confirmDialog = new MembershipAcquisitionConfirmDialog();
+        confirmDialog.show(getSupportFragmentManager(), "membership acquisition dialog");
+        membershipClicked = itemId;
+    }
+
+    @Override
+    public void dialogConfirmAcquireMembership() {
+
+        if (1000 >= 777) {
+            NotEnoughFundsDialog notEnoughFundsDialog = new NotEnoughFundsDialog();
+            notEnoughFundsDialog.show(getSupportFragmentManager(), "not enough funds dialog");
+        }
+
+    }
+
+    @Override
+    public void dialogNoFundsGoToAccount() {
+        Intent intent = new Intent(this, AccountActivity.class);
+//        intent.putExtra("userId", userId);
+        startActivity(intent);
     }
 }
