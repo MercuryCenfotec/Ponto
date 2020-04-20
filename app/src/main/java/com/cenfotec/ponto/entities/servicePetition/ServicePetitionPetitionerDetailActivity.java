@@ -40,6 +40,7 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     ImageView returnIcon;
     ViewPager petitionViewPager;
     TabLayout tabLayout;
+    TabLayoutAdapter_ServicePetitionDetailPetitioner adapter;
 
     private static final String MY_PREFERENCES = "MyPrefs";
     private DatabaseReference accountDBReference;
@@ -83,7 +84,7 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
                 goToHomePetitioner();
             }
         });
-        TabLayoutAdapter_ServicePetitionDetailPetitioner adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
+        adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
         petitionViewPager.setAdapter(adapter);
         petitionViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -178,9 +179,13 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
         accountDBReference.child(bidderUserAccount.getAccountNumber()).child("balance").setValue(bidderUserAccount.getBalance() + acceptedOffer.getCost());
         servicePetitionBReference.child(ServicePetitionDetail.servicePetition.getId()).child("finished").setValue(true);
 
+        adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
+        petitionViewPager.setAdapter(adapter);
+
         openRatingDialog();
     }
 
+    // Método que abre el dialog para calificar al usuario
     private void openRatingDialog() {
         RateUserDialog rateUserDialog = new RateUserDialog();
         rateUserDialog.setCancelable(false);
@@ -206,25 +211,28 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
         });
     }
 
+    // Implementar RateUserDialogConfirmListener y sobreescribir el método para manejar el click de Calificar dentro del dialogo
     @Override
     public void dialogConfirmRating(float rating) {
 
         int totalRating = 0;
         int numRatings = bidderRatings.size();
 
+        // Según el total de rating que ha tenido el usuario a calificar, sumar la totalidad de las calificaciones
         for (int i = 0; i < bidderRatings.size(); i++) {
             totalRating += bidderRatings.get(i).getRating();
         }
 
+        // Guardar en la base de datos en nuevo rating
         String ratingId = ratingDBReference.push().getKey();
         Rating myRating = new Rating(ratingId, bidder.getId(), userId, rating);
         ratingDBReference.child(ratingId).setValue(myRating);
 
         DecimalFormat df = new DecimalFormat("###.##");
+
+        // Actualizar el rating del usuario tomando la totalidad que se sumó arriba (además del rating nuevo) y dividirla por la cantidad total de ratings que tiene el user
         Float newRating = (totalRating + rating) / (numRatings + 1);
         userDBReference.child(bidder.getId()).child("rating").setValue(Float.parseFloat(df.format(newRating)));
 
-        finish();
-        startActivity(getIntent());
     }
 }

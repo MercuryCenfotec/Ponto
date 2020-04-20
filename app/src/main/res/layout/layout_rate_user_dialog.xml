@@ -29,7 +29,7 @@
         android:layout_marginRight="24dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="4dp"
-        android:text="Basado en el desempeño del oferente, califique el servicio otorgado"
+        android:text="Basado en el desempeño del usuario, califique la experiencia"
         android:textColor="#a9a9b0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
