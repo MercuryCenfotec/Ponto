@@ -209,7 +209,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                 "",
                 accountNumber);
         user.setVerified(false);
-        user.setMembershipId("none");
+        user.setMembershipId("");
 
         // IdVerification creation
         String idVerificationKey = idVerificationsDBReference.push().getKey();

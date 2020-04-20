@@ -9,12 +9,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Offer;
+import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.offer.OfferDetailActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -23,6 +31,7 @@ import java.util.List;
 public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.ViewHolder> {
     Context context;
     private List<Offer> offerList;
+    private User activeUser;
 
     public OfferCard_Adapter(Context context, List<Offer> offerList) {
         this.context = context;
@@ -39,6 +48,8 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
     public void onBindViewHolder(OfferCard_Adapter.ViewHolder holder, final int position) {
         DecimalFormat costFormat = new DecimalFormat("###,###.###");
         DecimalFormat durationFormat = new DecimalFormat("###.###");
+
+        getUserById(offerList.get(position).getUserId(), holder);
 
         final SharedPreferences myPrefs = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         holder.cardCost.setText("₡ " + costFormat.format(offerList.get(position).getCost()));
@@ -72,13 +83,32 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
         }
     }
 
+    private void getUserById(String userId, final OfferCard_Adapter.ViewHolder holder) {
+        final DatabaseReference userDBReference = FirebaseDatabase.getInstance().getReference();
+        Query getUserByIdQuery = userDBReference.child("Users").orderByChild("id").equalTo(userId);
+        getUserByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    activeUser = snapshot.getValue(User.class);
+                    holder.ratingValue.setText(String.valueOf(activeUser.getRating()));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @Override
     public int getItemCount() {
         return offerList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView cardTitle, cardDuration, cardCost, cardDescription, counterOfferText;
+        TextView cardTitle, cardDuration, cardCost, cardDescription, counterOfferText, ratingValue;
         CardView offerCard;
         ImageView cardImage, counterOfferIcon;
 
@@ -90,6 +120,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
             cardCost = itemView.findViewById(R.id.cardCost);
             cardDescription = itemView.findViewById(R.id.cardDescription);
             cardImage = itemView.findViewById(R.id.bidderImage);
+            ratingValue = itemView.findViewById(R.id.ratingValue);
 
             counterOfferIcon = itemView.findViewById(R.id.counterOfferIcon);
             counterOfferText = itemView.findViewById(R.id.counterOfferText);

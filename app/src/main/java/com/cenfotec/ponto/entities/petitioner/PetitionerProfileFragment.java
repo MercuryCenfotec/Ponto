@@ -56,12 +56,12 @@ public class PetitionerProfileFragment extends Fragment {
     private ArrayList<ProfileModel> profileModelArrayList;
     private MyTextView_SF_Pro_Display_Medium servicePetitionNumber;
 
-    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_star, R.drawable.ic_like, R.drawable.ic_paypal,
+    Integer inbox[] = {R.drawable.ic_calendar, R.drawable.ic_like, R.drawable.ic_paypal,
             R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
-    String txttrades[] = {"Agenda de proyectos", "Membresía", "Reseñas", "Cuenta interna", "Contratos",
+    String txttrades[] = {"Agenda de proyectos", "Reseñas", "Cuenta interna", "Contratos",
             "Mi perfil", "Cerrar sesión"};
-    String txthistory[] = {"Revise sus contrataciones", "Administre su membresía",
+    String txthistory[] = {"Revise sus contrataciones",
             "La colección", "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Cierre la sesión"};
 
     View view;
