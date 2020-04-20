@@ -7,187 +7,279 @@
     android:background="#03749C"
     tools:context=".entities.bidder.BidderRegistrationActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutBidReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <ScrollView
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <customfonts.MyTextView_SF_Pro_Display_Bold
-            android:id="@+id/myTextView_SF_Pro_Display_Bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="41dp"
-            android:layout_marginLeft="41dp"
-            android:layout_marginEnd="41dp"
-            android:layout_marginRight="41dp"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            android:text="Registro oferente"
-            android:textColor="#FFF"
-            android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@+id/fullNameEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/fullNameEditText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:hint="Nombre completo"
-            android:inputType="text"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="13.5sp" />
+            android:orientation="vertical">
 
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/birthDateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:focusable="false"
-            android:hint="Fecha de nacimiento"
-            android:inputType="date"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="13.5sp" />
-
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/emailEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:hint="Correo electrónico"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="13.5sp" />
-
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/identificationEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:hint="Número de cédula"
-            android:inputType="text"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="13.5sp" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <customfonts.EditText__SF_Pro_Display_Medium
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="41dp"
-                android:layout_marginTop="21dp"
-                android:layout_marginRight="41dp"
-                android:background="@drawable/rect"
-                android:hint="Contraseña"
-                android:inputType="textPassword"
-                android:paddingLeft="20dp"
-                android:paddingTop="13dp"
-                android:paddingRight="13dp"
-                android:paddingBottom="14dp"
-                android:textColor="#ffffff"
-                android:textColorHint="#ffffff"
-                android:textSize="13.5sp" />
 
             <ImageView
-                android:id="@+id/imgViewPassword"
-                android:layout_width="25dp"
-                android:layout_height="30dp"
-                android:layout_alignTop="@+id/passwordEditText"
-                android:layout_alignEnd="@+id/passwordEditText"
-                android:layout_alignRight="@+id/passwordEditText"
-                android:layout_alignBottom="@+id/passwordEditText"
-                android:layout_marginRight="16dp"
-                android:onClick="showHidePass"
-                android:src="@drawable/ic_eye" />
+                android:id="@+id/imageView"
+                android:layout_width="73dp"
+                android:layout_height="169dp"
+                android:layout_marginTop="48dp"
+                android:alpha="0.2"
+                android:src="@drawable/logo_ponto"
+                android:tint="#FFF"
+                app:layout_constraintBottom_toTopOf="@+id/layoutPetReg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutBidReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="48dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                <customfonts.MyTextView_SF_Pro_Display_Bold
+                    android:id="@+id/myTextView_SF_Pro_Display_Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="41dp"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginEnd="41dp"
+                    android:layout_marginRight="41dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:text="Registro oferente"
+                    android:textColor="#FFF"
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toTopOf="@+id/fullNameEditText"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/fullNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:hint="Nombre completo"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp" />
+
+                <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/birthDateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:focusable="false"
+                    android:hint="Fecha de nacimiento"
+                    android:inputType="date"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp" />
+
+                <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/emailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:hint="Correo electrónico"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp" />
+
+                <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/identificationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:hint="Número de cédula"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <customfonts.EditText__SF_Pro_Display_Medium
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="41dp"
+                        android:layout_marginTop="21dp"
+                        android:layout_marginRight="41dp"
+                        android:background="@drawable/rect"
+                        android:hint="Contraseña"
+                        android:inputType="textPassword"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="13dp"
+                        android:paddingRight="13dp"
+                        android:paddingBottom="14dp"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"
+                        android:textSize="13.5sp" />
+
+                    <ImageView
+                        android:id="@+id/imgViewPassword"
+                        android:layout_width="25dp"
+                        android:layout_height="30dp"
+                        android:layout_alignTop="@+id/passwordEditText"
+                        android:layout_alignEnd="@+id/passwordEditText"
+                        android:layout_alignRight="@+id/passwordEditText"
+                        android:layout_alignBottom="@+id/passwordEditText"
+                        android:layout_marginRight="16dp"
+                        android:onClick="showHidePass"
+                        android:src="@drawable/ic_eye" />
+
+                </RelativeLayout>
 
 
-        <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/biographyEditText"
-            android:layout_width="match_parent"
-            android:layout_height="97dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="41dp"
-            android:layout_marginTop="21dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/rect"
-            android:gravity="top|left"
-            android:hint="Biografía"
-            android:inputType="textMultiLine"
-            android:maxLines="10"
-            android:minLines="1"
-            android:paddingLeft="20dp"
-            android:paddingTop="14dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="14dp"
-            android:textColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:textSize="13.5sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+                <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/biographyEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="97dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:gravity="top|left"
+                    android:hint="Biografía"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:minLines="1"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
-        <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/btnBidderRegistration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/rect_white"
-            android:paddingLeft="48dp"
-            android:paddingTop="11dp"
-            android:paddingRight="48dp"
-            android:paddingBottom="11dp"
-            android:text="Registrarme"
-            android:textAllCaps="false"
-            android:textColor="#3b3b3b"
-            android:textSize="13.5sp" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="44dp"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginRight="44dp"
+                android:text="Para verificar su identidad, se requiere una foto de su cédula de identidad por el frente, una por el reverso y una fotografía reciente."
+                android:textColor="#fff"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutBidReg" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/btnPetitionUpload"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="44dp"
+                android:layout_marginLeft="44dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginRight="44dp"
+                android:background="@drawable/rect_white"
+                android:onClick="askCameraPermissions"
+                android:paddingLeft="48dp"
+                android:paddingTop="11dp"
+                android:paddingRight="48dp"
+                android:paddingBottom="11dp"
+                android:text="Subir archivos"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#000"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <TextView
+                android:id="@+id/filesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="2dp"
+                android:paddingTop="2dp"
+                android:paddingRight="2dp"
+                android:paddingBottom="2dp"
+                android:text="0 Archivos adjuntos"
+                android:textColor="#FAFAFA"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/btnPetitionUpload"
+                app:layout_constraintTop_toBottomOf="@+id/btnPetitionUpload" />
+
+            <customfonts.MyTextView_SF_Pro_Display_Medium
+                android:id="@+id/btnBidderRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="104dp"
+                android:background="@drawable/rect_white"
+                android:paddingLeft="48dp"
+                android:paddingTop="11dp"
+                android:paddingRight="48dp"
+                android:paddingBottom="11dp"
+                android:text="Registrarme"
+                android:textAllCaps="false"
+                android:textColor="#3b3b3b"
+                android:textSize="13.5sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/filesTextView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

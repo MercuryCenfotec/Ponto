@@ -42,6 +42,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="40dp"
+        android:onClick="goToAddFundsActivity"
         android:background="@drawable/background_send_money"
         android:gravity="center_horizontal"
         android:padding="24dp"

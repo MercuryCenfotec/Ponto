@@ -3,7 +3,7 @@ package com.cenfotec.ponto.entities.account;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
-import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.User;
-import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -110,4 +108,14 @@ public class AccountActivity extends AppCompatActivity {
         String accountBalance = "₡" + costFormat.format(Double.parseDouble(userAccount.getBalance().toString())) + " CRC";
         accountBalanceText.setText(accountBalance);
     }
+
+    // ## RechargeAccount statements start here ##
+    public void goToAddFundsActivity(View view) {
+        finish();
+        Intent ira = new Intent(this, RechargeAccountActivity.class);
+        ira.putExtra("balanceAccountId", userAccount.getAccountNumber());
+        ira.putExtra("userId", userId);
+        startActivity(ira);
+    }
+    // ## RechargeAccount statements end ##
 }

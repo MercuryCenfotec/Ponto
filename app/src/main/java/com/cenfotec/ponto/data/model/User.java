@@ -14,6 +14,8 @@ public class User {
     private int userType;
     private String profileImageUrl;
     private String userAccount;
+    private boolean isVerified;
+    private String membershipId;
 
     public User() {
     }
@@ -129,6 +131,22 @@ public class User {
 
     public void setUserAccount(String userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(String membershipId) {
+        this.membershipId = membershipId;
     }
 }
 
