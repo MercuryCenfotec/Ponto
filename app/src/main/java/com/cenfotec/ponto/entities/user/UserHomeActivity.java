@@ -21,21 +21,27 @@ public class UserHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
         SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
         String userType = myPrefs.getString("userType", "none");
+        String verifiedUser = myPrefs.getString("userIsVerified","none");
         Intent intent;
 
-        switch (userType) {
-            case "bidder":
-                intent = new Intent(this, BidderHomeActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            case "petitioner":
-                intent = new Intent(this, PetitionerHomeActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            default:
-                break;
+        if (verifiedUser.equals("none")) {
+            intent = new Intent(this,UnverifiedUserActivity.class);
+        } else {
+            switch (userType) {
+                case "bidder":
+                    intent = new Intent(this, BidderHomeActivity.class);
+                    break;
+                case "petitioner":
+                    intent = new Intent(this, PetitionerHomeActivity.class);
+                    break;
+                default:
+                    intent = new Intent(this, UserHomeActivity.class);
+                    break;
+            }
         }
+
+        startActivity(intent);
+        finish();
+
     }
 }

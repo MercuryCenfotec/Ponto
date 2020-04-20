@@ -1,30 +1,60 @@
 package com.cenfotec.ponto.entities.bidder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ClipData;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.BCrypt;
 import com.cenfotec.ponto.data.model.Bidder;
 import com.cenfotec.ponto.data.model.CustomDatePickerDialog;
+import com.cenfotec.ponto.data.model.IdVerification;
 import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.user.LoginActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 
@@ -32,6 +62,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
     DatabaseReference bidderDataReference;
+    DatabaseReference accountDBReference;
     EditText fullNameEditText;
     EditText birthDateEditText;
     EditText emailEditText;
@@ -41,6 +72,17 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     MyTextView_SF_Pro_Display_Medium btnBidderRegistration;
     DatePickerDialog.OnDateSetListener birthDateSetListener;
     CustomDatePickerDialog customDatePickerDialog;
+
+    // Camera related variables start here
+    public static final int CAMERA_PERMISSION_REQUEST_CODE = 1996;
+    public static final int CAMERA_REQUEST_CODE = 1995;
+    public static final int GALLERY_REQUEST_CODE = 1994;
+    Uri uri;
+    List<Uri> filesToUpload = new ArrayList<>();
+    List<String> realFilesToUpload = new ArrayList<>();
+    TextView fileTextView;
+    DatabaseReference idVerificationsDBReference;
+    // Camera related variables end here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +95,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     private void initFormControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         bidderDataReference = FirebaseDatabase.getInstance().getReference("Bidders");
+        accountDBReference = FirebaseDatabase.getInstance().getReference("Accounts");
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         fullNameEditText = findViewById(R.id.fullNameEditText);
@@ -60,6 +103,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         biographyEditText = findViewById(R.id.biographyEditText);
         btnBidderRegistration = findViewById(R.id.btnBidderRegistration);
         identificationEditText = findViewById(R.id.identificationEditText);
+        fileTextView = findViewById(R.id.filesTextView);
         customDatePickerDialog = new CustomDatePickerDialog();
     }
 
@@ -146,13 +190,31 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         String generatedSecuredPasswordHash = BCrypt.hashpw(password,
                 BCrypt.gensalt(12));
 
+        // Account creation start
+        String accountNumber = accountDBReference.push().getKey();
+        Account userAccount = new Account(accountNumber, (float) 0);
+        accountDBReference.child(accountNumber).setValue(userAccount);
+        // Account creation end
+
         String userId = databaseReference.push().getKey();
         User user = new User(userId,fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(),
-                generatedSecuredPasswordHash, 1, 0, true,
-                2, "");
+                generatedSecuredPasswordHash,
+                1,
+                0,
+                true,
+                2,
+                "",
+                accountNumber);
+        user.setVerified(false);
+        user.setMembershipId("none");
+
+        // IdVerification creation
+        String idVerificationKey = idVerificationsDBReference.push().getKey();
+        IdVerification idVerification = new IdVerification(idVerificationKey,user.getFullName(),user.getIdentificationNumber(),user.getId(),realFilesToUpload);
+        if (idVerificationKey != null) idVerificationsDBReference.child(idVerificationKey).setValue(idVerification);
 
         databaseReference.child(userId).setValue(user);
         afterUserIsAdded(userId);
@@ -213,4 +275,183 @@ public class BidderRegistrationActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    //Camera controls statements start here
+    public void askCameraPermissions(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
+                PackageManager.PERMISSION_GRANTED) {
+            preInvokeCameraAndGallery();
+        } else {
+            String[] permissionRequest = {Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this, permissionRequest,
+                    CAMERA_PERMISSION_REQUEST_CODE);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                preInvokeCameraAndGallery();
+            } else {
+                showToaster("Permisos requeridos");
+            }
+        }
+    }
+
+    public void preInvokeCameraAndGallery() {
+        File imagePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File picFile = new File(imagePath, getPictureName());
+        uri = FileProvider.getUriForFile(this,
+                getApplicationContext().getPackageName() + ".provider", picFile);
+        openCameraAndGalleryDialog();
+    }
+
+    private void openCameraAndGalleryDialog() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(BidderRegistrationActivity.this);
+        builderSingle.setTitle("Selecciona una opción");
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                BidderRegistrationActivity.this,
+                android.R.layout.select_dialog_singlechoice);
+        arrayAdapter.add("Galería");
+        arrayAdapter.add("Cámara");
+
+        builderSingle.setNegativeButton(
+                "Cancelar",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        builderSingle.setAdapter(
+                arrayAdapter,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int picked) {
+                        pickedOptionAction(picked);
+                    }
+                });
+        builderSingle.show();
+    }
+
+
+    private void pickedOptionAction(int picked) {
+        switch (picked) {
+            case 0:
+                Intent openGallery = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                openGallery.putExtra(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                openGallery.setType("*/*");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    openGallery.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                }
+
+                startActivityForResult(openGallery, GALLERY_REQUEST_CODE);
+                break;
+            case 1:
+                Intent openCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                openCamera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                startActivityForResult(openCamera, CAMERA_REQUEST_CODE);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private String getPictureName() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        Date now = new Date();
+        String timestamp = sdf.format(now);
+        return "image" + timestamp + ".jpg";
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case CAMERA_REQUEST_CODE:
+                    filesToUpload.add(uri);
+                    break;
+                case GALLERY_REQUEST_CODE:
+                    ClipData mClipData = data.getClipData();
+                    ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+                    for (int i = 0; i < mClipData.getItemCount(); i++) {
+                        ClipData.Item item = mClipData.getItemAt(i);
+                        Uri uri = item.getUri();
+                        mArrayUri.add(uri);
+                    }
+
+                    filesToUpload.addAll(mArrayUri);
+
+                    break;
+                default:
+                    break;
+            }
+            changeNumberOfFilesAdded(filesToUpload.size());
+
+        }
+    }
+
+    //Upload statements start here
+    private void uploadImageToFirebase() {
+        for (Uri uri : filesToUpload) {
+            String fileType = "";
+            String asd = getContentResolver().getType(uri);
+            if (asd.contains("image/")) {
+                fileType = "images/";
+            } else if (asd.contains("video/")) {
+                fileType = "videos/";
+            }
+            tryUpload(fileType, uri);
+        }
+
+    }
+
+    private void tryUpload(String fileType, Uri uri) {
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+        final StorageReference imgReference = storageReference.child(fileType +
+                uri.getLastPathSegment());
+
+        UploadTask uploadTask = imgReference.putFile(uri);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> downloadUrl = imgReference.getDownloadUrl();
+                downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        realFilesToUpload.add(uri.toString());
+                        if (realFilesToUpload.size() == filesToUpload.size()) {
+                            registerBidderToDB();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void changeNumberOfFilesAdded(int newAmount) {
+        String textToDisplay = newAmount + " Archivos adjuntos";
+        fileTextView.setText(textToDisplay);
+    }
+
+    // Upload statements end here
+
+    // Camera controls statements end here
 }

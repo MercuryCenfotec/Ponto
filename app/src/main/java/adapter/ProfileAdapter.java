@@ -1,6 +1,5 @@
 package adapter;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -13,14 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.entities.account.AccountActivity;
 import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
-import com.cenfotec.ponto.entities.appointment.AppointmentCreationActivity;
-import com.cenfotec.ponto.entities.bidder.BidderProfileActivity;
 import com.cenfotec.ponto.entities.bidder.BidderUpdateActivity;
 import com.cenfotec.ponto.entities.contract.ContractsListActivity;
-import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
-import com.cenfotec.ponto.entities.petitioner.PetitionerRegistrationActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
+import com.cenfotec.ponto.entities.membership.MembershipAcquisitionActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 import java.util.ArrayList;
@@ -73,8 +70,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 1:
-                        //Intent i = new Intent(context, CLASE DE RECOMENDACIONES.class);
-                        //context.startActivity(i);
+                        Intent membershipsIntent = new Intent(context, MembershipAcquisitionActivity.class);
+                        context.startActivity(membershipsIntent);
                         break;
 
                     case 2:
@@ -83,11 +80,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                         break;
 
                     case 3:
+                        Intent inte = new Intent(context, AccountActivity.class);
+                        inte.putExtra("userId", profileModelArrayList.get(position).getUserId());
+                        context.startActivity(inte);
+                        break;
+
+                    case 4:
                         Intent intent = new Intent(context, ContractsListActivity.class);
                         context.startActivity(intent);
                         break;
 
-                    case 4:
+                    case 5:
                         if(profileModelArrayList.get(position).getUserType().equals("petitioner")){
                             Intent i = new Intent(context, PetitionerUpdateActivity.class);
                             i.putExtra("petitionerId", profileModelArrayList.get(position).getUserId());
@@ -100,7 +103,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
                         break;
 
-                    case 5:
+                    case 6:
                         LogoutHelper.logout(context);
                         break;
                 }

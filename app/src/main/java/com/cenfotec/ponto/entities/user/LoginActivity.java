@@ -64,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putString("userType", data.child("userType").getValue().toString().equals("1") ? "petitioner" : "bidder");
                                 editor.putString("userName", data.child("fullName").getValue().toString());
                                 editor.putString("userImageUrl", data.child("profileImageUrl").getValue().toString());
+                                editor.putString("userMembershipId",data.child("membershipId").getValue().toString());
+                                editor.putString("userIsVerified",data.child("isVerified").getValue().toString());
                                 editor.commit();
                                 Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                                 startActivity(intent);

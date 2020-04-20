@@ -15,7 +15,7 @@
         android:layout_marginTop="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:text="Confirmar oferta"
+        android:text="Adquirir membresía"
         android:textColor="#000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:lineSpacingExtra="4dp"
-        android:text="¿Está seguro que desea aceptar esta oferta y, por ende, cancelar las demás? La totalidad del costo de la oferta será rebajada de su cuenta."
+        android:text="¿Está seguro que desea adquirir esta membresía? Una vez adquirida no hay devoluciones"
         android:textColor="#a9a9b0"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/confirmationTextDialog">
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
-            android:id="@+id/btnCancelOfferDialog"
+            android:id="@+id/btnCancelMembershipDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="22dp"
@@ -59,11 +59,11 @@
             android:textSize="15sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
-            android:id="@+id/btnAcceptOfferDialog"
+            android:id="@+id/btnAcquireMembershipDialog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="4dp"
-            android:text="CONFIRMAR"
+            android:text="ADQUIRIR"
             android:textColor="#15B1D7"
             android:textSize="15sp" />
 

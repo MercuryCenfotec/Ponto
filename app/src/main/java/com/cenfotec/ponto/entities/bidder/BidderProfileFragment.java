@@ -48,13 +48,13 @@ public class BidderProfileFragment extends Fragment {
     private RecyclerView recyclerview;
     private ArrayList<ProfileModel> profileModelArrayList;
     User user;
-    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_like, R.drawable.ic_star,
+    Integer inbox[] = {R.drawable.ic_calendar,R.drawable.ic_star, R.drawable.ic_like, R.drawable.ic_paypal,
             R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
     Integer arrow = R.drawable.ic_chevron_right_black_24dp;
-    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Contratos",
+    String txttrades[] = {"Agenda de proyectos", "Recomendaciones", "Reseñas", "Cuenta interna", "Contratos",
             "Mi perfil", "Cerrar sesión"};
-    String txthistory[] = {"Revisa las contrataciones", "Administra las recomendaciones",
-            "La colección", "Contratos realizados", "Cambia la información del perfil", "Cierra la sesión"};
+    String txthistory[] = {"Revise sus contrataciones", "Administre las recomendaciones",
+            "La colección", "Administe su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Cierre la sesión"};
 
     TextView profileFullName;
     TextView profileEmail;

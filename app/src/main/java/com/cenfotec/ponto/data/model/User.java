@@ -13,13 +13,16 @@ public class User {
     private boolean allowsPushNotifications;
     private int userType;
     private String profileImageUrl;
+    private String userAccount;
+    private boolean isVerified;
+    private String membershipId;
 
     public User() {
     }
 
     public User(String id, String fullName, String birthDate, String email,
                 String identificationNumber, String password, int status, float rating,
-                boolean allowsPushNotifications, int userType, String profileImageUrl) {
+                boolean allowsPushNotifications, int userType, String profileImageUrl, String userAccount) {
         this.id = id;
         this.fullName = fullName;
         this.birthDate = birthDate;
@@ -31,6 +34,7 @@ public class User {
         this.allowsPushNotifications = allowsPushNotifications;
         this.userType = userType;
         this.profileImageUrl = profileImageUrl;
+        this.userAccount = userAccount;
     }
 
     public String getId() {
@@ -119,6 +123,30 @@ public class User {
 
     public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(String membershipId) {
+        this.membershipId = membershipId;
     }
 }
 

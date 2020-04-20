@@ -14,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.Appointment;
 import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.account.AccountActivity;
+import com.cenfotec.ponto.entities.account.NotEnoughFundsDialog;
 import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
@@ -35,11 +38,12 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener, CounterOfferConfirmDialog.CounterOfferDialogConfirmListener {
+public class OfferDetailActivity extends AppCompatActivity implements CounterOfferDialog.CounterOfferDialogListener, AcceptOfferDialog.AcceptOfferDialogListener, CounterOfferConfirmDialog.CounterOfferDialogConfirmListener, NotEnoughFundsDialog.GoToAccountNoFundsDialogListener {
 
     private static SharedPreferences sharedpreferences;
     DatabaseReference offerDBReference;
     DatabaseReference bidderDBReference;
+    DatabaseReference accountDBReference;
     public static final String MY_PREFERENCES = "MyPrefs";
     TextView costText;
     TextView durationTypeText;
@@ -71,9 +75,15 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     TextView petitionerCostDetail;
     // Counter offer end
 
+    String userId;
+
     // ## Appointment ##
     TextView btnCreateAppointment;
     // ## Appointment end ##
+
+    // Account start
+    Account userAccount;
+    // Account end
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         setContentView(R.layout.activity_offer_detail);
         offerDBReference = FirebaseDatabase.getInstance().getReference("Offers");
         bidderDBReference = FirebaseDatabase.getInstance().getReference("Bidders");
+        accountDBReference = FirebaseDatabase.getInstance().getReference("Accounts");
         costText = findViewById(R.id.costValue);
         durationTypeText = findViewById(R.id.durationTypeValue);
         durationText = findViewById(R.id.durationValue);
@@ -110,7 +121,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
         btnCreateAppointment = findViewById(R.id.btnCreateAppointment);
 
-        String userId = myPrefs.getString("userId", "none");
+        userId = myPrefs.getString("userId", "none");
         offerId = myPrefs.getString("offerId","none");
 
         loadOfferData(userId, offerId);
@@ -118,6 +129,45 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         // ## Appointment ##
         checkIfServiceHasAcceptedOffer();
         // ## Appointment end ##
+
+        getActiveUser(userId);
+    }
+
+    private void getActiveUser(String userId) {
+
+        final DatabaseReference userDBReference = FirebaseDatabase.getInstance().getReference();
+        Query getUserByIdQuery = userDBReference.child("Users").orderByChild("id").equalTo(userId);
+        getUserByIdQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    getUserAccount(snapshot.getValue(User.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getUserAccount(User activeUser) {
+        final DatabaseReference accountDBReference = FirebaseDatabase.getInstance().getReference();
+        Query getUserAccountQuery = accountDBReference.child("Accounts").orderByChild("accountNumber").equalTo(activeUser.getUserAccount());
+        getUserAccountQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
+                    userAccount = accountSnapshot.getValue(Account.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void loadOfferData(final String userId, String offerId) {
@@ -223,7 +273,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         startActivity(intent);
     }
 
-    public void acceptOffer() {
+    public void  acceptOffer() {
         String servicePetitionId = myPrefs.getString("servicePetitionId", "none");
         final String offerId = myPrefs.getString("offerId", "none");
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Offers");
@@ -235,14 +285,20 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot offerSS : dataSnapshot.getChildren()) {
-                    ref.child(offerSS.child("id").getValue().toString()).child("accepted")
-                            .setValue(offerSS.child("id").getValue().toString().equals(offerId) ?
-                                    "accepted" :
-                                    "cancelled");
-                }
 
-                Toast.makeText(OfferDetailActivity.this, "La oferta fue aceptada", Toast.LENGTH_LONG).show();
-                registerContractToDB();
+                    if (hasSufficientFunds()) {
+                        ref.child(offerSS.child("id").getValue().toString()).child("accepted")
+                                .setValue(offerSS.child("id").getValue().toString().equals(offerId) ?
+                                        "accepted" :
+                                        "cancelled");
+
+                        Toast.makeText(OfferDetailActivity.this, "La oferta fue aceptada", Toast.LENGTH_LONG).show();
+                        registerContractToDB();
+
+                    } else {
+                        openNoFundsDialog();
+                    }
+                }
 
             }
 
@@ -254,6 +310,28 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
         ref2.child(servicePetitionId).child("acceptedOfferId").setValue(offerId);
 
+    }
+
+    @Override
+    public void dialogNoFundsGoToAccount() {
+        Intent intent = new Intent(this, AccountActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+
+    public void openNoFundsDialog() {
+        NotEnoughFundsDialog noFundsDialog = new NotEnoughFundsDialog();
+        noFundsDialog.show(getSupportFragmentManager(), "insufficient funds dialog");
+    }
+
+    private boolean hasSufficientFunds() {
+        if (userAccount.getBalance() >= activeOffer.getCost()) {
+            accountDBReference.child(userAccount.getAccountNumber()).child("balance").setValue(userAccount.getBalance() - activeOffer.getCost());
+            return true;
+
+        } else {
+            return false;
+        }
     }
 
     // ## Contract statements start here ##
