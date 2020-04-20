@@ -1,6 +1,8 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Chat;
+import com.cenfotec.ponto.entities.message.ChatMessagesActivity;
 import com.squareup.picasso.Picasso;
 
 import java.time.LocalDateTime;
@@ -24,108 +27,122 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.ViewHolder> {
 
-    Context context;
-    private List<Chat> chatList;
-    private String userId;
+  Context context;
+  private List<Chat> chatList;
+  private String userId;
 
-    public ChatCard_Adapter(Context context, List<Chat> chatList, String userId) {
-        this.context = context;
-        this.chatList = chatList;
-        this.userId = userId;
-    }
+  public ChatCard_Adapter(Context context, List<Chat> chatList, String userId) {
+    this.context = context;
+    this.chatList = chatList;
+    this.userId = userId;
+  }
 
-    @Override
-    public ChatCard_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_card, parent, false);
-        return new ViewHolder(view);
-    }
+  @Override
+  public ChatCard_Adapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_chat_card, parent, false);
+    return new ViewHolder(view);
+  }
 
-    @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        String parsedTime = "";
-        LocalDateTime time;
-        String timeLapse = "";
-        holder.linear.setBackgroundResource(R.drawable.rect_white_border);
-        if (chatList.get(position).getMessages()!= null) {
-            time = chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getDateTime();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) == 0) {
-                    if (time.getDayOfYear() - LocalDateTime.now().getDayOfYear() == 0) {
-                        if (time.getHour() - LocalDateTime.now().getHour() == 0) {
-                            if (time.getMinute() - LocalDateTime.now().getMinute() == 0) {
+  @Override
+  public void onBindViewHolder(ViewHolder holder, final int position) {
+    String parsedTime = "";
+    LocalDateTime time;
+    String timeLapse = "";
+    holder.linear.setBackgroundResource(R.drawable.rect_white_border);
+    if (chatList.get(position).getMessages() != null) {
+      time = chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getDateTime();
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) == 0) {
+          if (time.getDayOfYear() - LocalDateTime.now().getDayOfYear() == 0) {
+            if (time.getHour() - LocalDateTime.now().getHour() == 0) {
+              if (time.getMinute() - LocalDateTime.now().getMinute() == 0) {
 
-                            } else {
-                                timeLapse = (time.getMinute() - LocalDateTime.now().getMinute()) + " min";
-                                if (time.getMinute() - LocalDateTime.now().getMinute() > 1) {
-                                    timeLapse = timeLapse + "s";
-                                }
-                            }
-                        } else {
-                            timeLapse = (time.getHour() - LocalDateTime.now().getHour()) + " hora";
-                            if (time.getHour() - LocalDateTime.now().getHour() > 1) {
-                                timeLapse = timeLapse + "s";
-                            }
-                        }
-                    } else {
-                        timeLapse = (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth()) + " dias";
-                        if (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth() > 1) {
-                            timeLapse = timeLapse + "s";
-                        }
-                    }
-                } else {
-                    timeLapse = time.getMonth().compareTo(LocalDateTime.now().getMonth()) + " mes";
-                    if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) > 1) {
-                        timeLapse = timeLapse + "es";
-                    }
+              } else {
+                timeLapse = (time.getMinute() - LocalDateTime.now().getMinute()) + " min";
+                if (time.getMinute() - LocalDateTime.now().getMinute() > 1) {
+                  timeLapse = timeLapse + "s";
                 }
+              }
+            } else {
+              timeLapse = (time.getHour() - LocalDateTime.now().getHour()) + " hora";
+              if (time.getHour() - LocalDateTime.now().getHour() > 1) {
+                timeLapse = timeLapse + "s";
+              }
             }
-            parsedTime = "hace " + timeLapse;
-            holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getMessage());
-            holder.time.setText(parsedTime);
-        }else{
-            holder.message.setText("No tienes mensajes con esta persona..." );
-            holder.time.setText("");
-            holder.timePoint.setVisibility(View.GONE);
-        }
-
-        if (userId == chatList.get(position).getPetitionerId()) {
-            holder.name.setText(chatList.get(position).getBidderName());
-            if (chatList.get(position).getBidderImgUrl().length() > 0) {
-                Picasso.get().load(chatList.get(position).getBidderImgUrl()).into(holder.image);
+          } else {
+            timeLapse = (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth()) + " dias";
+            if (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth() > 1) {
+              timeLapse = timeLapse + "s";
             }
+          }
         } else {
-            holder.name.setText(chatList.get(position).getPetitionerName());
-            if (chatList.get(position).getPetitionerImgUrl().length() > 0) {
-                Picasso.get().load(chatList.get(position).getPetitionerImgUrl()).into(holder.image);
-            }
+          timeLapse = time.getMonth().compareTo(LocalDateTime.now().getMonth()) + " mes";
+          if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) > 1) {
+            timeLapse = timeLapse + "es";
+          }
         }
+      }
+      parsedTime = "hace " + timeLapse;
+      holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getMessage());
+      holder.time.setText(parsedTime);
+    } else {
+      holder.message.setText("No tienes mensajes con esta persona...");
+      holder.time.setText("");
+      holder.timePoint.setVisibility(View.GONE);
     }
 
-    @Override
-    public int getItemCount() {
-        return chatList.size();
-    }
+    holder.linear.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        Intent intent;
+        intent = new Intent(context, ChatMessagesActivity.class);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextViewSFProDisplayRegular name, time;
-        MyTextView_SF_Pro_Display_Medium message;
-        CircleImageView image;
-        LinearLayout linear;
-        ImageView timePoint,n2,n3,n4;
-        TextView n1;
+        editor.putString("chatId", chatList.get(position).getId());
+        editor.commit();
+        context.startActivity(intent);
+      }
+    });
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            timePoint = itemView.findViewById(R.id.timePoint);
-            image = itemView.findViewById(R.id.image);
-            message = itemView.findViewById(R.id.message);
-            name = itemView.findViewById(R.id.name);
-            time = itemView.findViewById(R.id.time);
-            linear =itemView.findViewById(R.id.linear);
-            n1=itemView.findViewById(R.id.n1);
-            n2=itemView.findViewById(R.id.n2);
-            n3=itemView.findViewById(R.id.n3);
-            n4=itemView.findViewById(R.id.n4);
-        }
+    if (userId == chatList.get(position).getPetitionerId()) {
+      holder.name.setText(chatList.get(position).getBidderName());
+      if (chatList.get(position).getBidderImgUrl().length() > 0) {
+        Picasso.get().load(chatList.get(position).getBidderImgUrl()).into(holder.image);
+      }
+    } else {
+      holder.name.setText(chatList.get(position).getPetitionerName());
+      if (chatList.get(position).getPetitionerImgUrl().length() > 0) {
+        Picasso.get().load(chatList.get(position).getPetitionerImgUrl()).into(holder.image);
+      }
     }
+  }
+
+  @Override
+  public int getItemCount() {
+    return chatList.size();
+  }
+
+  public class ViewHolder extends RecyclerView.ViewHolder {
+    TextViewSFProDisplayRegular name, time;
+    MyTextView_SF_Pro_Display_Medium message;
+    CircleImageView image;
+    LinearLayout linear;
+    ImageView timePoint, n2, n3, n4;
+    TextView n1;
+
+    public ViewHolder(View itemView) {
+      super(itemView);
+      timePoint = itemView.findViewById(R.id.timePoint);
+      image = itemView.findViewById(R.id.image);
+      message = itemView.findViewById(R.id.message);
+      name = itemView.findViewById(R.id.name);
+      time = itemView.findViewById(R.id.time);
+      linear = itemView.findViewById(R.id.linear);
+      n1 = itemView.findViewById(R.id.n1);
+      n2 = itemView.findViewById(R.id.n2);
+      n3 = itemView.findViewById(R.id.n3);
+      n4 = itemView.findViewById(R.id.n4);
+    }
+  }
 }

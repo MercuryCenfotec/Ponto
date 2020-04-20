@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".entities.messages.ChatCard">
+    tools:context=".entities.chat.ChatCard">
 
     <LinearLayout
         android:layout_width="match_parent"

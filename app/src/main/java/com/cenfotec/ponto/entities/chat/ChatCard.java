@@ -1,4 +1,4 @@
-package com.cenfotec.ponto.entities.messages;
+package com.cenfotec.ponto.entities.chat;
 
 import android.os.Bundle;
 
