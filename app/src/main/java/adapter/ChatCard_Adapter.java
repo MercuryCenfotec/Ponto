@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cenfotec.ponto.R;
@@ -43,6 +44,7 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
     return new ViewHolder(view);
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(ViewHolder holder, final int position) {
     String parsedTime = "";
@@ -50,40 +52,36 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
     String timeLapse = "";
     holder.linear.setBackgroundResource(R.drawable.rect_white_border);
     if (chatList.get(position).getMessages() != null) {
-      time = chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getDateTime();
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) == 0) {
-          if (time.getDayOfYear() - LocalDateTime.now().getDayOfYear() == 0) {
-            if (time.getHour() - LocalDateTime.now().getHour() == 0) {
-              if (time.getMinute() - LocalDateTime.now().getMinute() == 0) {
+      time = LocalDateTime.parse(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getDateTime());
+      if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) == 0) {
+        if (time.getDayOfYear() - LocalDateTime.now().getDayOfYear() == 0) {
+          if (time.getHour() - LocalDateTime.now().getHour() == 0) {
+            if (time.getMinute() - LocalDateTime.now().getMinute() == 0) {
 
-              } else {
-                timeLapse = (time.getMinute() - LocalDateTime.now().getMinute()) + " min";
-                if (time.getMinute() - LocalDateTime.now().getMinute() > 1) {
-                  timeLapse = timeLapse + "s";
-                }
-              }
             } else {
-              timeLapse = (time.getHour() - LocalDateTime.now().getHour()) + " hora";
-              if (time.getHour() - LocalDateTime.now().getHour() > 1) {
-                timeLapse = timeLapse + "s";
-              }
+              timeLapse = (LocalDateTime.now().getMinute() - time.getMinute()) + " min";
             }
           } else {
-            timeLapse = (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth()) + " dias";
-            if (time.getDayOfMonth() - LocalDateTime.now().getDayOfMonth() > 1) {
+            timeLapse = (LocalDateTime.now().getHour() - time.getHour()) + " hora";
+            if (LocalDateTime.now().getHour() - time.getHour() > 1) {
               timeLapse = timeLapse + "s";
             }
           }
         } else {
-          timeLapse = time.getMonth().compareTo(LocalDateTime.now().getMonth()) + " mes";
-          if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) > 1) {
-            timeLapse = timeLapse + "es";
+          timeLapse = (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth()) + " dias";
+          if (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth() > 1) {
+            timeLapse = timeLapse + "s";
           }
         }
+      } else {
+        timeLapse = LocalDateTime.now().getMonth().compareTo(time.getMonth()) + " mes";
+        if (LocalDateTime.now().getMonth().compareTo(time.getMonth()) > 1) {
+          timeLapse = timeLapse + "es";
+        }
+
       }
       parsedTime = "hace " + timeLapse;
-      holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size()).getMessage());
+      holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getMessage());
       holder.time.setText(parsedTime);
     } else {
       holder.message.setText("No tienes mensajes con esta persona...");

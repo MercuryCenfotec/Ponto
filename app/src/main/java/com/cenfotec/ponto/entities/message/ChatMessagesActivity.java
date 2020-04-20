@@ -18,10 +18,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Appointment;
 import com.cenfotec.ponto.data.model.Chat;
+import com.cenfotec.ponto.data.model.Message;
+import com.cenfotec.ponto.data.model.ServicePetition;
+import com.cenfotec.ponto.data.model.ServiceType;
+import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.appointment.AppointmentCreationActivity;
-import com.cenfotec.ponto.entities.appointment.AppointmentDetailActivity;
 import com.cenfotec.ponto.utils.GeneralActivity;
-import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +32,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 import adapter.MessageCard_Adapter;
 
@@ -38,8 +41,10 @@ public class ChatMessagesActivity extends GeneralActivity {
 
   private String userId, userType, chatId;
   private RecyclerView recyclerMessages;
-  private Chat chat;
+  private Chat chat = new Chat();
+  private List<Message> messages;
   private Appointment appointment;
+  private ServicePetition petition;
   private MessageCard_Adapter messageCardAdapter;
   private ImageView btnImageReturn, btnImageOption;
   private TextView txtReceiver, txtPetitionName, txtServiceType, btnCreateMeeting, txtMeeting, btnImgSend;
@@ -51,15 +56,13 @@ public class ChatMessagesActivity extends GeneralActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat_messages);
     initComponents();
-    setComponents();
 
   }
 
   @Override
   protected void initComponents() {
     super.initComponents();
-    chat = new Chat();
-
+    messages = new ArrayList<>();
     userId = sharedPreferences.getString("userId", "");
     userType = sharedPreferences.getString("userType", "");
     chatId = sharedPreferences.getString("chatId", "");
@@ -80,28 +83,62 @@ public class ChatMessagesActivity extends GeneralActivity {
     btnGoToMeeting = findViewById(R.id.btnGoToMeeting);
 
     inputNewMessage = findViewById(R.id.inputNewMessage);
+    chargeAdapterViews();
   }
 
 
   private void setComponents() {
+    btnImgSend.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public void onClick(View v) {
+        sendMessage();
+      }
+    });
+    btnImageReturn.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
   }
 
   @Override
   protected void chargeAdapterViews() {
     RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-    messageCardAdapter = new MessageCard_Adapter(this, chat, userId);
+    messageCardAdapter = new MessageCard_Adapter(this, chat, messages, userId);
 
     recyclerMessages.setLayoutManager(layoutManager);
     recyclerMessages.setItemAnimator(new DefaultItemAnimator());
     recyclerMessages.setAdapter(messageCardAdapter);
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
-    ref.child("id").equalTo(chatId).addListenerForSingleValueEvent(new ValueEventListener() {
+    ref.child(chatId).addListenerForSingleValueEvent(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        chat = dataSnapshot.getValue(Chat.class);
-        setUserName();
+        Chat newChat = dataSnapshot.getValue(Chat.class);
+        chat.setId(newChat.getId());
+        chat.setServicePetitionId(newChat.getServicePetitionId());
+        chat.setServicePetitionName(newChat.getServicePetitionName());
+        chat.setPetitionerId(newChat.getPetitionerId());
+        chat.setPetitionerImgUrl(newChat.getPetitionerImgUrl());
+        chat.setPetitionerName(newChat.getPetitionerName());
+        chat.setBidderId(newChat.getBidderId());
+        chat.setBidderImgUrl(newChat.getBidderImgUrl());
+        chat.setBidderName(newChat.getBidderName());
+        chat.setUnreadBidder(newChat.getUnreadBidder());
+        chat.setUnreadPetitioner(newChat.getUnreadPetitioner());
+        chat.setMessages(newChat.getMessages());
+        chat.setState(newChat.getState());
+        if (chat.getMessages() != null) {
+          messages.addAll(chat.getMessages());
+        }
         messageCardAdapter.notifyDataSetChanged();
+        setUserName();
+        chargeAppointment();
+        chargePetition();
+        setComponents();
       }
 
       @Override
@@ -109,7 +146,6 @@ public class ChatMessagesActivity extends GeneralActivity {
 
       }
     });
-    chargeAppointment();
   }
 
   private void chargeAppointment() {
@@ -134,6 +170,7 @@ public class ChatMessagesActivity extends GeneralActivity {
             }
           }
         }
+        validateMeetingInfo();
       }
 
       @Override
@@ -141,6 +178,41 @@ public class ChatMessagesActivity extends GeneralActivity {
 
       }
     });
+  }
+
+  private void chargePetition() {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+    Query query = ref.child(chat.getServicePetitionId());
+    query.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        petition = dataSnapshot.getValue(ServicePetition.class);
+        setPetitionInfo();
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
+  }
+
+  private void setPetitionInfo() {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("ServiceTypes");
+    Query query = ref.child(petition.getServiceTypeId());
+    query.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        ServiceType type = dataSnapshot.getValue(ServiceType.class);
+        txtServiceType.setText(type.getServiceType());
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
+    txtPetitionName.setText(petition.getName());
   }
 
 
@@ -166,51 +238,51 @@ public class ChatMessagesActivity extends GeneralActivity {
           redirectTo(AppointmentCreationActivity.class);
         }
       });
-    } else {
+    } else if (appointment != null) {
       layoutMeetingInfo.setVisibility(View.VISIBLE);
       txtMeeting.setText(appointment.getStartDateTime());
       btnGoToMeeting.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          goToAppointmentDetail();
+          goToAppointments();
         }
       });
     }
 
   }
 
-  private void goToAppointmentDetail() {
-    int colorOfEvent = 0;
-    for (BaseCalendarEvent baseCalendarEvent : tempEventList) {
-      if (baseCalendarEvent.getTitle().equals(event.getTitle())) {
-        colorOfEvent = baseCalendarEvent.getColor();
-      }
-    }
-    String newDay;
-    String newMonth;
-    if (LocalDateTime.parse(appointment.getStartTime()).get(Calendar.DAY_OF_MONTH) < 10) {
-      newDay = "0" + appointment.getStartTime().get(Calendar.DAY_OF_MONTH);
+  private void goToAppointments() {
+    Intent iac = new Intent(this, AppointmentAgendaActivity.class);
+    iac.putExtra("userId", userId);
+    iac.putExtra("petitionerId", "");
+    iac.putExtra("bidderId", "");
+    if (userType.equals("petitioner")) {
+      iac.putExtra("userType", "petitioner");
     } else {
-      newDay = "" + appointment.getStartTime().get(Calendar.DAY_OF_MONTH);
+      iac.putExtra("userType", "bidder");
     }
-    if (appointment.getStartTime().get(Calendar.MONTH) + 1 < 10) {
-      newMonth = "0" + (appointment.getStartTime().get(Calendar.MONTH) + 1);
-    } else {
-      newMonth = "" + (appointment.getStartTime().get(Calendar.MONTH) + 1);
-    }
-    String formattedLongDate = newDay + "/" + newMonth + "/" + appointment.getStartTime().get(Calendar.YEAR)
-            + " " + appointment.getStartTime().get(Calendar.HOUR_OF_DAY) + ":"
-            + appointment.getStartTime().get(Calendar.MINUTE);
-    Intent intent = new Intent(this, AppointmentDetailActivity.class);
-    intent.putExtra("dateSelected", formattedLongDate);
-    intent.putExtra("appointmentTitle", appointment.getTitle());
-    intent.putExtra("colorToDisplay", colorOfEvent);
-    intent.putExtra("petitionerId", appointment.getPetitionerId());
-    intent.putExtra("bidderId", appointment.getBidderId());
-    startActivity(intent);
+    startActivity(iac);
   }
 
-  private void sendMessage() {
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  private void sendMessage() {
+    String text = inputNewMessage.getText().toString();
+    List<Message> messages;
+    DatabaseReference ref = FirebaseDatabase.getInstance().
+            getReference("Chats").child(chat.getId());
+
+    if (text.length() > 0 && !text.equals("")) {
+      if (chat.getMessages() == null) {
+        messages = new ArrayList<>();
+      } else {
+        messages = chat.getMessages();
+      }
+
+      messages.add(new Message((messages.size() + ""), text, userId, LocalDateTime.now().toString()));
+      chat.setMessages(messages);
+      ref.setValue(chat);
+      inputNewMessage.setText("");
+    }
   }
 }

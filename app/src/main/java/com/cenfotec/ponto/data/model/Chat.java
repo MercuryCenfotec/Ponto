@@ -1,109 +1,141 @@
 package com.cenfotec.ponto.data.model;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chat {
-    private String id;
-    private String petitionerId;
-    private String petitionerImgUrl;
-    private String petitionerName;
-    private String bidderId;
-    private String bidderImgUrl;
-    private String bidderName;
-    private Boolean isUnreadBidder;
-    private Boolean isUnreadPetitioner;
-    private List<Message> messages;
-    private String state;
+  private String id;
+  private String servicePetitionId;
+  private String servicePetitionName;
+  private String petitionerId;
+  private String petitionerImgUrl;
+  private String petitionerName;
+  private String bidderId;
+  private String bidderImgUrl;
+  private String bidderName;
+  private Boolean isUnreadBidder;
+  private Boolean isUnreadPetitioner;
+  private List<Message> messages;
+  private String state;
 
-    public Chat() {
-    }
+  public Chat() {
+  }
 
-    public String getId() {
-        return id;
-    }
+  public Chat(String id, String servicePetitionId, String servicePetitionName, String petitionerId, String petitionerImgUrl, String petitionerName, String bidderId, String bidderImgUrl, String bidderName) {
+    this.id = id;
+    this.servicePetitionId = servicePetitionId;
+    this.servicePetitionName = servicePetitionName;
+    this.petitionerId = petitionerId;
+    this.petitionerImgUrl = petitionerImgUrl;
+    this.petitionerName = petitionerName;
+    this.bidderId = bidderId;
+    this.bidderImgUrl = bidderImgUrl;
+    this.bidderName = bidderName;
+    this.messages = new ArrayList<>();
+    this.state = "active";
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getPetitionerId() {
-        return petitionerId;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setPetitionerId(String petitionerId) {
-        this.petitionerId = petitionerId;
-    }
+  public String getServicePetitionId() {
+    return servicePetitionId;
+  }
 
-    public String getPetitionerImgUrl() {
-        return petitionerImgUrl;
-    }
+  public void setServicePetitionId(String servicePetitionId) {
+    this.servicePetitionId = servicePetitionId;
+  }
 
-    public void setPetitionerImgUrl(String petitionerImgUrl) {
-        this.petitionerImgUrl = petitionerImgUrl;
-    }
+  public String getServicePetitionName() {
+    return servicePetitionName;
+  }
 
-    public String getPetitionerName() {
-        return petitionerName;
-    }
+  public void setServicePetitionName(String servicePetitionName) {
+    this.servicePetitionName = servicePetitionName;
+  }
 
-    public void setPetitionerName(String petitionerName) {
-        this.petitionerName = petitionerName;
-    }
+  public String getPetitionerId() {
+    return petitionerId;
+  }
 
-    public String getBidderId() {
-        return bidderId;
-    }
+  public void setPetitionerId(String petitionerId) {
+    this.petitionerId = petitionerId;
+  }
 
-    public void setBidderId(String bidderId) {
-        this.bidderId = bidderId;
-    }
+  public String getPetitionerImgUrl() {
+    return petitionerImgUrl;
+  }
 
-    public String getBidderImgUrl() {
-        return bidderImgUrl;
-    }
+  public void setPetitionerImgUrl(String petitionerImgUrl) {
+    this.petitionerImgUrl = petitionerImgUrl;
+  }
 
-    public void setBidderImgUrl(String bidderImgUrl) {
-        this.bidderImgUrl = bidderImgUrl;
-    }
+  public String getPetitionerName() {
+    return petitionerName;
+  }
 
-    public String getBidderName() {
-        return bidderName;
-    }
+  public void setPetitionerName(String petitionerName) {
+    this.petitionerName = petitionerName;
+  }
 
-    public void setBidderName(String bidderName) {
-        this.bidderName = bidderName;
-    }
+  public String getBidderId() {
+    return bidderId;
+  }
 
-    public Boolean getUnreadBidder() {
-        return isUnreadBidder;
-    }
+  public void setBidderId(String bidderId) {
+    this.bidderId = bidderId;
+  }
 
-    public void setUnreadBidder(Boolean unreadBidder) {
-        isUnreadBidder = unreadBidder;
-    }
+  public String getBidderImgUrl() {
+    return bidderImgUrl;
+  }
 
-    public Boolean getUnreadPetitioner() {
-        return isUnreadPetitioner;
-    }
+  public void setBidderImgUrl(String bidderImgUrl) {
+    this.bidderImgUrl = bidderImgUrl;
+  }
 
-    public void setUnreadPetitioner(Boolean unreadPetitioner) {
-        isUnreadPetitioner = unreadPetitioner;
-    }
+  public String getBidderName() {
+    return bidderName;
+  }
 
-    public List<Message> getMessages() {
-        return messages;
-    }
+  public void setBidderName(String bidderName) {
+    this.bidderName = bidderName;
+  }
 
-    public void setMessages(List<Message> messages) {
-        this.messages = messages;
-    }
+  public Boolean getUnreadBidder() {
+    return isUnreadBidder;
+  }
 
-    public String getState() {
-        return state;
-    }
+  public void setUnreadBidder(Boolean unreadBidder) {
+    isUnreadBidder = unreadBidder;
+  }
 
-    public void setState(String state) {
-        this.state = state;
-    }
+  public Boolean getUnreadPetitioner() {
+    return isUnreadPetitioner;
+  }
+
+  public void setUnreadPetitioner(Boolean unreadPetitioner) {
+    isUnreadPetitioner = unreadPetitioner;
+  }
+
+  public List<Message> getMessages() {
+    return messages;
+  }
+
+  public void setMessages(List<Message> messages) {
+    this.messages = messages;
+  }
+
+  public String getState() {
+    return state;
+  }
+
+  public void setState(String state) {
+    this.state = state;
+  }
 }

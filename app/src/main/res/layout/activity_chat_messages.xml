@@ -83,26 +83,26 @@
             android:orientation="vertical">
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
-                android:id="@+id/txtPetitionName"
+                android:id="@+id/txtServiceType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Nombre de la peticion"
+                android:text="Tipo de Servicio "
                 android:textColor="#a9a9b0"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <customfonts.MyTextView_SF_Pro_Display_Bold
-                android:id="@+id/txtServiceType"
+                android:id="@+id/txtPetitionName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Tipo de Servicio"
+                android:text="Nombre de la peticion"
                 android:textColor="#3b3b3b"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPetitionName" />
+                app:layout_constraintTop_toBottomOf="@+id/txtServiceType" />
 
             <customfonts.MyTextView_SF_Pro_Display_Semibold
                 android:id="@+id/btnCreateMeeting"

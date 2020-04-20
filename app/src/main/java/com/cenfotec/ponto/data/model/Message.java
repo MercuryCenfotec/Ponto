@@ -1,45 +1,50 @@
 package com.cenfotec.ponto.data.model;
 
-import java.time.LocalDateTime;
-
 public class Message {
-    private String id;
-    private String message;
-    private String ownerId;
-    private LocalDateTime dateTime;
+  private String id;
+  private String message;
+  private String ownerId;
+  private String dateTime;
 
-    public Message() {
-    }
+  public Message() {
+  }
 
-    public String getId() {
-        return id;
-    }
+  public Message(String id, String message, String ownerId, String dateTime) {
+    this.id = id;
+    this.message = message;
+    this.ownerId = ownerId;
+    this.dateTime = dateTime;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getMessage() {
-        return message;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+  public String getMessage() {
+    return message;
+  }
 
-    public String getOwnerId() {
-        return ownerId;
-    }
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
-    }
+  public String getOwnerId() {
+    return ownerId;
+  }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
+  public void setOwnerId(String ownerId) {
+    this.ownerId = ownerId;
+  }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
+  public String getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(String dateTime) {
+    this.dateTime = dateTime;
+  }
 }
