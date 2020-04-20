@@ -2,8 +2,6 @@ package com.cenfotec.ponto.entities.membership;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -16,11 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.Membership;
+import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.account.AccountActivity;
 import com.cenfotec.ponto.entities.account.NotEnoughFundsDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
@@ -36,11 +37,18 @@ public class MembershipAcquisitionActivity extends AppCompatActivity implements 
     private RecyclerView recyclerView;
     private List<Membership> membershipList;
     private TextView activityTitle;
-    private String membershipClicked = "";
+    public static final String MY_PREFERENCES = "MyPrefs";
+    DatabaseReference userDBRef;
+    DatabaseReference accountDBRef;
+    User signedUser;
+    Account userAccount;
+    Membership selectedMembership;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userDBRef = FirebaseDatabase.getInstance().getReference("Users");
+        accountDBRef = FirebaseDatabase.getInstance().getReference("Accounts");
         membershipList = new ArrayList<>();
         setContentView(R.layout.activity_membership_acquisition);
         activityTitle = findViewById(R.id.membershipActivityTitle);
@@ -85,26 +93,67 @@ public class MembershipAcquisitionActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void onItemClicked(String itemId) {
+    public void onItemClicked(Membership item) {
         MembershipAcquisitionConfirmDialog confirmDialog = new MembershipAcquisitionConfirmDialog();
         confirmDialog.show(getSupportFragmentManager(), "membership acquisition dialog");
-        membershipClicked = itemId;
+        selectedMembership = item;
     }
 
     @Override
     public void dialogConfirmAcquireMembership() {
+        SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+        String userId = myPrefs.getString("userId","none");
+        userDBRef.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    signedUser = userSnapshot.getValue(User.class);
+                    accountDBRef.orderByChild("accountNumber").equalTo(signedUser.getUserAccount()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot accountSnapshot : dataSnapshot.getChildren()) {
+                                userAccount = accountSnapshot.getValue(Account.class);
+                                acquireMembership();
+                            }
+                        }
 
-        if (1000 >= 777) {
-            NotEnoughFundsDialog notEnoughFundsDialog = new NotEnoughFundsDialog();
-            notEnoughFundsDialog.show(getSupportFragmentManager(), "not enough funds dialog");
-        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     @Override
     public void dialogNoFundsGoToAccount() {
         Intent intent = new Intent(this, AccountActivity.class);
-//        intent.putExtra("userId", userId);
+        intent.putExtra("userId", signedUser.getId());
         startActivity(intent);
+    }
+
+    private void acquireMembership () {
+        SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+        if (userAccount.getBalance() <= selectedMembership.getPrice()) {
+            NotEnoughFundsDialog notEnoughFundsDialog = new NotEnoughFundsDialog();
+            notEnoughFundsDialog.show(getSupportFragmentManager(), "Fondos insuficientes");
+        } else {
+            signedUser.setMembershipId(selectedMembership.getId());
+            userAccount.setBalance(userAccount.getBalance() - selectedMembership.getPrice());
+            userDBRef.child(signedUser.getId()).setValue(signedUser);
+            accountDBRef.child(userAccount.getAccountNumber()).setValue(userAccount);
+            myPrefs.edit().putString("userMembershipId",selectedMembership.getId()).commit();
+            Toast.makeText(this, "¡Membresía adquirida con éxito!", Toast.LENGTH_LONG).show();
+            finish();
+            startActivity(getIntent());
+        }
     }
 }

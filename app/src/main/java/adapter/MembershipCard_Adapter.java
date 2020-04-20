@@ -53,7 +53,7 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
         holder.acquireMembershipBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClicked(membershipList.get(position).getId());
+                mListener.onItemClicked(membershipList.get(position));
             }
         });
     }
@@ -76,6 +76,6 @@ public class MembershipCard_Adapter extends RecyclerView.Adapter<MembershipCard_
     }
 
     public interface ItemClickListener {
-        void onItemClicked(String itemId);
+        void onItemClicked(Membership item);
     }
 }
