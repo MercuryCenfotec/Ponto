@@ -1,4 +1,4 @@
-package com.cenfotec.ponto.entities;
+package com.cenfotec.ponto.entities.membership;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
