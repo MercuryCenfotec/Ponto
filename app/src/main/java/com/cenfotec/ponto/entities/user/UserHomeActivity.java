@@ -24,7 +24,7 @@ public class UserHomeActivity extends AppCompatActivity {
         String verifiedUser = myPrefs.getString("userIsVerified","none");
         Intent intent;
 
-        if (verifiedUser.equals("none")) {
+        if (verifiedUser.equals("false")) {
             intent = new Intent(this,UnverifiedUserActivity.class);
         } else {
             switch (userType) {

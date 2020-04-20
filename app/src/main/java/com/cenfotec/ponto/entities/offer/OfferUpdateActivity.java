@@ -158,6 +158,7 @@ public class OfferUpdateActivity extends AppCompatActivity {
         showToaster("Oferta modificada exitosamente");
         Intent intent = new Intent(this, OfferDetailActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void finishActivity(View view) {
