@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +18,7 @@ import com.cenfotec.ponto.data.model.Chat;
 import com.cenfotec.ponto.data.model.Message;
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -44,9 +47,55 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
     return new ViewHolder(view);
   }
 
+  @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Message message = messages.get(position);
+    String parsedTime = "", timeLapse = "";
+    LocalDateTime time, now = LocalDateTime.now();
+    Integer difference;
+
+    time = LocalDateTime.parse(message.getDateTime());
+    difference = now.getMonthValue() - time.getMonthValue();
+    if (difference == 0) {
+      difference = now.getDayOfMonth() - time.getDayOfMonth();
+      if (difference == 0) {
+        difference = now.getHour() - time.getHour();
+        if (difference == 0) {
+          difference = now.getMinute() - time.getMinute();
+          if (difference == 0) {
+            difference = now.getSecond() - time.getSecond();
+            if (difference == 0) {
+              timeLapse = 1 + " segundo";
+            } else {
+              timeLapse = difference + " segundo";
+              if(difference > 1){
+                timeLapse +="s";
+              }
+            }
+          } else {
+            timeLapse = difference + " min";
+          }
+        } else {
+          timeLapse = difference + " hora";
+          if (difference > 1) {
+            timeLapse +="s";
+          }
+        }
+      } else {
+        timeLapse = difference + " dia";
+        if (difference > 1) {
+          timeLapse +="s";
+        }
+      }
+    } else {
+      timeLapse = difference + " mes";
+      if (difference > 1) {
+        timeLapse +="es";
+      }
+    }
+
+    parsedTime = "hace " + timeLapse;
     if (!message.getOwnerId().equals(userId)) {
       holder.cardSender.setVisibility(View.VISIBLE);
       holder.cardReceiver.setVisibility(View.GONE);
@@ -56,7 +105,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileSender);
       }
       holder.txtSender.setText(message.getMessage());
-      holder.txtTimeSender.setText(message.getDateTime());
+      holder.txtTimeSender.setText(parsedTime);
     } else {
       holder.cardReceiver.setVisibility(View.VISIBLE);
       holder.cardSender.setVisibility(View.GONE);
@@ -66,7 +115,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileReceiver);
       }
       holder.txtReceiver.setText(message.getMessage());
-      holder.txtTimeReceiver.setText(message.getDateTime());
+      holder.txtTimeReceiver.setText(parsedTime);
     }
     holder.imageSeenReceiver.setVisibility(View.GONE);
   }

@@ -48,37 +48,49 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
   @Override
   public void onBindViewHolder(ViewHolder holder, final int position) {
     String parsedTime = "";
-    LocalDateTime time;
+    LocalDateTime time, now = LocalDateTime.now();
     String timeLapse = "";
+    Integer difference;
     holder.linear.setBackgroundResource(R.drawable.rect_white_border);
     if (chatList.get(position).getMessages() != null) {
       time = LocalDateTime.parse(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getDateTime());
-      if (time.getMonth().compareTo(LocalDateTime.now().getMonth()) == 0) {
-        if (time.getDayOfYear() - LocalDateTime.now().getDayOfYear() == 0) {
-          if (time.getHour() - LocalDateTime.now().getHour() == 0) {
-            if (time.getMinute() - LocalDateTime.now().getMinute() == 0) {
-
+      difference = now.getMonthValue() - time.getMonthValue();
+      if (difference == 0) {
+        difference = now.getDayOfMonth() - time.getDayOfMonth();
+        if (difference == 0) {
+          difference = now.getHour() - time.getHour();
+          if (difference == 0) {
+            difference = now.getMinute() - time.getMinute();
+            if (difference == 0) {
+              difference = now.getSecond() - time.getSecond();
+              if (difference == 0) {
+                timeLapse = 1 + " segundo";
+              } else {
+                timeLapse = difference + " segundo";
+                if (difference > 1) {
+                  timeLapse += "s";
+                }
+              }
             } else {
-              timeLapse = (LocalDateTime.now().getMinute() - time.getMinute()) + " min";
+              timeLapse = difference + " min";
             }
           } else {
-            timeLapse = (LocalDateTime.now().getHour() - time.getHour()) + " hora";
-            if (LocalDateTime.now().getHour() - time.getHour() > 1) {
-              timeLapse = timeLapse + "s";
+            timeLapse = difference + " hora";
+            if (difference > 1) {
+              timeLapse += "s";
             }
           }
         } else {
-          timeLapse = (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth()) + " dia";
-          if (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth() > 1) {
-            timeLapse = timeLapse + "s";
+          timeLapse = difference + " dia";
+          if (difference > 1) {
+            timeLapse += "s";
           }
         }
       } else {
-        timeLapse = LocalDateTime.now().getMonth().compareTo(time.getMonth()) + " mes";
-        if (LocalDateTime.now().getMonth().compareTo(time.getMonth()) > 1) {
-          timeLapse = timeLapse + "es";
+        timeLapse = difference + " mes";
+        if (difference > 1) {
+          timeLapse += "es";
         }
-
       }
       parsedTime = "hace " + timeLapse;
       holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getMessage());
