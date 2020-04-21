@@ -68,7 +68,7 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
             }
           }
         } else {
-          timeLapse = (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth()) + " dias";
+          timeLapse = (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth()) + " dia";
           if (LocalDateTime.now().getDayOfMonth() - time.getDayOfMonth() > 1) {
             timeLapse = timeLapse + "s";
           }

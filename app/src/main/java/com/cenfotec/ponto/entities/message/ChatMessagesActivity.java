@@ -114,7 +114,7 @@ public class ChatMessagesActivity extends GeneralActivity {
     recyclerMessages.setAdapter(messageCardAdapter);
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
-    ref.child(chatId).addListenerForSingleValueEvent(new ValueEventListener() {
+    ref.child(chatId).addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         Chat newChat = dataSnapshot.getValue(Chat.class);
@@ -132,6 +132,7 @@ public class ChatMessagesActivity extends GeneralActivity {
         chat.setMessages(newChat.getMessages());
         chat.setState(newChat.getState());
         if (chat.getMessages() != null) {
+          messages.clear();
           messages.addAll(chat.getMessages());
         }
         messageCardAdapter.notifyDataSetChanged();
