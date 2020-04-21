@@ -110,8 +110,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:text="Por favor proceda a ingresar el siguiente código en el espacio
-            corrrespondiente para confirmar la transacción."
+            android:text="Por favor proceda a ingresar el siguiente código en el espacio corrrespondiente para confirmar la transacción."
             android:textColor="#a9a9b0"
             android:textSize="14sp" />
 
