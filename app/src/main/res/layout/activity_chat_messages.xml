@@ -242,6 +242,7 @@
             android:layout_weight="1"
             android:background="#00000000"
             android:hint="Escribe algo..."
+            android:imeOptions="actionSend"
             android:textColorHint="#a9a9b0"
             android:textSize="12sp" />
 
