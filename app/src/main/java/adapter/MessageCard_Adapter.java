@@ -61,13 +61,14 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
       holder.cardReceiver.setVisibility(View.VISIBLE);
       holder.cardSender.setVisibility(View.GONE);
       if (chat.getBidderId().equals(message.getOwnerId()) && chat.getBidderImgUrl().length() > 0) {
-        Picasso.get().load(chat.getBidderImgUrl()).into(holder.imageSeenReceiver);
+        Picasso.get().load(chat.getBidderImgUrl()).into(holder.imageProfileReceiver);
       } else if (chat.getPetitionerId().equals(message.getOwnerId()) && chat.getPetitionerImgUrl().length() > 0) {
-        Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageSeenReceiver);
+        Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileReceiver);
       }
       holder.txtReceiver.setText(message.getMessage());
       holder.txtTimeReceiver.setText(message.getDateTime());
     }
+    holder.imageSeenReceiver.setVisibility(View.GONE);
   }
 
   @Override
@@ -77,7 +78,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
 
   public class ViewHolder extends RecyclerView.ViewHolder {
     ConstraintLayout cardSender, cardReceiver;
-    ImageView imageProfileSender, imageSeenReceiver;
+    ImageView imageProfileSender, imageProfileReceiver, imageSeenReceiver;
     TextView txtSender, txtTimeSender, txtReceiver, txtTimeReceiver;
 
 
@@ -86,6 +87,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
       cardSender = itemView.findViewById(R.id.cardSender);
       cardReceiver = itemView.findViewById(R.id.cardReceiver);
       imageProfileSender = itemView.findViewById(R.id.imageProfileSender);
+      imageProfileReceiver = itemView.findViewById(R.id.imageProfileReceiver);
       imageSeenReceiver = itemView.findViewById(R.id.imageSeenReceiver);
       txtSender = itemView.findViewById(R.id.txtSender);
       txtTimeSender = itemView.findViewById(R.id.txtTimeSender);
