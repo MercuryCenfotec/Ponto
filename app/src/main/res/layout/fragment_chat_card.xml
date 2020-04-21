@@ -76,7 +76,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
 
                     <customfonts.MyTextView_SF_Pro_Display_Medium
@@ -89,31 +89,16 @@
                         android:textColor="#3b3b3b"
                         android:textSize="13sp" />
 
-                    <ImageView
-                        android:id="@+id/n2"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="5dp"
-                        android:src="@drawable/ic_check_grey"
-                        android:visibility="gone" />
-
-
-                    <ImageView
-                        android:id="@+id/n3"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_marginLeft="10dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/n4"
-                        android:layout_width="11dp"
-                        android:layout_height="13dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="7dp"
-                        android:src="@drawable/ic_credit_card"
-                        android:visibility="gone" />
+                    <customfonts.TextViewSFProDisplayRegular
+                        android:id="@+id/petitionName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_weight="1"
+                        android:maxLength="48"
+                        android:text="Service Petition Name Max characters lorem impsu"
+                        android:textColor="#a9a9b0"
+                        android:textSize="12.5sp" />
 
 
                 </LinearLayout>

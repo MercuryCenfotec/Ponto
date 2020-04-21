@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.Appointment;
+import com.cenfotec.ponto.data.model.Chat;
 import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.ServicePetition;
@@ -294,6 +295,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
                         Toast.makeText(OfferDetailActivity.this, "La oferta fue aceptada", Toast.LENGTH_LONG).show();
                         registerContractToDB();
+                        registerChatToDB();
 
                     } else {
                         openNoFundsDialog();
@@ -332,6 +334,30 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         } else {
             return false;
         }
+    }
+
+    private void registerChatToDB() {
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+        DatabaseReference databaseReferenceUser = FirebaseDatabase.getInstance().getReference("Users");
+        final String chatId = databaseReference.push().getKey();
+        sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        final String petitionerId = sharedpreferences.getString("userId", "");
+        Query queryUser = databaseReferenceUser.child(petitionerId);
+        final String bidderUserId = activeOffer.getUserId();
+        queryUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Chat chat = new Chat(chatId, activeOffer.getServicePetitionId(), activeOffer.getServicePetitionTitle(), petitionerId, user.getProfileImageUrl(), user.getFullName(), bidderUserId, activeOffer.getBidderImageUrl(), activeOffer.getBidderName());
+                databaseReference.child(chatId).setValue(chat);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     // ## Contract statements start here ##

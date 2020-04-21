@@ -126,6 +126,7 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
         Picasso.get().load(chatList.get(position).getPetitionerImgUrl()).into(holder.image);
       }
     }
+    holder.petitionName.setText(chatList.get(position).getServicePetitionName());
   }
 
   @Override
@@ -134,11 +135,11 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
   }
 
   public class ViewHolder extends RecyclerView.ViewHolder {
-    TextViewSFProDisplayRegular name, time;
+    TextViewSFProDisplayRegular name, time, petitionName;
     MyTextView_SF_Pro_Display_Medium message;
     CircleImageView image;
     LinearLayout linear;
-    ImageView timePoint, n2, n3, n4;
+    ImageView timePoint;
     TextView n1;
 
     public ViewHolder(View itemView) {
@@ -148,11 +149,9 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
       message = itemView.findViewById(R.id.message);
       name = itemView.findViewById(R.id.name);
       time = itemView.findViewById(R.id.time);
+      petitionName = itemView.findViewById(R.id.petitionName);
       linear = itemView.findViewById(R.id.linear);
       n1 = itemView.findViewById(R.id.n1);
-      n2 = itemView.findViewById(R.id.n2);
-      n3 = itemView.findViewById(R.id.n3);
-      n4 = itemView.findViewById(R.id.n4);
     }
   }
 }
