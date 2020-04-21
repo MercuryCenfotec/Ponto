@@ -7,17 +7,17 @@
     tools:context=".entities.account.FetchBalanceFromAccountActivity">
 
     <ImageView
-        android:id="@+id/ertjkg"
+        android:id="@+id/imgFetchBalanceReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_margin="10dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="wrap_content"
         android:onClick="goBackFromFetchBalance"
-        android:layout_height="18dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_left_arrow"/>
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,10 +27,10 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ertjkg">
+        app:layout_constraintTop_toBottomOf="@+id/imgFetchBalanceReturn">
 
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/jgsdkjhs"
+            android:id="@+id/fetchBalanceDestinationET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -47,7 +47,7 @@
             android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/ewfjkgtewkjtf"
+            android:id="@+id/fetchBalanceIdentificationET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -65,7 +65,7 @@
             android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
-            android:id="@+id/vosjkthewkt"
+            android:id="@+id/fetchBalanceAmountET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -84,7 +84,6 @@
             android:textSize="15sp" />
 
         <View
-            android:id="@+id/ksdjfhakjgk"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="20dp"
@@ -95,7 +94,6 @@
             android:background="#34495e" />
 
         <customfonts.MyTextView_SF_Pro_Display_Bold
-            android:id="@+id/bsfkjewtlk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -106,19 +104,19 @@
             android:textSize="20sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/lkjfdgsfghtky"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:text="Por favor proceda a ingresar el siguiente código en el espacio corrrespondiente para confirmar la transacción."
+            android:text="Por favor proceda a ingresar el siguiente código en el espacio
+            corrrespondiente para confirmar la transacción."
             android:textColor="#a9a9b0"
             android:textSize="14sp" />
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/ddjkfkt"
+            android:id="@+id/fetchBalanceGeneratedCodeTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -136,7 +134,7 @@
             android:layout_marginRight="30dp">
 
             <customfonts.EditText__SF_Pro_Display_Medium
-                android:id="@+id/cbeejktwekjt"
+                android:id="@+id/fetchBalanceFirstCodeET"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -154,7 +152,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
-                android:id="@+id/kjhdgfsghjg"
+                android:id="@+id/firstLineSeparator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -163,11 +161,11 @@
                 android:text="-"
                 android:textColor="#000"
                 android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/cbeejktwekjt"
+                app:layout_constraintStart_toEndOf="@+id/fetchBalanceFirstCodeET"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <customfonts.EditText__SF_Pro_Display_Medium
-                android:id="@+id/dhgrtoiyth"
+                android:id="@+id/fetchBalanceSecondCodeET"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -183,11 +181,11 @@
                 android:textColor="#000"
                 android:textColorHint="#ced0d2"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/kjhdgfsghjg"
+                app:layout_constraintStart_toEndOf="@+id/firstLineSeparator"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
-                android:id="@+id/kjjghewkjt"
+                android:id="@+id/secondLineSeparator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
@@ -196,11 +194,11 @@
                 android:text="-"
                 android:textColor="#000"
                 android:textSize="30sp"
-                app:layout_constraintStart_toEndOf="@+id/dhgrtoiyth"
+                app:layout_constraintStart_toEndOf="@+id/fetchBalanceSecondCodeET"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <customfonts.EditText__SF_Pro_Display_Medium
-                android:id="@+id/ncdfytuyioi"
+                android:id="@+id/fetchBalanceThirdCodeET"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -216,13 +214,13 @@
                 android:textColor="#000"
                 android:textColorHint="#ced0d2"
                 android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/kjjghewkjt"
+                app:layout_constraintStart_toEndOf="@+id/secondLineSeparator"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
-            android:id="@+id/jkegkewjge"
+            android:id="@+id/btnConfirmBalanceFetch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -231,11 +229,11 @@
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rect_blue"
+            android:onClick="confirmFetch"
             android:paddingLeft="48dp"
             android:paddingTop="11dp"
             android:paddingRight="48dp"
             android:paddingBottom="11dp"
-            android:onClick="confirmFetch"
             android:text="Confirmar"
             android:textAlignment="center"
             android:textAllCaps="false"

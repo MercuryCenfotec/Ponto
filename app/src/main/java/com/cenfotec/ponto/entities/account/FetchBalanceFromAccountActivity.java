@@ -19,19 +19,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.Random;
 
 import customfonts.EditText__SF_Pro_Display_Medium;
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 
 public class FetchBalanceFromAccountActivity extends AppCompatActivity {
 
+    final String charList = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static SecureRandom secureRandom;
     DatabaseReference databaseReference;
     String code;
     Float tempAmount;
@@ -46,7 +44,6 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
     MyTextView_SF_Pro_Display_Medium generatedCode;
     Account account;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,15 +54,17 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
         generateRandomCode();
     }
 
+    // ## OnActivityCreation statements start here ##
     private void initControls() {
         databaseReference = FirebaseDatabase.getInstance().getReference("Accounts");
-        destinationAccount = findViewById(R.id.jgsdkjhs);
-        userIdentification = findViewById(R.id.ewfjkgtewkjtf);
-        balanceAccount = findViewById(R.id.vosjkthewkt);
-        generatedCode = findViewById(R.id.ddjkfkt);
-        firstCodeSection = findViewById(R.id.cbeejktwekjt);
-        secondCodeSection = findViewById(R.id.dhgrtoiyth);
-        thirdCodeSection = findViewById(R.id.ncdfytuyioi);
+        secureRandom = new SecureRandom();
+        destinationAccount = findViewById(R.id.fetchBalanceDestinationET);
+        userIdentification = findViewById(R.id.fetchBalanceIdentificationET);
+        balanceAccount = findViewById(R.id.fetchBalanceAmountET);
+        generatedCode = findViewById(R.id.fetchBalanceGeneratedCodeTV);
+        firstCodeSection = findViewById(R.id.fetchBalanceFirstCodeET);
+        secondCodeSection = findViewById(R.id.fetchBalanceSecondCodeET);
+        thirdCodeSection = findViewById(R.id.fetchBalanceThirdCodeET);
     }
 
     private void catchIntent() {
@@ -74,6 +73,7 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
             userId = getIntent().getStringExtra("userId");
         }
     }
+    // ## OnActivityCreation statements end ##
 
     // ## User balance account information statements start here ##
     private void getUserBalanceAccount() {
@@ -100,6 +100,7 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
     }
     // ## User balance account information statements start here ##
 
+    // ## Fetch confirmation statements start here ##
     public void confirmFetch(View view) {
         if (!showErrorOnBlankSpaces()) {
             if (isSameCode()) {
@@ -111,7 +112,9 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
             showToaster("Verificar campos");
         }
     }
+    // ## Fetch confirmation statements end ##
 
+    // ## Other statements start here ##
     public void goBackFromFetchBalance(View view) {
         finish();
         Intent intent = new Intent(this, AccountActivity.class);
@@ -123,12 +126,44 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    private void generateRandomCode() {
+        String randomCodeBuilder = random().toUpperCase() + " - " + random().toUpperCase() + " - "
+                + random().toUpperCase();
+        code = randomCodeBuilder;
+        generatedCode.setText(randomCodeBuilder);
+    }
+
+    public String random() {
+        StringBuilder sb = new StringBuilder(2);
+        for (int codeLength = 0; codeLength < 2; codeLength++)
+            sb.append(charList.charAt(secureRandom.nextInt(charList.length())));
+        return sb.toString();
+    }
+    // ## Other statements end ##
+
+    // ## Update user balance account statements start here ##
+    private void updateUserBalanceAccount() {
+        DatabaseReference updateBalanceReference = databaseReference.child(account.getAccountNumber());
+        Float newBalance = account.getBalance() - tempAmount;
+        account.setBalance(newBalance);
+        updateBalanceReference.setValue(account);
+        showToaster("Retiro exitoso");
+        finish();
+        Intent intent = new Intent(this, AccountActivity.class);
+        intent.putExtra("userId", userId);
+        startActivity(intent);
+    }
+    // ## Update user balance account statements end ##
+
+    // ## Validation statements start here ##
     private boolean showErrorOnBlankSpaces() {
         boolean isEmpty = false;
         int color;
-        EditText[] editTextsList = new EditText[]{destinationAccount, userIdentification, firstCodeSection, secondCodeSection, thirdCodeSection};
+        EditText[] editTextsList = new EditText[]{destinationAccount, userIdentification,
+                firstCodeSection, secondCodeSection, thirdCodeSection};
         for (EditText editText : editTextsList) {
-            if (editText.equals(firstCodeSection) || editText.equals(secondCodeSection) || editText.equals(thirdCodeSection)) {
+            if (editText.equals(firstCodeSection) || editText.equals(secondCodeSection)
+                    || editText.equals(thirdCodeSection)) {
                 color = Color.parseColor("#ced0d2");
             } else {
                 color = Color.parseColor("#000000");
@@ -147,37 +182,12 @@ public class FetchBalanceFromAccountActivity extends AppCompatActivity {
 
     private boolean isSameCode() {
         boolean isEqual = false;
-        String finalString = firstCodeSection.getText().toString() + " - " + secondCodeSection.getText().toString() + " - " + thirdCodeSection.getText().toString();
+        String finalString = firstCodeSection.getText().toString() + " - "
+                + secondCodeSection.getText().toString() + " - " + thirdCodeSection.getText().toString();
         if (finalString.equals(code)) {
             isEqual = true;
         }
         return isEqual;
     }
-
-    private void generateRandomCode() {
-        String sdf = random().toUpperCase() + " - " + random().toUpperCase() + " - " + random().toUpperCase();
-        code = sdf;
-        generatedCode.setText(sdf);
-    }
-
-    public static String random() {
-        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        SecureRandom rnd = new SecureRandom();
-        StringBuilder sb = new StringBuilder( 2 );
-        for( int i = 0; i < 2; i++ )
-            sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
-        return sb.toString();
-    }
-
-    private void updateUserBalanceAccount() {
-        DatabaseReference updateBalanceReference = databaseReference.child(account.getAccountNumber());
-        Float newBalance = account.getBalance() - tempAmount;
-        account.setBalance(newBalance);
-        updateBalanceReference.setValue(account);
-        showToaster("Retiro exitoso");
-        finish();
-        Intent intent = new Intent(this, AccountActivity.class);
-        intent.putExtra("userId", userId);
-        startActivity(intent);
-    }
+    // ## Validation statements end ##
 }
