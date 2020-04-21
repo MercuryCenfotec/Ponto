@@ -16,6 +16,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".entities.message.ChatMessagesActivity"></activity>
         <activity android:name=".entities.user.UnverifiedUserActivity"></activity>
+        <activity android:name=".entities.account.FetchBalanceFromAccountActivity"></activity>
+        <activity android:name=".entities.user.UnverifiedUserActivity" />
         <activity android:name=".entities.membership.MembershipAcquisitionActivity" />
         <activity android:name=".entities.account.RechargeAccountActivity" />
         <activity android:name=".entities.account.AccountActivity" />

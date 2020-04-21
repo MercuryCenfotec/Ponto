@@ -118,4 +118,14 @@ public class AccountActivity extends AppCompatActivity {
         startActivity(ira);
     }
     // ## RechargeAccount statements end ##
+
+    // ## FetchBalance statements start here ##
+    public void goToFetchFundsActivity(View view) {
+        finish();
+        Intent ira = new Intent(this, FetchBalanceFromAccountActivity.class);
+        ira.putExtra("balanceAccountId", userAccount.getAccountNumber());
+        ira.putExtra("userId", userId);
+        startActivity(ira);
+    }
+    // ## FetchBalance statements end ##
 }

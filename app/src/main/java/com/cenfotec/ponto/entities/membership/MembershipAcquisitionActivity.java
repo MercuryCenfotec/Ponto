@@ -55,7 +55,7 @@ public class MembershipAcquisitionActivity extends AppCompatActivity implements 
         final SharedPreferences myPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String currentMembership = myPrefs.getString("userMembershipId", "none");
         Query membershipsQuery;
-        if (currentMembership.equals("none")) {
+        if (currentMembership.equals("")) {
             activityTitle.setText("Membresías");
             membershipsQuery = FirebaseDatabase.getInstance().getReference("Memberships").orderByChild("id");
         } else {
