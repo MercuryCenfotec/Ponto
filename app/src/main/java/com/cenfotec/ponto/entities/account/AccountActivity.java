@@ -122,6 +122,8 @@ public class AccountActivity extends AppCompatActivity {
     public void goToFetchFundsActivity(View view) {
         finish();
         Intent ira = new Intent(this, FetchBalanceFromAccountActivity.class);
+        ira.putExtra("balanceAccountId", userAccount.getAccountNumber());
+        ira.putExtra("userId", userId);
         startActivity(ira);
     }
 }
