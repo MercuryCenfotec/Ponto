@@ -49,18 +49,20 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
     Message message = messages.get(position);
     if (!message.getOwnerId().equals(userId)) {
       holder.cardSender.setVisibility(View.VISIBLE);
-      if (chat.getBidderId().equals(userId) && !chat.getBidderImgUrl().equals("")) {
+      holder.cardReceiver.setVisibility(View.GONE);
+      if (chat.getBidderId().equals(message.getOwnerId()) && chat.getBidderImgUrl().length() > 0) {
         Picasso.get().load(chat.getBidderImgUrl()).into(holder.imageProfileSender);
-      } else if (chat.getPetitionerId().equals(userId) && !chat.getPetitionerImgUrl().equals("")) {
+      } else if (chat.getPetitionerId().equals(message.getOwnerId()) && chat.getPetitionerImgUrl().length() > 0) {
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileSender);
       }
       holder.txtSender.setText(message.getMessage());
       holder.txtTimeSender.setText(message.getDateTime());
     } else {
       holder.cardReceiver.setVisibility(View.VISIBLE);
-      if (chat.getBidderId().equals(userId) && !chat.getBidderImgUrl().equals("")) {
+      holder.cardSender.setVisibility(View.GONE);
+      if (chat.getBidderId().equals(message.getOwnerId()) && chat.getBidderImgUrl().length() > 0) {
         Picasso.get().load(chat.getBidderImgUrl()).into(holder.imageSeenReceiver);
-      } else if (chat.getPetitionerId().equals(userId) && !chat.getPetitionerImgUrl().equals("")) {
+      } else if (chat.getPetitionerId().equals(message.getOwnerId()) && chat.getPetitionerImgUrl().length() > 0) {
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageSeenReceiver);
       }
       holder.txtReceiver.setText(message.getMessage());

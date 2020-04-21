@@ -3,6 +3,7 @@ package com.cenfotec.ponto.entities.message;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -95,6 +96,17 @@ public class ChatMessagesActivity extends GeneralActivity {
         sendMessage();
       }
     });
+    inputNewMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+          sendMessage();
+        }
+        return false;
+      }
+    });
+    inputNewMessage.setImeActionLabel("Enviar", KeyEvent.KEYCODE_ENTER);
     btnImageReturn.setOnClickListener(new View.OnClickListener() {
       @RequiresApi(api = Build.VERSION_CODES.O)
       @Override
@@ -136,6 +148,7 @@ public class ChatMessagesActivity extends GeneralActivity {
           messages.addAll(chat.getMessages());
         }
         messageCardAdapter.notifyDataSetChanged();
+        recyclerMessages.scrollToPosition(messages.size() - 1);
         setUserName();
         chargeAppointment();
         chargePetition();
@@ -218,7 +231,7 @@ public class ChatMessagesActivity extends GeneralActivity {
 
 
   private void setUserName() {
-    if (userType.equals("petitioner")) {
+    if (!userType.equals("petitioner")) {
       txtReceiver.setText(chat.getPetitionerName());
     } else {
       txtReceiver.setText(chat.getBidderName());
