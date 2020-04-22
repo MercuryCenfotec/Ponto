@@ -6,6 +6,7 @@ public class Notification {
   private String title;
   private String detail;
   private Integer iconId;
+  private Integer number;
   private String actionValue;
   private String type;
   private boolean isRead;
@@ -62,6 +63,14 @@ public class Notification {
 
   public void setIconId(Integer iconId) {
     this.iconId = iconId;
+  }
+
+  public Integer getNumber() {
+    return number;
+  }
+
+  public void setNumber(Integer number) {
+    this.number = number;
   }
 
   public String getActionValue() {

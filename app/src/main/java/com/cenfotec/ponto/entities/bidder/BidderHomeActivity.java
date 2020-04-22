@@ -1,6 +1,5 @@
 package com.cenfotec.ponto.entities.bidder;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -92,9 +91,10 @@ public class BidderHomeActivity extends AppCompatActivity {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Notification notification = snapshot.getValue(Notification.class);
           if (!notification.isShow()) {
-            showNotification(notification);
+            notificationList.add(notification);
           }
         }
+        showNotification();
       }
 
       @Override
@@ -104,7 +104,15 @@ public class BidderHomeActivity extends AppCompatActivity {
     });
   }
 
-  public void showNotification(Notification notification){
-    NotificationFactory.createNotificationWithoutExtras(this, notification.getTitle(), notification.getDetail());
+  public void showNotification() {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
+    DatabaseReference query;
+
+    for (Notification notification : notificationList) {
+      notification.setShow(true);
+      NotificationFactory.createNotificationWithoutExtras(this, notification);
+//    ref.child(notification.getId()).setValue(notification);
+    }
+
   }
 }
