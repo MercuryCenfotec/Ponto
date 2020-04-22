@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         String userId = myPrefs.getString("userId", "none");
         Intent intent;
 
-
-
         if (userId.equals("none")) {
             intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

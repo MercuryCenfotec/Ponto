@@ -65,7 +65,7 @@ public class OfferCard_Adapter extends RecyclerView.Adapter<OfferCard_Adapter.Vi
         }
 
         holder.offerCard.setOnClickListener(
-                new View.OnClickListener() {
+        new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, OfferDetailActivity.class);
