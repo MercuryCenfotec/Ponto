@@ -2,16 +2,13 @@ package com.cenfotec.ponto.entities.appointment;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import customfonts.MyTextView_SF_Pro_Display_Bold;
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 
@@ -38,6 +38,7 @@ public class AppointmentDetailActivity extends AppCompatActivity
     String MY_PREFERENCES;
     Appointment updatedAppointment;
     ConstraintLayout topContainer;
+    ConstraintLayout btnLocationSharing;
     MyTextView_SF_Pro_Display_Bold appoDetailTitle;
     MyTextView_SF_Pro_Display_Medium appoDetailDate;
     MyTextView_SF_Pro_Display_Medium appoDetailLocation;
@@ -73,6 +74,7 @@ public class AppointmentDetailActivity extends AppCompatActivity
         appoDetailLocation = findViewById(R.id.appoDetailLocation);
         appoDetailDescription = findViewById(R.id.appoDetailDescription);
         imgAppoSettings = findViewById(R.id.imgAppoSettings);
+        btnLocationSharing = findViewById(R.id.btnLocationSharing);
     }
 
     private void catchIntent() {
@@ -86,6 +88,8 @@ public class AppointmentDetailActivity extends AppCompatActivity
 
         if (activeUserType.equals("petitioner")) {
             imgAppoSettings.setVisibility(View.VISIBLE);
+        } else {
+            btnLocationSharing.setVisibility(View.VISIBLE);
         }
     }
     // ## OnActivityCreation statements start here ##
@@ -199,4 +203,20 @@ public class AppointmentDetailActivity extends AppCompatActivity
         showToaster("Cita eliminada exitosamente");
     }
     // ## AppointmentDeletionConfirmDialog statements end ##
+
+    // ## Google Maps Share Location statements start here ##
+    public void openLocationSharing(View view) {
+        String googleMapsUrlString = "https://www.google.com/maps/search/?api=1&query="
+                + appoDetailLocation.getText().toString();
+        URL mapsURL = null;
+        try {
+            mapsURL = new URL(googleMapsUrlString);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(mapsURL.toString()));
+        intent.setPackage("com.google.android.apps.maps");
+        startActivity(intent);
+    }
+    // ## Google Maps Share Location statements end ##
 }
