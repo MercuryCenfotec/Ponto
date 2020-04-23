@@ -25,7 +25,8 @@ public class NotificationFactory {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(actualActivity, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_bell)
             .setContentTitle(title)
-            .setContentText(description);
+            .setContentText(description)
+            .setGroup("Ponto");
 
     NotificationManager manager = (NotificationManager) actualActivity.getSystemService(Context.NOTIFICATION_SERVICE);
     manager.notify(0, builder.build());
@@ -35,7 +36,8 @@ public class NotificationFactory {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(actualActivity, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_bell)
             .setContentTitle(notification.getTitle())
-            .setContentText(notification.getDetail());
+            .setContentText(notification.getDetail())
+            .setGroup("Ponto");
     Random random = new Random();
 
     NotificationManager manager = (NotificationManager) actualActivity.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -48,7 +50,8 @@ public class NotificationFactory {
     NotificationCompat.Builder builder = new NotificationCompat.Builder(actualActivity, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_bell)
             .setContentTitle(title)
-            .setContentText(description);
+            .setContentText(description)
+            .setGroup("Ponto");
 
     Intent notificationIntent = new Intent(actualActivity, nextActivity);
     //foreach extra that the activity needs, assign them from the hashMap
