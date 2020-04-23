@@ -3,9 +3,11 @@ package com.cenfotec.ponto.entities.petitioner;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,8 +23,10 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import adapter.TabLayoutAdapter_PetitionerHome;
 
@@ -90,6 +94,7 @@ public class PetitionerHomeActivity extends AppCompatActivity {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
     Query query = ref.orderByChild("userId").equalTo(userId);
     query.addValueEventListener(new ValueEventListener() {
+      @RequiresApi(api = Build.VERSION_CODES.N)
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         notificationList.clear();
@@ -109,15 +114,16 @@ public class PetitionerHomeActivity extends AppCompatActivity {
     });
   }
 
+
+  @RequiresApi(api = Build.VERSION_CODES.N)
   public void showNotification() {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
-    DatabaseReference query;
+    final Map notificationMap = new HashMap<>();
 
     for (Notification notification : notificationList) {
-      notification.setShow(true);
       NotificationFactory.createNotificationWithoutExtras(this, notification);
-//    ref.child(notification.getId()).setValue(notification);
+      notificationMap.put(notification.getId() + "/show", true);
     }
-
+    ref.updateChildren(notificationMap);
   }
 }
