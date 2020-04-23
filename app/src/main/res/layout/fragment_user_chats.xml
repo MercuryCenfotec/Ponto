@@ -57,10 +57,10 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:tabIndicatorColor="#118df0"
+            app:tabIndicatorColor="@color/colorAccent"
             app:tabSelectedTextColor="#3b3b3b"
             app:tabTextAppearance="@style/MyCustomTextAppearance"
-            app:tabTextColor="#a9a9b0" >
+            app:tabTextColor="#a9a9b0">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabAll"

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".entities.notification.NotificationCardFragment">
 
     <LinearLayout
@@ -19,6 +19,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="17dp"
+            android:background="@drawable/rectangular_black_fill_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="12dp"
@@ -29,8 +30,8 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/bell_regular" />
 
             <LinearLayout
@@ -52,8 +53,8 @@
                         android:layout_height="wrap_content"
                         android:maxLength="44"
                         android:text="Notification Name "
-                        android:textColor="#a9a9b0"
-                        android:textSize="12.5sp" />
+                        android:textColor="#000000"
+                        android:textSize="11sp" />
 
                 </LinearLayout>
 
@@ -69,8 +70,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:maxLength="80"
-                        android:textColor="#3b3b3b"
-                        android:textSize="13sp" />
+                        android:text="Hola this is a test sabdioknsao pkdnoilksnd oiknsalkodnas"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -78,14 +80,13 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/n1"
+                android:id="@+id/n"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="2dp"
-                android:background="@drawable/circle_blue"
+                android:background="@drawable/circle_accent"
                 android:gravity="center"
-                android:text="1"
                 android:textColor="@color/white"
                 android:textSize="11sp"
                 android:visibility="gone" />

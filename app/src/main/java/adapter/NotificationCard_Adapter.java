@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,24 +20,22 @@ import java.util.List;
 import customfonts.MyTextView_SF_Pro_Display_Medium;
 import customfonts.TextViewSFProDisplayRegular;
 
-public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adapter.ViewHolder> {
+public class NotificationCard_Adapter extends RecyclerView.Adapter<NotificationCard_Adapter.ViewHolder> {
   private Context context;
-  private String userId;
   private List<Notification> notifications;
 
-  public Notification_Adapter() {
+  public NotificationCard_Adapter() {
   }
 
-  public Notification_Adapter(Context context, List<Notification> notifications, String userId) {
+  public NotificationCard_Adapter(Context context, List<Notification> notifications) {
 
     this.context = context;
     this.notifications = notifications;
-    this.userId = userId;
   }
 
   @NonNull
   @Override
-  public Notification_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+  public NotificationCard_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_notification_card, parent, false);
     return new ViewHolder(view);
   }
@@ -45,8 +44,13 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
   public void onBindViewHolder(ViewHolder holder, int position) {
     Notification notification = notifications.get(position);
     holder.name.setText(notification.getTitle());
-    holder.name.setText(notification.getDetail());
+    holder.message.setText(notification.getDetail());
     holder.linear.setOnClickListener(NotificationFactory.createNotificationOnClick(context, notification));
+    if (!notification.isRead()) {
+      holder.n.setVisibility(View.VISIBLE);
+    } else {
+      holder.n.setVisibility(View.GONE);
+    }
   }
 
   @Override
@@ -59,6 +63,7 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
     MyTextView_SF_Pro_Display_Medium message;
     LinearLayout linear;
     ImageView image;
+    TextView n;
 
     public ViewHolder(View itemView) {
       super(itemView);
@@ -67,6 +72,7 @@ public class Notification_Adapter extends RecyclerView.Adapter<Notification_Adap
       name = itemView.findViewById(R.id.name);
       time = itemView.findViewById(R.id.time);
       linear = itemView.findViewById(R.id.linear);
+      n = itemView.findViewById(R.id.n);
     }
   }
 }
