@@ -202,5 +202,4 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OfferCreationActivity.class);
         startActivity(intent);
     }
-
 }
