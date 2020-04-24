@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Notification;
+import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.notification.NotificationFactory;
 import com.cenfotec.ponto.utils.GeneralActivity;
 import com.google.android.material.tabs.TabLayout;
@@ -33,6 +34,7 @@ public class BidderHomeActivity extends GeneralActivity {
   protected TabLayoutAdapter_BidderHome viewPagerAdapter;
   TabLayoutAdapter_BidderHome adapter;
   List<Notification> notificationList = new ArrayList<>();
+  User user;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +45,31 @@ public class BidderHomeActivity extends GeneralActivity {
     bindContent();
     initContent();
     catchIntent();
-    chargeNotification();
+    chargeUser();
     Locale spanish = new Locale("es", "ES");
     Locale.setDefault(spanish);
+  }
+
+  private void chargeUser() {
+    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    String userId = myPrefs.getString("userId", "none");
+
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+    Query query = ref.child(userId);
+    query.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        user = dataSnapshot.getValue(User.class);
+        if (user.isAllowsPushNotifications()) {
+          chargeNotification();
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
   }
 
   private void bindContent() {

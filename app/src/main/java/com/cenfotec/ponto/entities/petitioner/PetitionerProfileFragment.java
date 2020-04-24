@@ -56,7 +56,7 @@ public class PetitionerProfileFragment extends Fragment {
           R.drawable.ic_contract, R.drawable.ic_profile, R.drawable.ic_bell_gray, R.drawable.ic_settings};
   Integer arrow = R.drawable.ic_chevron_right_black_24dp;
   String txttrades[] = {"Agenda de proyectos", "Cuenta interna", "Contratos",
-          "Mi perfil", "Activar/Desactivar Notificaciones", "Cerrar sesión"};
+          "Mi perfil", "Ajustes de Notificaciones", "Cerrar sesión"};
   String txthistory[] = {"Revise sus contrataciones",
           "La colección", "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Configure las notificaciones de la aplicaciòn en su dispositivo", "Cierre la sesión"};
 
@@ -125,8 +125,6 @@ public class PetitionerProfileFragment extends Fragment {
     servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
     profilePetitionerImage = view.findViewById(R.id.profile_image);
     user = new User();
-    profileAdapter = new ProfileAdapter(getActivity(), profileModelArrayList);
-    recyclerview.setAdapter(profileAdapter);
   }
 
   private void getActiveUserId() {

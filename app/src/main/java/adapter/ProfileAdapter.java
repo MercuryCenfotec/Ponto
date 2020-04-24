@@ -129,22 +129,17 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
               break;
 
             case 2:
-              //Intent i = new Intent(context, CLASE DE RESEÑAS.class);
-              //context.startActivity(i);
-              break;
-
-            case 3:
               Intent inte = new Intent(context, AccountActivity.class);
               inte.putExtra("userId", profileModelArrayList.get(position).getUserId());
               context.startActivity(inte);
               break;
 
-            case 4:
+            case 3:
               Intent intent = new Intent(context, ContractsListActivity.class);
               context.startActivity(intent);
               break;
 
-            case 5:
+            case 4:
               if (profileModelArrayList.get(position).getUserType().equals("petitioner")) {
                 Intent i = new Intent(context, PetitionerUpdateActivity.class);
                 i.putExtra("petitionerId", profileModelArrayList.get(position).getUserId());
@@ -155,6 +150,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
                 context.startActivity(i);
               }
 
+              break;
+
+            case 5:
+              Intent i = new Intent(context, NotificationsSettingsActivity.class);
+              context.startActivity(i);
               break;
 
             case 6:
