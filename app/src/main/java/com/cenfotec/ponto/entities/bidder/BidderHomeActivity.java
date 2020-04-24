@@ -83,6 +83,7 @@ public class BidderHomeActivity extends GeneralActivity {
   public void chargeNotification() {
     SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
     String userId = myPrefs.getString("userId", "none");
+
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
     Query query = ref.orderByChild("userId").equalTo(userId);
     query.addValueEventListener(new ValueEventListener() {

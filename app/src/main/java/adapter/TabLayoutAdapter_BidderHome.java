@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.cenfotec.ponto.entities.bidder.BidderProfileFragment;
+import com.cenfotec.ponto.entities.notification.NotificationListFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionBidderList;
 import com.cenfotec.ponto.entities.chat.UserChats;
 
@@ -32,6 +33,9 @@ public class TabLayoutAdapter_BidderHome extends FragmentStatePagerAdapter {
             case 1:
                 UserChats tab2 = new UserChats();
                 return tab2;
+            case 3:
+                NotificationListFragment tab3 = new NotificationListFragment();
+                return tab3;
             case 4:
                 BidderProfileFragment tab4 = new BidderProfileFragment();
                 return tab4;

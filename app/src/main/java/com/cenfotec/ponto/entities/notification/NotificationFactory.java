@@ -7,14 +7,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Contract;
 import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.entities.account.AccountActivity;
+import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
 import com.cenfotec.ponto.entities.message.ChatMessagesActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -98,6 +104,32 @@ public class NotificationFactory {
             editor.putString("chatId", notification.getActionValue());
             editor.commit();
             context.startActivity(intent);
+          }
+        };
+        break;
+      case "contract":
+        onClick = new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            DatabaseReference contractDBRef = FirebaseDatabase.getInstance().getReference("Contracts");
+            contractDBRef.orderByChild("id").equalTo(notification.getActionValue()).addListenerForSingleValueEvent(new ValueEventListener() {
+              @Override
+              public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot contractSnapshot : dataSnapshot.getChildren()) {
+                  Contract contract = contractSnapshot.getValue(Contract.class);
+                  Intent intent = new Intent(context, GeneratedContractActivity.class);
+                  intent.putExtra("petitionerId", contract.getPetitionerId());
+                  intent.putExtra("bidderUserId", contract.getBidderId());
+                  intent.putExtra("contractId", contract.getId());
+                  intent.putExtra("finalCost", contract.getFinalCost());
+                  context.startActivity(intent);
+                }
+              }
+
+              @Override
+              public void onCancelled(@NonNull DatabaseError databaseError) {
+              }
+            });
           }
         };
         break;
