@@ -96,6 +96,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         bidderDataReference = FirebaseDatabase.getInstance().getReference("Bidders");
         accountDBReference = FirebaseDatabase.getInstance().getReference("Accounts");
+        idVerificationsDBReference = FirebaseDatabase.getInstance().getReference("IdVerifications");
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         fullNameEditText = findViewById(R.id.fullNameEditText);

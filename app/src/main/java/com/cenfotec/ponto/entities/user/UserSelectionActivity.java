@@ -21,10 +21,12 @@ public class UserSelectionActivity extends AppCompatActivity {
     public void goToBidderRegistration(View view) {
         Intent intent = new Intent(this, BidderRegistrationActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void goToPetitionerRegistration(View view) {
         Intent intent = new Intent(this, PetitionerRegistrationActivity.class);
         startActivity(intent);
+        finish();
     }
 }

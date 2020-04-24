@@ -128,7 +128,7 @@ public class PetitionerProfileFragment extends Fragment {
 //        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
         profilePetitionerRating = view.findViewById(R.id.petitionerRatingProfile);
         servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
-        profilePetitionerImage = view.findViewById(R.id.profile_image);
+        profilePetitionerImage = view.findViewById(R.id.imageProfileSender);
         user = new User();
     }
 

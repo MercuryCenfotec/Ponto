@@ -18,6 +18,7 @@ import com.cenfotec.ponto.data.model.Account;
 import com.cenfotec.ponto.data.model.Appointment;
 import com.cenfotec.ponto.data.model.Chat;
 import com.cenfotec.ponto.data.model.Contract;
+import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
@@ -26,6 +27,7 @@ import com.cenfotec.ponto.entities.account.NotEnoughFundsDialog;
 import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.cenfotec.ponto.entities.contract.GeneratedContractActivity;
+import com.cenfotec.ponto.entities.notification.NotificationFactory;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -381,12 +383,25 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         contract.setFinalCost(activeOffer.getCost());
         databaseReference.child(contractId).setValue(contract);
 
+        // ## Bidder notification
+        Notification bidderNotification = new Notification();
+        bidderNotification.setActionValue(contract.getId());
+        bidderNotification.setTitle("Nuevo contrato");
+        bidderNotification.setDetail("Una oferta suya ha sido aceptada.");
+        bidderNotification.setUserId(contract.getBidderId());
+        bidderNotification.setIconId(0);
+        bidderNotification.setType("contract");
+        bidderNotification.setRead(false);
+        NotificationFactory.registerNotificationToDB(bidderNotification);
+        // Bidder notification ##
+
         myPrefs.edit().putString("contractId", contractId).commit();
         Intent intent = new Intent(this, GeneratedContractActivity.class);
         intent.putExtra("petitionerId", contract.getPetitionerId());
         intent.putExtra("bidderUserId", contract.getBidderId());
         intent.putExtra("contractId", contract.getId());
         intent.putExtra("finalCost", contract.getFinalCost());
+
         startActivity(intent);
         finish();
     }
