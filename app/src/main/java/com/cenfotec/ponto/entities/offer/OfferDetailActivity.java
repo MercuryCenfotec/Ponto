@@ -392,6 +392,8 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
         bidderNotification.setIconId(0);
         bidderNotification.setType("contract");
         bidderNotification.setRead(false);
+        bidderNotification.setShow(false);
+        bidderNotification.setDone(false);
         NotificationFactory.registerNotificationToDB(bidderNotification);
         // Bidder notification ##
 
