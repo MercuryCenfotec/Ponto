@@ -112,26 +112,11 @@ public class PetitionerProfileFragment extends Fragment {
       ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId, "petitioner");
       profileModelArrayList.add(view);
 
-        profileAdapter = new ProfileAdapter(getActivity(), profileModelArrayList);
-        recyclerview.setAdapter(profileAdapter);
-    }
-
-    private void initProfileControls() {
-        profilePetitionerFullName = view.findViewById(R.id.petitionerFullNameProfile);
-//        profilePetitionerBirthDate = findViewById(R.id.petitionerBirthdateProfile);
-        profilePetitionerEmail = view.findViewById(R.id.petitionerMailProfile);
-//        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
-        profilePetitionerRating = view.findViewById(R.id.petitionerRatingProfile);
-        servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
-        profilePetitionerImage = view.findViewById(R.id.imageProfileSender);
-        user = new User();
-    }
-
-    private void getActiveUserId() {
-        sharedpreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-        activeUserId = sharedpreferences.getString("userId", "");
+      profileAdapter = new ProfileAdapter(getActivity(), profileModelArrayList);
+      recyclerview.setAdapter(profileAdapter);
     }
   }
+
 
   private void initProfileControls() {
     profilePetitionerFullName = view.findViewById(R.id.petitionerFullNameProfile);

@@ -34,7 +34,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageProfileSender"
+                android:id="@+id/profile_image"
                 android:layout_width="85dp"
                 android:layout_height="95.7dp"
                 android:layout_gravity="center"
@@ -53,9 +53,9 @@
                 android:text="Nombre completo"
                 android:textColor="#3b3b3b"
                 android:textSize="23dp"
-                app:layout_constraintEnd_toEndOf="@+id/imageProfileSender"
-                app:layout_constraintStart_toStartOf="@+id/imageProfileSender"
-                app:layout_constraintTop_toBottomOf="@+id/imageProfileSender" />
+                app:layout_constraintEnd_toEndOf="@+id/profile_image"
+                app:layout_constraintStart_toStartOf="@+id/profile_image"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/petitionerMailProfile"
@@ -184,10 +184,10 @@
             android:layout_height="2.5dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/shadow"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            android:orientation="horizontal" >
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         </LinearLayout>
 
@@ -217,12 +217,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             app:bb_behavior="iconsOnly"
             app:bb_tabXmlResource="@xml/bottombar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone">
+            app:layout_constraintStart_toStartOf="parent">
 
         </com.roughike.bottombar.BottomBar>
 
