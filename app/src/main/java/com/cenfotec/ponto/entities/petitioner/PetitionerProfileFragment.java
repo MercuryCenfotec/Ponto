@@ -3,6 +3,11 @@ package com.cenfotec.ponto.entities.petitioner;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,14 +15,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.User;
 import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -40,136 +38,129 @@ import model.ProfileModel;
  */
 public class PetitionerProfileFragment extends Fragment {
 
-    private static SharedPreferences sharedpreferences;
-    private String activeUserId;
-    private TextView profilePetitionerFullName;
-    //    TextView profilePetitionerBirthDate;
-    private TextView profilePetitionerEmail;
-    //    TextView profilePetitionerIdentification;
-    private TextView profilePetitionerRating;
-    private ImageView profilePetitionerImage;
-    private User user;
-    private Integer servicePetitionsNumber = 0;
+  private static SharedPreferences sharedpreferences;
+  private String activeUserId;
+  private TextView profilePetitionerFullName;
+  private TextView profilePetitionerEmail;
+  private TextView profilePetitionerRating;
+  private ImageView profilePetitionerImage;
+  private User user;
+  private Integer servicePetitionsNumber = 0;
 
-    private ProfileAdapter profileAdapter;
-    private RecyclerView recyclerview;
-    private ArrayList<ProfileModel> profileModelArrayList;
-    private MyTextView_SF_Pro_Display_Medium servicePetitionNumber;
+  private ProfileAdapter profileAdapter;
+  private RecyclerView recyclerview;
+  private ArrayList<ProfileModel> profileModelArrayList;
+  private MyTextView_SF_Pro_Display_Medium servicePetitionNumber;
 
-    Integer inbox[] = {R.drawable.ic_calendar, R.drawable.ic_like, R.drawable.ic_paypal,
-            R.drawable.ic_contract, R.drawable.ic_profile,R.drawable.ic_settings};
-    Integer arrow = R.drawable.ic_chevron_right_black_24dp;
-    String txttrades[] = {"Agenda de proyectos", "Reseñas", "Cuenta interna", "Contratos",
-            "Mi perfil", "Cerrar sesión"};
-    String txthistory[] = {"Revise sus contrataciones",
-            "La colección", "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Cierre la sesión"};
+  Integer inbox[] = {R.drawable.ic_calendar, R.drawable.ic_paypal,
+          R.drawable.ic_contract, R.drawable.ic_profile, R.drawable.ic_bell_gray, R.drawable.ic_settings};
+  Integer arrow = R.drawable.ic_chevron_right_black_24dp;
+  String txttrades[] = {"Agenda de proyectos", "Cuenta interna", "Contratos",
+          "Mi perfil", "Activar/Desactivar Notificaciones", "Cerrar sesión"};
+  String txthistory[] = {"Revise sus contrataciones",
+          "La colección", "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Configure las notificaciones de la aplicaciòn en su dispositivo", "Cierre la sesión"};
 
-    View view;
+  View view;
 
-    public PetitionerProfileFragment() {
-        // Required empty public constructor
-    }
+  public PetitionerProfileFragment() {
+    // Required empty public constructor
+  }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_petitioner_profile, container, false);
-        getActiveUserId();
-        initProfileControls();
-        getPetitionerByActiveUserId();
-        showRecyclerViewOptions();
-        getServicePetitionsNumber();
-        return view;
-    }
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    view = inflater.inflate(R.layout.fragment_petitioner_profile, container, false);
+    getActiveUserId();
+    initProfileControls();
+    getPetitionerByActiveUserId();
+    showRecyclerViewOptions();
+    getServicePetitionsNumber();
+    return view;
+  }
 
-    private void getServicePetitionsNumber() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
-        Query getServicePetitionsQuery = databaseReference.orderByChild("petitionerId").equalTo(activeUserId);
+  private void getServicePetitionsNumber() {
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("ServicePetitions");
+    Query getServicePetitionsQuery = databaseReference.orderByChild("petitionerId").equalTo(activeUserId);
 
-        getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
-                            servicePetitionsNumber++;
-                }
-                servicePetitionNumber.setText(""+servicePetitionsNumber);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-    }
-
-    private void showRecyclerViewOptions() {
-        recyclerview = view.findViewById(R.id.profileOptionsPetitioner);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerview.setLayoutManager(layoutManager);
-        recyclerview.setItemAnimator(new DefaultItemAnimator());
-
-        profileModelArrayList = new ArrayList<>();
-
-        for (int i = 0; i < inbox.length; i++) {
-            ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId, "petitioner");
-            profileModelArrayList.add(view);
+    getServicePetitionsQuery.addValueEventListener(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot snapshot) {
+        for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
+          servicePetitionsNumber++;
         }
+        servicePetitionNumber.setText("" + servicePetitionsNumber);
+      }
 
-        profileAdapter = new ProfileAdapter(getActivity(), profileModelArrayList);
-        recyclerview.setAdapter(profileAdapter);
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+        System.out.println("The read failed: " + databaseError.getCode());
+      }
+    });
+  }
+
+  private void showRecyclerViewOptions() {
+    recyclerview = view.findViewById(R.id.profileOptionsPetitioner);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+    recyclerview.setLayoutManager(layoutManager);
+    recyclerview.setItemAnimator(new DefaultItemAnimator());
+
+    profileModelArrayList = new ArrayList<>();
+
+    for (int i = 0; i < inbox.length; i++) {
+      ProfileModel view = new ProfileModel(inbox[i], arrow, txttrades[i], txthistory[i], activeUserId, "petitioner");
+      profileModelArrayList.add(view);
+    }
+  }
+
+  private void initProfileControls() {
+    profilePetitionerFullName = view.findViewById(R.id.petitionerFullNameProfile);
+    profilePetitionerEmail = view.findViewById(R.id.petitionerMailProfile);
+    profilePetitionerRating = view.findViewById(R.id.petitionerRatingProfile);
+    servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
+    profilePetitionerImage = view.findViewById(R.id.profile_image);
+    user = new User();
+    profileAdapter = new ProfileAdapter(getActivity(), profileModelArrayList);
+    recyclerview.setAdapter(profileAdapter);
+  }
+
+  private void getActiveUserId() {
+    sharedpreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
+    activeUserId = sharedpreferences.getString("userId", "");
+  }
+
+  private void getPetitionerByActiveUserId() {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+    ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        user = dataSnapshot.getValue(User.class);
+        showPetitionerProfileInformation();
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
+  }
+
+  private void showPetitionerProfileInformation() {
+    // Convert first letter to capital
+    StringBuilder capitalized = new StringBuilder();
+    Scanner lineScan = new Scanner(user.getFullName().toLowerCase());
+    while (lineScan.hasNext()) {
+      String word = lineScan.next();
+      capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
     }
 
-    private void initProfileControls() {
-        profilePetitionerFullName = view.findViewById(R.id.petitionerFullNameProfile);
-//        profilePetitionerBirthDate = findViewById(R.id.petitionerBirthdateProfile);
-        profilePetitionerEmail = view.findViewById(R.id.petitionerMailProfile);
-//        profilePetitionerIdentification = findViewById(R.id.petitionerIdentificationProfile);
-        profilePetitionerRating = view.findViewById(R.id.petitionerRatingProfile);
-        servicePetitionNumber = view.findViewById(R.id.servicePetitionNumber);
-        profilePetitionerImage = view.findViewById(R.id.profile_image);
-        user = new User();
+    if (!user.getProfileImageUrl().equals("")) {
+      Picasso.get().load(user.getProfileImageUrl()).into(profilePetitionerImage);
     }
-
-    private void getActiveUserId() {
-        sharedpreferences = getActivity().getSharedPreferences(LoginActivity.MY_PREFERENCES, Context.MODE_PRIVATE);
-        activeUserId = sharedpreferences.getString("userId", "");
-    }
-
-    private void getPetitionerByActiveUserId() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.child(activeUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user = dataSnapshot.getValue(User.class);
-                showPetitionerProfileInformation();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void showPetitionerProfileInformation() {
-
-        // Convert first letter to capital
-        StringBuilder capitalized = new StringBuilder();
-        Scanner lineScan = new Scanner(user.getFullName().toLowerCase());
-        while(lineScan.hasNext()) {
-            String word = lineScan.next();
-            capitalized.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
-        }
-
-        if(!user.getProfileImageUrl().equals("")){
-            Picasso.get().load(user.getProfileImageUrl()).into(profilePetitionerImage);
-        }
-        profilePetitionerFullName.setText(capitalized);
-//        profilePetitionerBirthDate.setText(petitioner.getBirthDate());
-        profilePetitionerEmail.setText(user.getEmail());
-//        profilePetitionerIdentification.setText(petitioner.getIdentificationNumber());
-        profilePetitionerRating.setText(String.valueOf(user.getRating()));
-    }
+    profilePetitionerFullName.setText(capitalized);
+    profilePetitionerEmail.setText(user.getEmail());
+    profilePetitionerRating.setText(String.valueOf(user.getRating()));
+  }
 }
+

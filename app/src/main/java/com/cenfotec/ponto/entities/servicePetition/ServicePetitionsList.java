@@ -165,7 +165,6 @@ public class ServicePetitionsList extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
