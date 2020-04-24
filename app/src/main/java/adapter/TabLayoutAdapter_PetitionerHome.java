@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.cenfotec.ponto.entities.chat.UserChats;
+import com.cenfotec.ponto.entities.notification.NotificationListFragment;
 import com.cenfotec.ponto.entities.petitioner.PetitionerProfileFragment;
 import com.cenfotec.ponto.entities.servicePetition.ServicePetitionPetitionerList;
 
@@ -33,6 +34,9 @@ public class TabLayoutAdapter_PetitionerHome extends FragmentStatePagerAdapter {
       case 1:
         UserChats tab2 = new UserChats();
         return tab2;
+      case 3:
+        NotificationListFragment tab3 = new NotificationListFragment();
+        return tab3;
       case 4:
         PetitionerProfileFragment tab4 = new PetitionerProfileFragment();
         return tab4;
