@@ -58,7 +58,7 @@ public class PetitionerProfileFragment extends Fragment {
   String txttrades[] = {"Agenda de proyectos", "Cuenta interna", "Contratos",
           "Mi perfil", "Ajustes de Notificaciones", "Cerrar sesión"};
   String txthistory[] = {"Revise sus contrataciones",
-          "La colección", "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Configure las notificaciones de la aplicaciòn en su dispositivo", "Cierre la sesión"};
+          "Administre su cuenta interna", "Contratos realizados", "Cambie la información de su perfil", "Configure las notificaciones de la aplicaciòn en su dispositivo", "Cierre la sesión"};
 
   View view;
 

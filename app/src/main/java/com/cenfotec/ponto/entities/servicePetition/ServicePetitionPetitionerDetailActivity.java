@@ -12,9 +12,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
+import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.Rating;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.notification.NotificationFactory;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 import com.cenfotec.ponto.entities.rating.RateUserDialog;
 import com.google.android.material.tabs.TabLayout;
@@ -173,6 +175,17 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
   public void dialogEndWork() {
     accountDBReference.child(bidderUserAccount.getAccountNumber()).child("balance").setValue(bidderUserAccount.getBalance() + acceptedOffer.getCost());
     servicePetitionBReference.child(ServicePetitionDetail.servicePetition.getId()).child("finished").setValue(true);
+
+    Notification paymentNotification = new Notification();
+    paymentNotification.setTitle("Pago recibido");
+    paymentNotification.setDetail("Ha recibido un pago por la completitud de un trabajo con un solicitante, vaya a la cuenta interna para confirmar.");
+    paymentNotification.setUserId(bidder.getId());
+    paymentNotification.setIconId(0);
+    paymentNotification.setType("payment");
+    paymentNotification.setRead(false);
+    paymentNotification.setShow(false);
+    paymentNotification.setDone(false);
+    NotificationFactory.registerNotificationToDB(paymentNotification);
 
     adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
     petitionViewPager.setAdapter(adapter);
