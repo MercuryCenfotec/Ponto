@@ -178,13 +178,14 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
 
     Notification paymentNotification = new Notification();
     paymentNotification.setTitle("Pago recibido");
-    paymentNotification.setDetail("Ha recibido un pago por la completitud de un trabajo con un solicitante, vaya a la cuenta interna para confirmar.");
+    paymentNotification.setDetail("Ha recibido un pago por la completitud de un trabajo con un solicitante, presione para calificarlo. Puede confirmar el pago en su cuenta interna.");
     paymentNotification.setUserId(bidder.getId());
     paymentNotification.setIconId(0);
     paymentNotification.setType("payment");
     paymentNotification.setRead(false);
     paymentNotification.setShow(false);
     paymentNotification.setDone(false);
+    paymentNotification.setActionValue(userId);
     NotificationFactory.registerNotificationToDB(paymentNotification);
 
     adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
