@@ -63,11 +63,29 @@
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <customfonts.EditText__SF_Pro_Display_Medium
+                    android:id="@+id/identificationEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="41dp"
+                    android:layout_marginRight="41dp"
+                    android:background="@drawable/rect"
+                    android:hint="Número de cédula"
+                    android:inputType="text"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"
+                    android:textSize="13.5sp" />
+
+                <customfonts.EditText__SF_Pro_Display_Medium
                     android:id="@+id/fullNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="41dp"
+                    android:layout_marginTop="21dp"
                     android:layout_marginRight="41dp"
                     android:background="@drawable/rect"
                     android:hint="Nombre completo"
@@ -109,24 +127,6 @@
                     android:background="@drawable/rect"
                     android:hint="Correo electrónico"
                     android:inputType="textEmailAddress"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="14dp"
-                    android:paddingBottom="14dp"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    android:textSize="13.5sp" />
-
-                <customfonts.EditText__SF_Pro_Display_Medium
-                    android:id="@+id/identificationEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="41dp"
-                    android:layout_marginTop="21dp"
-                    android:layout_marginRight="41dp"
-                    android:background="@drawable/rect"
-                    android:hint="Número de cédula"
-                    android:inputType="text"
                     android:paddingLeft="20dp"
                     android:paddingTop="14dp"
                     android:paddingBottom="14dp"

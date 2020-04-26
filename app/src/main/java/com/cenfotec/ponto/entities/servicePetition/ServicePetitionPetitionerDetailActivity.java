@@ -28,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import adapter.TabLayoutAdapter_ServicePetitionDetailPetitioner;
@@ -178,7 +179,7 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
 
     Notification paymentNotification = new Notification();
     paymentNotification.setTitle("Pago recibido");
-    paymentNotification.setDetail("Ha recibido un pago por la completitud de un trabajo con un solicitante, presione para calificarlo. Puede confirmar el pago en su cuenta interna.");
+    paymentNotification.setDetail("Ha recibido el pago del trabajo " + ServicePetitionDetail.servicePetition.getName() + ", puede confirmarlo en su cuenta. Presione para calificar al usuario");
     paymentNotification.setUserId(bidder.getId());
     paymentNotification.setIconId(0);
     paymentNotification.setType("payment");
@@ -237,7 +238,10 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     Rating myRating = new Rating(ratingId, bidder.getId(), userId, rating);
     ratingDBReference.child(ratingId).setValue(myRating);
 
+    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+    symbols.setDecimalSeparator('.');
     DecimalFormat df = new DecimalFormat("###.##");
+    df.setDecimalFormatSymbols(symbols);
 
     // Actualizar el rating del usuario tomando la totalidad que se sumó arriba (además del rating nuevo) y dividirla por la cantidad total de ratings que tiene el user
     Float newRating = (totalRating + rating) / (numRatings + 1);

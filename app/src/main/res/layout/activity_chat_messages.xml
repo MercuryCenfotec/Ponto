@@ -34,18 +34,18 @@
             app:layout_constraintEnd_toStartOf="@+id/imageView5"
             app:layout_constraintStart_toStartOf="@+id/imageView5">
 
-
             <ImageView
                 android:id="@+id/btnImageReturn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:contentDescription="Return Button"
-                android:src="@drawable/ic_left"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="18dp"
+                android:layout_margin="10dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_left_arrow"
+                app:layout_constraintBottom_toBottomOf="@+id/txtReceiver"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/txtReceiver" />
 
             <customfonts.MyTextView_SF_Pro_Display_Semibold
                 android:id="@+id/txtReceiver"

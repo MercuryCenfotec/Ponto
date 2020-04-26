@@ -13,20 +13,20 @@
 
         <customfonts.MyTextView_SF_Pro_Display_Semibold
             android:id="@+id/btnPetitionCreation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:background="@drawable/rect_blue"
             android:gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingTop="7dp"
+            android:paddingLeft="9dp"
             android:paddingRight="10dp"
-            android:paddingBottom="8dp"
-            android:text="Crear solicitud"
+            android:paddingBottom="9dp"
+            android:text="+"
             android:textColor="#ffffff"
-            android:textSize="12sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/viewpager1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tablayout1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.411" />
 

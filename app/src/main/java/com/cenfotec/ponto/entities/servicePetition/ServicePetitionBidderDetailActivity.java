@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.ServicePetition;
@@ -52,6 +53,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
     TextViewSFProDisplayRegular petitionDescription;
     MyTextView_SF_Pro_Display_Semibold btnOfferCreation;
     MyTextView_SF_Pro_Display_Semibold petitionUserName;
+    TextView bidderRatingValue;
     ServicePetition servicePetition;
     ServiceType serviceType;
     User petitionUser;
@@ -129,6 +131,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
         btnOfferCreation = findViewById(R.id.btnOfferCreation);
         petitionUserImage = findViewById(R.id.petitionUserImage);
         petitionUserName = findViewById(R.id.petitionUserName);
+        bidderRatingValue = findViewById(R.id.bidderRatingValue);
     }
 
     private void setContent() {
@@ -147,6 +150,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
             Picasso.get().load(petitionUser.getProfileImageUrl()).into(petitionUserImage);
         }
         petitionUserName.setText(petitionUser.getFullName());
+        bidderRatingValue.setText(String.valueOf(petitionUser.getRating()));
         btnOfferCreation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

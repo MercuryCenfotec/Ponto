@@ -14,7 +14,7 @@
         <LinearLayout
             android:id="@+id/linearLayout11"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="33dp"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="15dp"
@@ -23,9 +23,12 @@
             android:background="@drawable/rect_bg"
             android:gravity="center"
             android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:paddingStart="8dp">
 
             <customfonts.EditText__SF_Pro_Display_Regular
                 android:id="@+id/searchInput"
@@ -38,13 +41,13 @@
                 android:paddingTop="4dp"
                 android:paddingRight="4dp"
                 android:paddingBottom="4dp"
-                android:textSize="12sp" />
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/arrow"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="8dp"
                 android:src="@drawable/ic_search_black_24dp" />
 
         </LinearLayout>
