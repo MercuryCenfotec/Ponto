@@ -260,12 +260,17 @@
 
             <customfonts.MyTextView_SF_Pro_Display_Medium
                 android:id="@+id/btnBidderRegistration"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="44dp"
+                android:layout_marginLeft="44dp"
                 android:layout_marginTop="48dp"
+                android:layout_marginEnd="44dp"
+                android:layout_marginRight="44dp"
                 android:layout_marginBottom="104dp"
                 android:background="@drawable/rect_white"
+                android:gravity="center"
                 android:paddingLeft="48dp"
                 android:paddingTop="11dp"
                 android:paddingRight="48dp"

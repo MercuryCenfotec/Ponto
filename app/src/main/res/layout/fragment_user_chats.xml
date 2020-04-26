@@ -39,12 +39,6 @@
                     android:textColor="#3b3b3b"
                     android:textSize="22sp" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_search_magnifier_interface_symbol" />
-
             </LinearLayout>
         </LinearLayout>
 

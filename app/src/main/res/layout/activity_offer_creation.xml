@@ -141,15 +141,16 @@
 
     <customfonts.MyTextView_SF_Pro_Display_Medium
         android:id="@+id/createOfferButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="124dp"
-        android:layout_marginLeft="124dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginRight="124dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/rect_blue"
+        android:onClick="createOffer"
         android:paddingLeft="48dp"
         android:paddingTop="11dp"
         android:paddingRight="48dp"
@@ -158,9 +159,9 @@
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="15sp"
-        android:onClick="createOffer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
