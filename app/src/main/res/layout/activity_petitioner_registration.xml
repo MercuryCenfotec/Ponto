@@ -72,7 +72,7 @@
                     android:paddingBottom="14dp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    android:textSize="13.5sp" />
+                    android:textSize="15sp" />
 
                 <customfonts.EditText__SF_Pro_Display_Medium
                     android:id="@+id/fullNamePetEditText"
@@ -90,7 +90,7 @@
                     android:paddingBottom="14dp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    android:textSize="13.5sp" />
+                    android:textSize="15sp" />
 
 
                 <customfonts.EditText__SF_Pro_Display_Medium
@@ -110,7 +110,7 @@
                     android:paddingBottom="14dp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    android:textSize="13.5sp" />
+                    android:textSize="15sp" />
 
                 <customfonts.EditText__SF_Pro_Display_Medium
                     android:id="@+id/emailPetEditText"
@@ -128,7 +128,7 @@
                     android:paddingBottom="14dp"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    android:textSize="13.5sp" />
+                    android:textSize="15sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -151,7 +151,7 @@
                         android:paddingBottom="14dp"
                         android:textColor="#ffffff"
                         android:textColorHint="#ffffff"
-                        android:textSize="13.5sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:id="@+id/imgViewPassword"
@@ -244,7 +244,7 @@
                 android:text="Registrarme"
                 android:textAllCaps="false"
                 android:textColor="#3b3b3b"
-                android:textSize="13.5sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"

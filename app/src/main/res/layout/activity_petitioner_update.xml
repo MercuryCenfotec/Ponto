@@ -66,7 +66,7 @@
             android:paddingBottom="14dp"
             android:textColor="#ced0d2"
             android:textColorHint="#ced0d2"
-            android:textSize="11.5sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/birthDateUpdPetEditText"
@@ -85,7 +85,7 @@
             android:paddingBottom="14dp"
             android:textColor="#ced0d2"
             android:textColorHint="#ced0d2"
-            android:textSize="11.5sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/fullNameUpdPetEditText"
@@ -103,7 +103,7 @@
             android:paddingBottom="14dp"
             android:textColor="#000"
             android:textColorHint="#000"
-            android:textSize="11.5sp" />
+            android:textSize="15sp" />
 
         <customfonts.EditText__SF_Pro_Display_Medium
             android:id="@+id/emailUpdPetEditText"
@@ -121,7 +121,7 @@
             android:paddingBottom="14dp"
             android:textColor="#000"
             android:textColorHint="#000"
-            android:textSize="11.5sp" />
+            android:textSize="15sp" />
 
         <!--        <RelativeLayout-->
 <!--            android:layout_width="match_parent"-->
@@ -176,7 +176,7 @@
             android:text="Actualizar"
             android:textAllCaps="false"
             android:textColor="#FFF"
-            android:textSize="11.5sp" />
+            android:textSize="15sp" />
 
 
     </LinearLayout>

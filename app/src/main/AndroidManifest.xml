@@ -38,9 +38,11 @@
         <activity android:name=".entities.bidder.BidderUpdateActivity" />
         <activity android:name=".entities.petitioner.PetitionerUpdateActivity" />
         <activity android:name=".entities.petitioner.PetitionerProfileActivity" />
-        <activity android:name=".entities.petitioner.PetitionerRegistrationActivity" />
+        <activity android:name=".entities.petitioner.PetitionerRegistrationActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".entities.bidder.BidderProfileActivity" />
-        <activity android:name=".entities.bidder.BidderRegistrationActivity" />
+        <activity android:name=".entities.bidder.BidderRegistrationActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".entities.petitioner.PetitionerHomeActivity" />
         <activity android:name=".entities.bidder.BidderHomeActivity" />
         <activity android:name=".entities.user.UserHomeActivity" />

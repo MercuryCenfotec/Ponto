@@ -126,10 +126,9 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
     }
 
     public void prePetitionerRegistration(View view) {
-        if (filesToUpload.size() != 0) {
-            uploadImageToFirebase();
-        } else {
-            if (!showErrorOnBlankSpaces() && isValidEmail()) {
+        if (!showErrorOnBlankSpaces() && isValidEmail()) {
+            if (hasAllPhotos()) {
+                uploadImageToFirebase();
                 FirebaseDatabase.getInstance().getReference().child("Users")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -157,10 +156,11 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                                 System.out.println("The read failed: " + databaseError.getCode());
                             }
                         });
-
             } else {
-                showToaster("Verificar campos");
+                showToaster("Debe seleccionar 3 archivos");
             }
+        } else {
+            showToaster("Verificar campos");
         }
     }
 
@@ -258,6 +258,13 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 //            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }
+    }
+
+    private boolean hasAllPhotos() {
+        if (filesToUpload.size() != 3) {
+            return false;
+        }
+        return true;
     }
 
     private void openPetitionerProfile() {
