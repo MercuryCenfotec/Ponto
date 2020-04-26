@@ -58,7 +58,7 @@ public class OffersListFragment extends Fragment {
         if (myPrefs.getString("userType", "none").equals("bidder")) {
             // Bidder
             offersQuery[0] = offerDBReference.orderByChild("userId").equalTo(myPrefs.getString("userId", "none"));
-            loadOffers(offersQuery[0]);
+            loadBidderOffersForBidder(offersQuery[0]);
         } else {
             // Petitioner
             servicePetitionQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -96,6 +96,26 @@ public class OffersListFragment extends Fragment {
                 offerList.clear();
                 for (DataSnapshot data : snapshot.getChildren()) {
                     if (!data.child("accepted").getValue().toString().equals("cancelled"))
+                        offerList.add(data.getValue(Offer.class));
+                }
+                offerCard_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                System.out.println("The offers read failed: " + databaseError.getCode());
+            }
+        });
+    }
+
+    private void loadBidderOffersForBidder (Query query) {
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                offerList.clear();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    if (!data.child("accepted").getValue().toString().equals("cancelled")
+                            && !data.child("accepted").getValue().toString().equals("accepted"))
                         offerList.add(data.getValue(Offer.class));
                 }
                 offerCard_adapter.notifyDataSetChanged();
