@@ -181,10 +181,15 @@ public class AppointmentCreationActivity extends AppCompatActivity {
 
   private void createAppointment(String longDate) {
     DatabaseReference notiRef = FirebaseDatabase.getInstance().getReference("Notifications");
-    ;
     String notificationId = notiRef.push().getKey();
     String appointmentId = databaseReference.push().getKey();
-    Notification notification = new Notification(notificationId, userId, "Nueva cita", "Una nueva cita a sido creada, revise su calendario", "", "newAppointment");
+    String userNotifId = "";
+    if(userType=="petitioner"){
+      userNotifId = bidderUserId;
+    }else{
+      userNotifId = petitionerId;
+    }
+    Notification notification = new Notification(notificationId, userNotifId, "Nueva cita", "Una nueva cita a sido creada, revise su calendario", "", "newAppointment");
     Appointment appointment = new Appointment(appointmentId,
             appointmentTitleEditText.getText().toString(),
             appointmentLocationEditText.getText().toString(), longDate,
