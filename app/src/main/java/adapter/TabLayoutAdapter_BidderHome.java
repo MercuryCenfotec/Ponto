@@ -33,10 +33,10 @@ public class TabLayoutAdapter_BidderHome extends FragmentStatePagerAdapter {
             case 1:
                 UserChats tab2 = new UserChats();
                 return tab2;
-            case 3:
+            case 2:
                 NotificationListFragment tab3 = new NotificationListFragment();
                 return tab3;
-            case 4:
+            case 3:
                 BidderProfileFragment tab4 = new BidderProfileFragment();
                 return tab4;
             default:

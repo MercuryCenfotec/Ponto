@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Notification;
+import com.cenfotec.ponto.entities.rating.RateUserDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +38,7 @@ import adapter.NotificationCard_Adapter;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotificationListFragment extends Fragment {
+public class NotificationListFragment extends Fragment implements NotificationCard_Adapter.NotificationClickListener {
   private View view;
   public static final String MY_PREFERENCES = "MyPrefs";
   private String userId;
@@ -45,6 +47,7 @@ public class NotificationListFragment extends Fragment {
   private NotificationCard_Adapter notificationCard_adapter;
   private RecyclerView recyclerview;
   private TextView notificationsListEmpty;
+  private DatabaseReference notifDBReference;
 
   public NotificationListFragment() {
     // Required empty public constructor
@@ -111,9 +114,8 @@ public class NotificationListFragment extends Fragment {
 
 
   private void setContent() {
-    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-//    layoutManager.setReverseLayout(true);
-    notificationCard_adapter = new NotificationCard_Adapter(getActivity(), notificationList);
+    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    notificationCard_adapter = new NotificationCard_Adapter(getActivity(), notificationList, (NotificationCard_Adapter.NotificationClickListener) this);
 
     recyclerview.setLayoutManager(layoutManager);
     recyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -121,10 +123,34 @@ public class NotificationListFragment extends Fragment {
   }
 
   private void initContent() {
+
+    notifDBReference = FirebaseDatabase.getInstance().getReference("Notifications");
+
     recyclerview = (view).findViewById(R.id.recycler);
     sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
     userId = sharedPreferences.getString("userId", "");
     notificationsListEmpty = view.findViewById(R.id.notificationsListEmpty);
 
+  }
+
+  @Override
+  public void onNotificationClicked(final String bidderId, final String petitionerId, final String notificationId) {
+
+    notifDBReference.child(notificationId).addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        if (!dataSnapshot.getValue(Notification.class).isDone()) {
+          RateUserDialog rateUserDialog = new RateUserDialog(bidderId, petitionerId, notificationId);
+          rateUserDialog.show(getChildFragmentManager(), "membership acquisition dialog");
+        } else {
+          Toast.makeText(getContext(), "Ya calificó al usuario", Toast.LENGTH_LONG).show();
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
   }
 }

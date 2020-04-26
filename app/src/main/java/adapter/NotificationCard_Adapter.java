@@ -23,14 +23,16 @@ import customfonts.TextViewSFProDisplayRegular;
 public class NotificationCard_Adapter extends RecyclerView.Adapter<NotificationCard_Adapter.ViewHolder> {
   private Context context;
   private List<Notification> notifications;
+  private NotificationClickListener mListener;
 
   public NotificationCard_Adapter() {
   }
 
-  public NotificationCard_Adapter(Context context, List<Notification> notifications) {
+  public NotificationCard_Adapter(Context context, List<Notification> notifications, NotificationClickListener listener) {
 
     this.context = context;
     this.notifications = notifications;
+    this.mListener = listener;
   }
 
   @NonNull
@@ -42,7 +44,7 @@ public class NotificationCard_Adapter extends RecyclerView.Adapter<NotificationC
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    Notification notification = notifications.get(position);
+    final Notification notification = notifications.get(position);
     holder.name.setText(notification.getTitle());
     holder.message.setText(notification.getDetail());
     holder.linear.setOnClickListener(NotificationFactory.createNotificationOnClick(context, notification));
@@ -51,6 +53,16 @@ public class NotificationCard_Adapter extends RecyclerView.Adapter<NotificationC
     } else {
       holder.n.setVisibility(View.GONE);
     }
+
+    if (notification.getType().equals("payment")) {
+      holder.linear.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          mListener.onNotificationClicked(notification.getUserId(), notification.getActionValue(), notification.getId());
+        }
+      });
+    }
+
   }
 
   @Override
@@ -75,4 +87,9 @@ public class NotificationCard_Adapter extends RecyclerView.Adapter<NotificationC
       n = itemView.findViewById(R.id.n);
     }
   }
+
+  public interface NotificationClickListener {
+    void onNotificationClicked(String bidderId, String petitionerId, String notificationId);
+  }
+
 }

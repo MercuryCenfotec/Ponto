@@ -16,7 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.cenfotec.ponto.R;
-import com.cenfotec.ponto.entities.servicePetition.ServicePetitionPetitionerDetailActivity;
 
 public class RateUserDialog extends AppCompatDialogFragment {
 
@@ -25,6 +24,20 @@ public class RateUserDialog extends AppCompatDialogFragment {
     private RatingBar ratingBar;
     private EditText ratingDescription;
     private RateUserDialogConfirmListener listener;
+    private RatePetDialogConfirmListener mListener;
+
+    private String petitionerId = "";
+    private String bidderId = "";
+    private String notificationId = "";
+
+    public RateUserDialog() {
+    }
+
+    public RateUserDialog(String raterId, String toRateId, String pNotificationId) {
+        petitionerId = toRateId;
+        bidderId = raterId;
+        notificationId = pNotificationId;
+    }
 
     @NonNull
     @Override
@@ -44,8 +57,15 @@ public class RateUserDialog extends AppCompatDialogFragment {
             @Override
             public void onClick(View v) {
                 if (ratingBar.getRating() > 0) {
-                    listener.dialogConfirmRating(ratingBar.getRating());
-                    dismiss();
+
+                    if (petitionerId.equals("") && bidderId.equals("")) {
+                        listener.dialogConfirmRating(ratingBar.getRating());
+                        dismiss();
+                    } else {
+                        mListener.dialogConfirmPetRating(ratingBar.getRating(), bidderId, petitionerId, notificationId);
+                        dismiss();
+                    }
+
                 } else {
                     Toast.makeText(getContext(), "Por favor califique al usuario", Toast.LENGTH_LONG).show();
                 }
@@ -67,7 +87,12 @@ public class RateUserDialog extends AppCompatDialogFragment {
         super.onAttach(context);
 
         try {
-            listener = (RateUserDialogConfirmListener) context;
+            if (petitionerId.equals("") && bidderId.equals("")) {
+                listener = (RateUserDialogConfirmListener) context;
+            } else {
+                mListener = (RatePetDialogConfirmListener) context;
+            }
+
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement RateUserDialogConfirmListener");
         }
@@ -75,5 +100,9 @@ public class RateUserDialog extends AppCompatDialogFragment {
 
     public interface RateUserDialogConfirmListener {
         void dialogConfirmRating(float rating);
+    }
+
+    public interface RatePetDialogConfirmListener {
+        void dialogConfirmPetRating(float rating, String bidderId, String petitionerId, String notificationId);
     }
 }

@@ -182,6 +182,29 @@
                         android:textSize="16sp" />
 
                     <LinearLayout
+                        android:id="@+id/ratingLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:layout_marginTop="1dp"
+                            android:src="@drawable/ic_rate_star_button"
+                            android:tint="#a9a9b0" />
+
+                        <customfonts.TextViewSFProDisplayRegular
+                            android:id="@+id/bidderRatingValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:text="0.0"
+                            android:textColor="#a9a9b0"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" />

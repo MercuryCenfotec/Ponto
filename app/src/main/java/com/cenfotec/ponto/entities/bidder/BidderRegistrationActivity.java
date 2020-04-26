@@ -153,34 +153,39 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     //create statements start here
     private void preBidderRegistration() {
         if (!showErrorOnBlankSpaces() && isValidEmail()) {
-            FirebaseDatabase.getInstance().getReference().child("Users")
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            boolean bidderFound = false;
-                            for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
-                                if (identificationEditText.getText().toString().equals(bidderSnapshot
-                                        .child("identificationNumber").getValue().toString())) {
-                                    bidderFound = true;
-                                    showToaster("Identificación existente");
-                                } else if (emailEditText.getText().toString().equals(bidderSnapshot
-                                        .child("email").getValue().toString())) {
-                                    bidderFound = true;
-                                    showToaster("Email existente");
+            if(hasAllPhotos()) {
+                uploadImageToFirebase();
+                FirebaseDatabase.getInstance().getReference().child("Users")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                boolean bidderFound = false;
+                                for (DataSnapshot bidderSnapshot : snapshot.getChildren()) {
+                                    if (identificationEditText.getText().toString().equals(bidderSnapshot
+                                            .child("identificationNumber").getValue().toString())) {
+                                        bidderFound = true;
+                                        showToaster("Identificación existente");
+                                    } else if (emailEditText.getText().toString().equals(bidderSnapshot
+                                            .child("email").getValue().toString())) {
+                                        bidderFound = true;
+                                        showToaster("Email existente");
+                                    }
+                                }
+
+                                if (!bidderFound) {
+                                    registerBidderToDB();
                                 }
                             }
 
-                            if (!bidderFound) {
-                                registerBidderToDB();
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                System.out.println("The read failed: " + databaseError.getCode());
                             }
-                        }
+                        });
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            System.out.println("The read failed: " + databaseError.getCode());
-                        }
-                    });
-
+            } else {
+                showToaster("Debe seleccionar 3 archivos");
+            }
         } else {
             showToaster("Verificar campos");
         }
@@ -275,6 +280,13 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 //            emailEditText.setHintTextColor(Color.parseColor("#c0392b"));
             return false;
         }
+    }
+
+    private boolean hasAllPhotos() {
+        if (filesToUpload.size() != 3) {
+            return false;
+        }
+        return true;
     }
 
     //Camera controls statements start here

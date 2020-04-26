@@ -12,9 +12,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
+import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.Rating;
 import com.cenfotec.ponto.data.model.User;
+import com.cenfotec.ponto.entities.notification.NotificationFactory;
 import com.cenfotec.ponto.entities.petitioner.PetitionerHomeActivity;
 import com.cenfotec.ponto.entities.rating.RateUserDialog;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 
 import adapter.TabLayoutAdapter_ServicePetitionDetailPetitioner;
@@ -174,6 +177,18 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     accountDBReference.child(bidderUserAccount.getAccountNumber()).child("balance").setValue(bidderUserAccount.getBalance() + acceptedOffer.getCost());
     servicePetitionBReference.child(ServicePetitionDetail.servicePetition.getId()).child("finished").setValue(true);
 
+    Notification paymentNotification = new Notification();
+    paymentNotification.setTitle("Pago recibido");
+    paymentNotification.setDetail("Ha recibido el pago del trabajo " + ServicePetitionDetail.servicePetition.getName() + ", puede confirmarlo en su cuenta. Presione para calificar al usuario");
+    paymentNotification.setUserId(bidder.getId());
+    paymentNotification.setIconId(0);
+    paymentNotification.setType("payment");
+    paymentNotification.setRead(false);
+    paymentNotification.setShow(false);
+    paymentNotification.setDone(false);
+    paymentNotification.setActionValue(userId);
+    NotificationFactory.registerNotificationToDB(paymentNotification);
+
     adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
     petitionViewPager.setAdapter(adapter);
 
@@ -223,7 +238,10 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     Rating myRating = new Rating(ratingId, bidder.getId(), userId, rating);
     ratingDBReference.child(ratingId).setValue(myRating);
 
+    DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+    symbols.setDecimalSeparator('.');
     DecimalFormat df = new DecimalFormat("###.##");
+    df.setDecimalFormatSymbols(symbols);
 
     // Actualizar el rating del usuario tomando la totalidad que se sumó arriba (además del rating nuevo) y dividirla por la cantidad total de ratings que tiene el user
     Float newRating = (totalRating + rating) / (numRatings + 1);

@@ -25,14 +25,26 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgBill"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="@+id/costTitle"
+        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/viewTitle"
+        app:srcCompat="@drawable/ic_money" />
+
     <TextView
         android:id="@+id/costTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:text="Costo del proyecto"
         android:textColor="#000"
-        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintStart_toEndOf="@+id/imgBill"
         app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
 
     <TextView
@@ -43,16 +55,25 @@
         app:layout_constraintStart_toStartOf="@+id/costTitle"
         app:layout_constraintTop_toBottomOf="@+id/costTitle" />
 
+    <ImageView
+        android:id="@+id/imgWork"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/costValue"
+        app:srcCompat="@drawable/ic_repair" />
+
     <TextView
         android:id="@+id/durationTypeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="Modo de trabajo"
         android:textColor="#000"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgWork"
         app:layout_constraintTop_toBottomOf="@+id/costValue" />
 
     <TextView
@@ -63,16 +84,25 @@
         app:layout_constraintStart_toStartOf="@+id/durationTypeTitle"
         app:layout_constraintTop_toBottomOf="@+id/durationTypeTitle" />
 
+    <ImageView
+        android:id="@+id/imgTime"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/durationTypeValue"
+        app:srcCompat="@drawable/ic_clock" />
+
     <TextView
         android:id="@+id/durationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="Duración del proyecto"
         android:textColor="#000"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgTime"
         app:layout_constraintTop_toBottomOf="@+id/durationTypeValue" />
 
     <TextView
@@ -84,16 +114,25 @@
         app:layout_constraintStart_toStartOf="@+id/durationTitle"
         app:layout_constraintTop_toBottomOf="@+id/durationTitle" />
 
+    <ImageView
+        android:id="@+id/imgDesc"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/viewTitle"
+        app:layout_constraintTop_toBottomOf="@+id/durationValue"
+        app:srcCompat="@drawable/ic_copy" />
+
     <TextView
         android:id="@+id/descriptionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
         android:text="Descripción del proyecto"
         android:textColor="#000"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imgDesc"
         app:layout_constraintTop_toBottomOf="@+id/durationValue" />
 
     <TextView
