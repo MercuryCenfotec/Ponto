@@ -39,7 +39,6 @@ public class UserHomeActivity extends AppCompatActivity {
                     break;
             }
         }
-
         startActivity(intent);
         finish();
 

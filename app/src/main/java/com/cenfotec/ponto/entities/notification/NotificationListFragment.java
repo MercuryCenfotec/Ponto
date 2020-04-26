@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,7 @@ public class NotificationListFragment extends Fragment implements NotificationCa
   private List<Notification> notificationList = new ArrayList<>();
   private NotificationCard_Adapter notificationCard_adapter;
   private RecyclerView recyclerview;
+  private TextView notificationsListEmpty;
   private DatabaseReference notifDBReference;
 
   public NotificationListFragment() {
@@ -78,6 +80,13 @@ public class NotificationListFragment extends Fragment implements NotificationCa
         }
         notificationCard_adapter.notifyDataSetChanged();
         setNotificationRead();
+        if (notificationList.isEmpty()) {
+          recyclerview.setVisibility(View.GONE);
+          notificationsListEmpty.setVisibility(View.VISIBLE);
+        } else {
+          recyclerview.setVisibility(View.VISIBLE);
+          notificationsListEmpty.setVisibility(View.GONE);
+        }
       }
 
       @Override
@@ -95,7 +104,7 @@ public class NotificationListFragment extends Fragment implements NotificationCa
     notificationList.forEach(new Consumer<Notification>() {
       @Override
       public void accept(Notification notification) {
-        if(!notification.isRead()){
+        if (!notification.isRead()) {
           notificationMap.put(notification.getId() + "/read", true);
         }
       }
@@ -120,6 +129,7 @@ public class NotificationListFragment extends Fragment implements NotificationCa
     recyclerview = (view).findViewById(R.id.recycler);
     sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
     userId = sharedPreferences.getString("userId", "");
+    notificationsListEmpty = view.findViewById(R.id.notificationsListEmpty);
 
   }
 

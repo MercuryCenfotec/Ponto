@@ -19,6 +19,7 @@ import com.cenfotec.ponto.entities.contract.ContractsListActivity;
 import com.cenfotec.ponto.entities.membership.MembershipAcquisitionActivity;
 import com.cenfotec.ponto.entities.notification.NotificationsSettingsActivity;
 import com.cenfotec.ponto.entities.petitioner.PetitionerUpdateActivity;
+import com.cenfotec.ponto.entities.user.LoginActivity;
 import com.cenfotec.ponto.utils.LogoutHelper;
 
 import java.util.ArrayList;
@@ -100,6 +101,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             case 5:
               LogoutHelper.logout(context);
+              Intent logoutIntent = new Intent(context, LoginActivity.class);
+              logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+              context.startActivity(logoutIntent);
               break;
           }
         }
@@ -159,6 +163,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
 
             case 6:
               LogoutHelper.logout(context);
+              Intent logoutIntent = new Intent(context, LoginActivity.class);
+              logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+              context.startActivity(logoutIntent);
               break;
           }
         }

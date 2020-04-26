@@ -86,36 +86,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view">
 
+
                 <LinearLayout
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingBottom="13dp">
-
-                    <customfonts.MyTextView_SF_Pro_Display_Medium
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingTop="13dp"
-                        android:text="--"
-                        android:textColor="#3b3b3b"
-                        android:textSize="14sp" />
-
-                    <customfonts.TextViewSFProDisplayRegular
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Compartidos"
-                        android:textColor="#a9a9b0"
-                        android:textSize="13sp" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
                     android:orientation="vertical"
                     android:paddingBottom="13dp">
 
@@ -125,6 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:paddingTop="13dp"
+                        android:text="--"
                         android:textColor="#3b3b3b"
                         android:textSize="14sp" />
 

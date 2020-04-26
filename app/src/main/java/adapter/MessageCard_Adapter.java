@@ -18,7 +18,6 @@ import com.cenfotec.ponto.data.model.Chat;
 import com.cenfotec.ponto.data.model.Message;
 import com.squareup.picasso.Picasso;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -51,51 +50,8 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     Message message = messages.get(position);
-    String parsedTime = "", timeLapse = "";
-    LocalDateTime time, now = LocalDateTime.now();
-    Integer difference;
 
-    time = LocalDateTime.parse(message.getDateTime());
-    difference = now.getMonthValue() - time.getMonthValue();
-    if (difference == 0) {
-      difference = now.getDayOfMonth() - time.getDayOfMonth();
-      if (difference == 0) {
-        difference = now.getHour() - time.getHour();
-        if (difference == 0) {
-          difference = now.getMinute() - time.getMinute();
-          if (difference == 0) {
-            difference = now.getSecond() - time.getSecond();
-            if (difference == 0) {
-              timeLapse = 1 + " segundo";
-            } else {
-              timeLapse = difference + " segundo";
-              if(difference > 1){
-                timeLapse +="s";
-              }
-            }
-          } else {
-            timeLapse = difference + " min";
-          }
-        } else {
-          timeLapse = difference + " hora";
-          if (difference > 1) {
-            timeLapse +="s";
-          }
-        }
-      } else {
-        timeLapse = difference + " dia";
-        if (difference > 1) {
-          timeLapse +="s";
-        }
-      }
-    } else {
-      timeLapse = difference + " mes";
-      if (difference > 1) {
-        timeLapse +="es";
-      }
-    }
 
-    parsedTime = "hace " + timeLapse;
     if (!message.getOwnerId().equals(userId)) {
       holder.cardSender.setVisibility(View.VISIBLE);
       holder.cardReceiver.setVisibility(View.GONE);
@@ -105,7 +61,6 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileSender);
       }
       holder.txtSender.setText(message.getMessage());
-      holder.txtTimeSender.setText(parsedTime);
     } else {
       holder.cardReceiver.setVisibility(View.VISIBLE);
       holder.cardSender.setVisibility(View.GONE);
@@ -115,9 +70,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
         Picasso.get().load(chat.getPetitionerImgUrl()).into(holder.imageProfileReceiver);
       }
       holder.txtReceiver.setText(message.getMessage());
-      holder.txtTimeReceiver.setText(parsedTime);
     }
-    holder.imageSeenReceiver.setVisibility(View.GONE);
   }
 
   @Override
@@ -128,7 +81,7 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
   public class ViewHolder extends RecyclerView.ViewHolder {
     ConstraintLayout cardSender, cardReceiver;
     ImageView imageProfileSender, imageProfileReceiver, imageSeenReceiver;
-    TextView txtSender, txtTimeSender, txtReceiver, txtTimeReceiver;
+    TextView txtSender, txtReceiver;
 
 
     public ViewHolder(View itemView) {
@@ -137,11 +90,8 @@ public class MessageCard_Adapter extends RecyclerView.Adapter<MessageCard_Adapte
       cardReceiver = itemView.findViewById(R.id.cardReceiver);
       imageProfileSender = itemView.findViewById(R.id.imageProfileSender);
       imageProfileReceiver = itemView.findViewById(R.id.imageProfileReceiver);
-      imageSeenReceiver = itemView.findViewById(R.id.imageSeenReceiver);
       txtSender = itemView.findViewById(R.id.txtSender);
-      txtTimeSender = itemView.findViewById(R.id.txtTimeSender);
       txtReceiver = itemView.findViewById(R.id.txtReceiver);
-      txtTimeReceiver = itemView.findViewById(R.id.txtTimeReceiver);
     }
   }
 }
