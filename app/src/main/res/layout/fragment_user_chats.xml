@@ -69,12 +69,6 @@
                 android:text="Todos" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabArchived"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Archivados" />
-
-            <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabClosed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +93,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
+            app:layout_constraintTop_toBottomOf="@+id/view3" >
+
+        </androidx.viewpager.widget.ViewPager>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

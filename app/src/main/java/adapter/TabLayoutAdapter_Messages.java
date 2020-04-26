@@ -27,10 +27,6 @@ public class TabLayoutAdapter_Messages extends FragmentStatePagerAdapter {
         ChatsList tab1 = new ChatsList("active");
         return tab1;
       case 1:
-        ChatsList tab2 = new ChatsList("archived");
-        return tab2;
-
-      case 2:
         ChatsList tab3 = new ChatsList("closed");
         return tab3;
 

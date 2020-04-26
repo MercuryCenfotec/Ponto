@@ -61,6 +61,7 @@ public class PetitionerHomeActivity extends AppCompatActivity {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         user = dataSnapshot.getValue(User.class);
+        assert user != null;
         if (user.isAllowsPushNotifications()) {
           chargeNotification();
         }
@@ -124,6 +125,7 @@ public class PetitionerHomeActivity extends AppCompatActivity {
         notificationList.clear();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Notification notification = snapshot.getValue(Notification.class);
+          assert notification != null;
           if (!notification.isShow()) {
             notificationList.add(notification);
           }

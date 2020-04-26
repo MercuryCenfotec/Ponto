@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -43,6 +44,7 @@ public class NotificationListFragment extends Fragment {
   private List<Notification> notificationList = new ArrayList<>();
   private NotificationCard_Adapter notificationCard_adapter;
   private RecyclerView recyclerview;
+  private TextView notificationsListEmpty;
 
   public NotificationListFragment() {
     // Required empty public constructor
@@ -75,6 +77,13 @@ public class NotificationListFragment extends Fragment {
         }
         notificationCard_adapter.notifyDataSetChanged();
         setNotificationRead();
+        if (notificationList.isEmpty()) {
+          recyclerview.setVisibility(View.GONE);
+          notificationsListEmpty.setVisibility(View.VISIBLE);
+        } else {
+          recyclerview.setVisibility(View.VISIBLE);
+          notificationsListEmpty.setVisibility(View.GONE);
+        }
       }
 
       @Override
@@ -92,7 +101,7 @@ public class NotificationListFragment extends Fragment {
     notificationList.forEach(new Consumer<Notification>() {
       @Override
       public void accept(Notification notification) {
-        if(!notification.isRead()){
+        if (!notification.isRead()) {
           notificationMap.put(notification.getId() + "/read", true);
         }
       }
@@ -102,7 +111,8 @@ public class NotificationListFragment extends Fragment {
 
 
   private void setContent() {
-    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+//    layoutManager.setReverseLayout(true);
     notificationCard_adapter = new NotificationCard_Adapter(getActivity(), notificationList);
 
     recyclerview.setLayoutManager(layoutManager);
@@ -114,6 +124,7 @@ public class NotificationListFragment extends Fragment {
     recyclerview = (view).findViewById(R.id.recycler);
     sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
     userId = sharedPreferences.getString("userId", "");
+    notificationsListEmpty = view.findViewById(R.id.notificationsListEmpty);
 
   }
 }

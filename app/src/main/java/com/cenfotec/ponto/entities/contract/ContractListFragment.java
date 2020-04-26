@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Contract;
@@ -39,12 +40,14 @@ public class ContractListFragment extends Fragment {
     private RecyclerView contractListRecycler;
     private List<Contract> contractList;
     private Map<String, ServicePetition> servicePetitionList;
+    private TextView contractsListEmpty;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contract_list, container, false);
+        contractsListEmpty = (view).findViewById(R.id.contractsListEmpty);
         contractListRecycler = (view).findViewById(R.id.contractListRecycler);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,
                 StaggeredGridLayoutManager.VERTICAL);
@@ -79,6 +82,13 @@ public class ContractListFragment extends Fragment {
                 contractList.clear();
                 for (DataSnapshot contractSnapshot : snapshot.getChildren()) {
                     contractList.add(contractSnapshot.getValue(Contract.class));
+                }
+                if(contractList.isEmpty()){
+                    contractsListEmpty.setVisibility(View.VISIBLE);
+                    contractListRecycler.setVisibility(View.GONE);
+                }else{
+                    contractsListEmpty.setVisibility(View.GONE);
+                    contractListRecycler.setVisibility(View.VISIBLE);
                 }
                 loadPetitionsFromDB();
             }

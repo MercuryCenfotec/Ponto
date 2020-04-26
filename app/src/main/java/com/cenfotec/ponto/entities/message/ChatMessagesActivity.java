@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +25,6 @@ import com.cenfotec.ponto.data.model.Message;
 import com.cenfotec.ponto.data.model.ServicePetition;
 import com.cenfotec.ponto.data.model.ServiceType;
 import com.cenfotec.ponto.entities.appointment.AppointmentAgendaActivity;
-import com.cenfotec.ponto.entities.appointment.AppointmentCreationActivity;
 import com.cenfotec.ponto.utils.GeneralActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +34,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +49,10 @@ public class ChatMessagesActivity extends GeneralActivity {
   private Appointment appointment;
   private ServicePetition petition;
   private MessageCard_Adapter messageCardAdapter;
-  private ImageView btnImageReturn, btnImageOption;
-  private TextView txtReceiver, txtPetitionName, txtServiceType, btnCreateMeeting, txtMeeting, btnImgSend;
-  private ConstraintLayout layoutMeetingInfo, btnGoToMeeting;
+  private ImageView btnImageReturn;
+  private TextView txtReceiver, txtPetitionName, txtServiceType, txtMeetingDate, btnImgSend;
+  private ConstraintLayout layoutMeetingInfo;
+  private FrameLayout btnGoToMeeting;
   private EditText inputNewMessage;
 
   @Override
@@ -72,13 +74,11 @@ public class ChatMessagesActivity extends GeneralActivity {
     recyclerMessages = findViewById(R.id.recyclerMessages);
 
     btnImageReturn = findViewById(R.id.btnImageReturn);
-    btnImageOption = findViewById(R.id.btnImageOption);
 
     txtReceiver = findViewById(R.id.txtReceiver);
     txtPetitionName = findViewById(R.id.txtPetitionName);
     txtServiceType = findViewById(R.id.txtServiceType);
-    btnCreateMeeting = findViewById(R.id.btnCreateMeeting);
-    txtMeeting = findViewById(R.id.txtMeeting);
+    txtMeetingDate = findViewById(R.id.txtMeetingDate);
     btnImgSend = findViewById(R.id.btnImgSend);
 
     layoutMeetingInfo = findViewById(R.id.layoutMeetingInfo);
@@ -86,36 +86,6 @@ public class ChatMessagesActivity extends GeneralActivity {
 
     inputNewMessage = findViewById(R.id.inputNewMessage);
     chargeAdapterViews();
-  }
-
-
-  private void setComponents() {
-    btnImgSend.setOnClickListener(new View.OnClickListener() {
-      @RequiresApi(api = Build.VERSION_CODES.O)
-      @Override
-      public void onClick(View v) {
-        sendMessage();
-      }
-    });
-    inputNewMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-      @RequiresApi(api = Build.VERSION_CODES.O)
-      @Override
-      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_SEND || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
-          sendMessage();
-          return true;
-        }
-        return false;
-      }
-    });
-    inputNewMessage.setImeActionLabel("Enviar", KeyEvent.KEYCODE_ENTER);
-    btnImageReturn.setOnClickListener(new View.OnClickListener() {
-      @RequiresApi(api = Build.VERSION_CODES.O)
-      @Override
-      public void onClick(View v) {
-        finish();
-      }
-    });
   }
 
   @Override
@@ -129,6 +99,7 @@ public class ChatMessagesActivity extends GeneralActivity {
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
     ref.child(chatId).addValueEventListener(new ValueEventListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         Chat newChat = dataSnapshot.getValue(Chat.class);
@@ -164,25 +135,35 @@ public class ChatMessagesActivity extends GeneralActivity {
     });
   }
 
+  private void setUserName() {
+    if (!userType.equals("petitioner")) {
+      txtReceiver.setText(chat.getPetitionerName());
+    } else {
+      txtReceiver.setText(chat.getBidderName());
+    }
+  }
+
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
   private void chargeAppointment() {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Appointments");
     Query query;
+    final DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
     if (userType.equals("petitioner")) {
       query = ref.orderByChild("petitionerId").equalTo(userId);
     } else {
       query = ref.orderByChild("bidderId").equalTo(userId);
     }
     query.addValueEventListener(new ValueEventListener() {
-      @RequiresApi(api = Build.VERSION_CODES.O)
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-          if (appointment == null && LocalDateTime.now().compareTo(LocalDateTime.parse(snapshot.getValue(Appointment.class).getStartDateTime())) > 0) {
-            snapshot.getValue(Appointment.class);
-          } else {
-            Appointment tempApp = snapshot.getValue(Appointment.class);
-            if (LocalDateTime.parse(appointment.getStartDateTime()).compareTo(LocalDateTime.parse(tempApp.getStartDateTime())) < 0) {
-              snapshot.getValue(Appointment.class);
+          Appointment tempApp = snapshot.getValue(Appointment.class);
+          if (appointment == null && LocalDateTime.now().compareTo(LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter)) < 0) {
+            appointment = tempApp;
+          } else if (appointment != null) {
+            if (LocalDateTime.parse(appointment.getStartDateTime()).compareTo(LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter)) < 0) {
+              appointment = tempApp;
             }
           }
         }
@@ -194,6 +175,24 @@ public class ChatMessagesActivity extends GeneralActivity {
 
       }
     });
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  private void validateMeetingInfo() {
+    DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
+    if (appointment != null) {
+      layoutMeetingInfo.setVisibility(View.VISIBLE);
+      txtMeetingDate.setText(LocalDateTime.parse(appointment.getStartDateTime(), customFormatter).format(DateTimeFormatter.ofPattern("d/MM/yyyy")).toString());
+      btnGoToMeeting.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          goToAppointments();
+        }
+      });
+    } else {
+      layoutMeetingInfo.setVisibility(View.GONE);
+    }
+
   }
 
   private void chargePetition() {
@@ -231,41 +230,41 @@ public class ChatMessagesActivity extends GeneralActivity {
     txtPetitionName.setText(petition.getName());
   }
 
-
-  private void setUserName() {
-    if (!userType.equals("petitioner")) {
-      txtReceiver.setText(chat.getPetitionerName());
-    } else {
-      txtReceiver.setText(chat.getBidderName());
-    }
+  private void setComponents() {
+    btnImgSend.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public void onClick(View v) {
+        sendMessage();
+      }
+    });
+    inputNewMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_SEND || (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+          sendMessage();
+          return true;
+        }
+        return false;
+      }
+    });
+    inputNewMessage.setImeActionLabel("Enviar", KeyEvent.KEYCODE_ENTER);
+    btnImageReturn.setOnClickListener(new View.OnClickListener() {
+      @RequiresApi(api = Build.VERSION_CODES.O)
+      @Override
+      public void onClick(View v) {
+        finish();
+      }
+    });
   }
+
 
   @Override
   protected void setTabs() {
 
   }
 
-  private void validateMeetingInfo() {
-    if (appointment == null && userType.equals("petitioner")) {
-      btnCreateMeeting.setVisibility(View.VISIBLE);
-      btnCreateMeeting.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          redirectTo(AppointmentCreationActivity.class);
-        }
-      });
-    } else if (appointment != null) {
-      layoutMeetingInfo.setVisibility(View.VISIBLE);
-      txtMeeting.setText(appointment.getStartDateTime());
-      btnGoToMeeting.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          goToAppointments();
-        }
-      });
-    }
-
-  }
 
   private void goToAppointments() {
     Intent iac = new Intent(this, AppointmentAgendaActivity.class);

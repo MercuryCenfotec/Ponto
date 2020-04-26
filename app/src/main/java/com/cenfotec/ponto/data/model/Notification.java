@@ -6,7 +6,6 @@ public class Notification {
   private String title;
   private String detail;
   private Integer iconId;
-  private Integer number;
   private String actionValue;
   private String type;
   private boolean isRead;
@@ -17,12 +16,16 @@ public class Notification {
 
   }
 
-  public Notification(String id, String userId, String title, String detail, boolean isRead) {
+  public Notification(String id, String userId, String title, String detail, String actionValue, String type) {
     this.id = id;
     this.userId = userId;
     this.title = title;
     this.detail = detail;
-    this.isRead = isRead;
+    this.actionValue = actionValue;
+    this.type = type;
+    this.isRead = false;
+    this.isShow = false;
+    this.isDone = false;
   }
 
   public String getId() {
@@ -63,14 +66,6 @@ public class Notification {
 
   public void setIconId(Integer iconId) {
     this.iconId = iconId;
-  }
-
-  public Integer getNumber() {
-    return number;
-  }
-
-  public void setNumber(Integer number) {
-    this.number = number;
   }
 
   public String getActionValue() {

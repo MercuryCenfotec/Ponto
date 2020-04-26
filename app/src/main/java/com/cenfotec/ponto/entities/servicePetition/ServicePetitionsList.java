@@ -93,11 +93,11 @@ public class ServicePetitionsList extends Fragment {
                 for (DataSnapshot servicePetitionSnapshot : snapshot.getChildren()) {
                     ServicePetition servicePetition = servicePetitionSnapshot.getValue(ServicePetition.class);
                     if((isSearching && servicePetition.getName().toLowerCase().contains(searchValue.toLowerCase()))|| !isSearching) {
-                        if (isPetitioner) {
-                            servicePetitionArrayList.add(servicePetitionSnapshot.getValue(ServicePetition.class));
+                        if (isPetitioner && !servicePetition.getFinished()) {
+                            servicePetitionArrayList.add(servicePetition);
                         } else {
                             if (servicePetition.getAcceptedOfferId() != null) {
-                                if (servicePetition.getAcceptedOfferId().equals("")) {
+                                if (servicePetition.getAcceptedOfferId().equals("") && !servicePetition.getFinished()) {
                                     servicePetitionArrayList.add(servicePetition);
                                 }
                             }
