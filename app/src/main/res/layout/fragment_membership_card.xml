@@ -64,16 +64,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider7" />
+                    app:layout_constraintTop_toBottomOf="@+id/divider7"
+                    android:layout_marginBottom="24dp"
+                    />
 
                 <customfonts.MyTextView_SF_Pro_Display_Medium
                     android:id="@+id/acquireMembershipBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/rect_blue"
                     android:paddingLeft="48dp"
