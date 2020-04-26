@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cenfotec.ponto.R;
+import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.entities.bidder.BidderHomeActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -92,7 +93,11 @@ public class OfferCreationActivity extends AppCompatActivity {
 
     public void createOffer(View view) {
         if (!validForm()) {
+            DatabaseReference notiRef = FirebaseDatabase.getInstance().getReference("Notifications");
             SharedPreferences myPrefs = this.getSharedPreferences(MY_PREFERENCES, MODE_PRIVATE);
+            String notificationId = notiRef.push().getKey();
+            String userNotifId = myPrefs.getString("servicePetitionUserId", "none");
+            Notification notification = new Notification(notificationId, userNotifId, "Nueva oferta", "Se ha efectuado una oferta en su solicitud: "+myPrefs.getString("servicePetitionTitle", "")+".", myPrefs.getString("servicePetitionId",""), "newAppointment");
             String key = offerDBReference.push().getKey();
 
             offer.setId(key);
@@ -109,6 +114,7 @@ public class OfferCreationActivity extends AppCompatActivity {
             offer.setBidderImageUrl(myPrefs.getString("userImageUrl", "none"));
 
             offerDBReference.child(key).setValue(offer);
+            notiRef.child(notificationId).setValue(notification);
             goToHome();
         } else {
             showToaster("Verificar campos");

@@ -189,7 +189,7 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     }else{
       userNotifId = petitionerId;
     }
-    Notification notification = new Notification(notificationId, userNotifId, "Nueva cita", "Una nueva cita a sido creada, revise su calendario", "", "newAppointment");
+    Notification notification = new Notification(notificationId, userNotifId, "Nueva cita", "Una nueva cita a sido creada, revise su calendario.", "", "newAppointment");
     Appointment appointment = new Appointment(appointmentId,
             appointmentTitleEditText.getText().toString(),
             appointmentLocationEditText.getText().toString(), longDate,
