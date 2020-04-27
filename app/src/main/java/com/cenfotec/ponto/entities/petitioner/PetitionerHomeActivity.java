@@ -133,7 +133,8 @@ public class PetitionerHomeActivity extends AppCompatActivity {
               notificationList.add(notification);
             }
           }
-        showNotification();
+          showNotification();
+        }
       }
 
       @Override
