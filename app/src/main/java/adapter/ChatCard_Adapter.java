@@ -47,58 +47,11 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
   @RequiresApi(api = Build.VERSION_CODES.O)
   @Override
   public void onBindViewHolder(ViewHolder holder, final int position) {
-    String parsedTime = "";
-    LocalDateTime time, now = LocalDateTime.now();
-    String timeLapse = "";
-    Integer difference;
     holder.linear.setBackgroundResource(R.drawable.rect_white_border);
     if (chatList.get(position).getMessages() != null) {
-      time = LocalDateTime.parse(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getDateTime());
-      difference = now.getMonthValue() - time.getMonthValue();
-      if (difference == 0) {
-        difference = now.getDayOfMonth() - time.getDayOfMonth();
-        if (difference == 0) {
-          difference = now.getHour() - time.getHour();
-          if (difference == 0) {
-            difference = now.getMinute() - time.getMinute();
-            if (difference == 0) {
-              difference = now.getSecond() - time.getSecond();
-              if (difference == 0) {
-                timeLapse = 1 + " segundo";
-              } else {
-                timeLapse = difference + " segundo";
-                if (difference > 1) {
-                  timeLapse += "s";
-                }
-              }
-            } else {
-              timeLapse = difference + " min";
-            }
-          } else {
-            timeLapse = difference + " hora";
-            if (difference > 1) {
-              timeLapse += "s";
-            }
-          }
-        } else {
-          timeLapse = difference + " dia";
-          if (difference > 1) {
-            timeLapse += "s";
-          }
-        }
-      } else {
-        timeLapse = difference + " mes";
-        if (difference > 1) {
-          timeLapse += "es";
-        }
-      }
-      parsedTime = "hace " + timeLapse;
       holder.message.setText(chatList.get(position).getMessages().get(chatList.get(position).getMessages().size() - 1).getMessage());
-      holder.time.setText(parsedTime);
     } else {
       holder.message.setText("No tienes mensajes con esta persona...");
-      holder.time.setText("");
-      holder.timePoint.setVisibility(View.GONE);
     }
 
     holder.linear.setOnClickListener(new View.OnClickListener() {
@@ -139,16 +92,13 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
     MyTextView_SF_Pro_Display_Medium message;
     CircleImageView image;
     LinearLayout linear;
-    ImageView timePoint;
     TextView n1;
 
     public ViewHolder(View itemView) {
       super(itemView);
-      timePoint = itemView.findViewById(R.id.timePoint);
       image = itemView.findViewById(R.id.image);
       message = itemView.findViewById(R.id.message);
       name = itemView.findViewById(R.id.name);
-      time = itemView.findViewById(R.id.time);
       petitionName = itemView.findViewById(R.id.petitionName);
       linear = itemView.findViewById(R.id.linear);
       n1 = itemView.findViewById(R.id.n1);

@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
+import com.cenfotec.ponto.data.model.Chat;
 import com.cenfotec.ponto.data.model.Notification;
 import com.cenfotec.ponto.data.model.Offer;
 import com.cenfotec.ponto.data.model.Rating;
@@ -167,7 +168,6 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
 
   public void openEndWorkDialog(View view) {
     getOffer();
-
     EndWorkDialog endWorkDialog = new EndWorkDialog();
     endWorkDialog.show(getSupportFragmentManager(), "end work dialog");
   }
@@ -188,6 +188,24 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     paymentNotification.setDone(false);
     paymentNotification.setActionValue(userId);
     NotificationFactory.registerNotificationToDB(paymentNotification);
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Chats");
+    Query query = ref.orderByChild("servicePetitionId").equalTo(ServicePetitionDetail.servicePetition.getId());
+    query.addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        for(DataSnapshot data : dataSnapshot.getChildren()){
+          DatabaseReference updRef = FirebaseDatabase.getInstance().getReference("Chats");
+          Chat chat =data.getValue(Chat.class);
+          chat.setState("closed");
+          updRef.child(chat.getId()).setValue(chat);
+        }
+      }
+
+      @Override
+      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+      }
+    });
 
     adapter = new TabLayoutAdapter_ServicePetitionDetailPetitioner(getSupportFragmentManager(), tabLayout.getTabCount());
     petitionViewPager.setAdapter(adapter);

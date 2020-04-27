@@ -121,6 +121,11 @@ public class ChatMessagesActivity extends GeneralActivity {
           messages.addAll(chat.getMessages());
         }
         messageCardAdapter.notifyDataSetChanged();
+        if (chat.getState().equals("closed")) {
+          findViewById(R.id.linearLayout12).setVisibility(View.GONE);
+        } else {
+          findViewById(R.id.linearLayout12).setVisibility(View.VISIBLE);
+        }
         recyclerMessages.scrollToPosition(messages.size() - 1);
         setUserName();
         chargeAppointment();
@@ -159,10 +164,12 @@ public class ChatMessagesActivity extends GeneralActivity {
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Appointment tempApp = snapshot.getValue(Appointment.class);
-          if (appointment == null && LocalDateTime.now().compareTo(LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter)) < 0) {
+          LocalDateTime tempLocalDateTime = LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter);
+          if (appointment == null && LocalDateTime.now().compareTo(tempLocalDateTime) < 0) {
             appointment = tempApp;
           } else if (appointment != null) {
-            if (LocalDateTime.parse(appointment.getStartDateTime()).compareTo(LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter)) < 0) {
+            LocalDateTime appoLocalDateTime = LocalDateTime.parse(appointment.getStartDateTime(), customFormatter);
+            if (appoLocalDateTime.compareTo(tempLocalDateTime) < 0) {
               appointment = tempApp;
             }
           }
