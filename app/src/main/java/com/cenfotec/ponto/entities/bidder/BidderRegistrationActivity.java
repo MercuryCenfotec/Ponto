@@ -137,13 +137,12 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 
     public void showHidePass(View view) {
         if (view.getId() == R.id.imgViewPassword) {
-            if(passwordEditText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                ((ImageView)(view)).setImageResource(R.drawable.ic_hide);
+            if (passwordEditText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view)).setImageResource(R.drawable.ic_hide);
                 //Show Password
                 passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }
-            else{
-                ((ImageView)(view)).setImageResource(R.drawable.ic_eye);
+            } else {
+                ((ImageView) (view)).setImageResource(R.drawable.ic_eye);
                 //Hide Password
                 passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
@@ -153,8 +152,8 @@ public class BidderRegistrationActivity extends AppCompatActivity {
     //create statements start here
     private void preBidderRegistration() {
         if (!showErrorOnBlankSpaces() && isValidEmail()) {
-            if(hasAllPhotos()) {
-                uploadImageToFirebase();
+            if (hasAllPhotos()) {
+
                 FirebaseDatabase.getInstance().getReference().child("Users")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -173,7 +172,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
                                 }
 
                                 if (!bidderFound) {
-                                    registerBidderToDB();
+                                    uploadImageToFirebase();
                                 }
                             }
 
@@ -203,7 +202,7 @@ public class BidderRegistrationActivity extends AppCompatActivity {
         // Account creation end
 
         String userId = databaseReference.push().getKey();
-        User user = new User(userId,fullNameEditText.getText().toString(),
+        User user = new User(userId, fullNameEditText.getText().toString(),
                 birthDateEditText.getText().toString(),
                 emailEditText.getText().toString(),
                 identificationEditText.getText().toString(),
@@ -219,15 +218,16 @@ public class BidderRegistrationActivity extends AppCompatActivity {
 
         // IdVerification creation
         String idVerificationKey = idVerificationsDBReference.push().getKey();
-        IdVerification idVerification = new IdVerification(idVerificationKey,user.getFullName(),user.getIdentificationNumber(),user.getId(),realFilesToUpload);
-        if (idVerificationKey != null) idVerificationsDBReference.child(idVerificationKey).setValue(idVerification);
+        IdVerification idVerification = new IdVerification(idVerificationKey, user.getFullName(), user.getIdentificationNumber(), user.getId(), realFilesToUpload);
+        if (idVerificationKey != null)
+            idVerificationsDBReference.child(idVerificationKey).setValue(idVerification);
 
         databaseReference.child(userId).setValue(user);
         afterUserIsAdded(userId);
         //initBidderProfileView(bidderId);
     }
 
-    private void afterUserIsAdded(String userId){
+    private void afterUserIsAdded(String userId) {
         String bidderId = bidderDataReference.push().getKey();
         Bidder bidder = new Bidder(bidderId, biographyEditText.getText().toString(), userId);
         bidderDataReference.child(bidderId).setValue(bidder);

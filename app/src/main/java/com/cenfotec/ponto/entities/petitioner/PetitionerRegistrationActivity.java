@@ -128,7 +128,6 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
     public void prePetitionerRegistration(View view) {
         if (!showErrorOnBlankSpaces() && isValidEmail()) {
             if (hasAllPhotos()) {
-                uploadImageToFirebase();
                 FirebaseDatabase.getInstance().getReference().child("Users")
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -147,7 +146,7 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
                                 }
 
                                 if (!petitionerFound) {
-                                    registerPetitioner();
+                                    uploadImageToFirebase();
                                 }
                             }
 
@@ -195,8 +194,9 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 
         // IdVerification creation
         String idVerificationKey = idVerificationsDBReference.push().getKey();
-        IdVerification idVerification = new IdVerification(idVerificationKey,user.getFullName(),user.getIdentificationNumber(),user.getId(),realFilesToUpload);
-        if (idVerificationKey != null) idVerificationsDBReference.child(idVerificationKey).setValue(idVerification);
+        IdVerification idVerification = new IdVerification(idVerificationKey, user.getFullName(), user.getIdentificationNumber(), user.getId(), realFilesToUpload);
+        if (idVerificationKey != null)
+            idVerificationsDBReference.child(idVerificationKey).setValue(idVerification);
 
         clearPetitionRegistrationInputs();
         showToaster("Registro exitoso");
@@ -217,13 +217,12 @@ public class PetitionerRegistrationActivity extends AppCompatActivity {
 
     public void showHidePass(View view) {
         if (view.getId() == R.id.imgViewPassword) {
-            if(passwordEditText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                ((ImageView)(view)).setImageResource(R.drawable.ic_hide);
+            if (passwordEditText.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                ((ImageView) (view)).setImageResource(R.drawable.ic_hide);
                 //Show Password
                 passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            }
-            else{
-                ((ImageView)(view)).setImageResource(R.drawable.ic_eye);
+            } else {
+                ((ImageView) (view)).setImageResource(R.drawable.ic_eye);
                 //Hide Password
                 passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
             }
