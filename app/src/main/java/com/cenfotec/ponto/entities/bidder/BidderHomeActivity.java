@@ -43,12 +43,14 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
   User user;
   private ArrayList<Rating> petitionerRatings;
   private boolean hasBeenRated = false;
+  Map notificationHistory;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_bidder_home);
     super.initComponents(R.id.homeView, R.id.bidderHomeNavbar);
+    notificationHistory  = new HashMap<>();
     setTabs();
     bindContent();
     initContent();
@@ -122,7 +124,6 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
   public void chargeNotification() {
     final SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
     String userId = myPrefs.getString("userId", "none");
-
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
     Query query = ref.orderByChild("userId").equalTo(userId);
     query.addValueEventListener(new ValueEventListener() {
@@ -130,15 +131,18 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         notificationList.clear();
+        chargeNotificationHistory();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Notification notification = snapshot.getValue(Notification.class);
           if (notification.getUserId().equals(myPrefs.getString("userId", "none"))) {
-            if (!notification.isShow()) {
+            if (!notification.isShow() && !notificationHistory.containsKey(notification.getId())) {
               notificationList.add(notification);
             }
           }
         }
-        showNotification();
+        if (notificationList.size() > 0) {
+          showNotification();
+        }
       }
 
       @Override
@@ -152,12 +156,19 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
   @RequiresApi(api = Build.VERSION_CODES.N)
   public void showNotification() {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
+    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
     final Map notificationMap = new HashMap<>();
+    String s = "";
+    if (!myPrefs.getString("notificationsIdsBidder", "").equals("")) {
+      s = myPrefs.getString("notificationsIdsBidder", "");
+    }
 
     for (Notification notification : notificationList) {
       NotificationFactory.createNotificationWithoutExtras(this, notification);
       notificationMap.put(notification.getId() + "/show", true);
+      s = s + " " + notification.getId();
     }
+    myPrefs.edit().putString("notificationsIdsBidder", s).apply();
     ref.updateChildren(notificationMap);
   }
 
@@ -244,6 +255,21 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
     userDBReference.child(petId).child("rating").setValue(Float.parseFloat(df.format(newRating)));
 
     notifDBReference.child(notificationId).child("done").setValue(true);
+  }
+
+  private void chargeNotificationHistory() {
+    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    String s = "";
+    String[] splitedString;
+    notificationHistory = new HashMap();
+    if (!myPrefs.getString("notificationsIdsBidder", "").equals("")) {
+      s = myPrefs.getString("notificationsIdsBidder", "");
+      splitedString = s.split(" ");
+
+      for (String string : splitedString) {
+        notificationHistory.put(string, "");
+      }
+    }
   }
 
 }

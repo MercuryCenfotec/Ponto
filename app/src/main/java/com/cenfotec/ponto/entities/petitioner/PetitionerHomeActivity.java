@@ -38,11 +38,15 @@ public class PetitionerHomeActivity extends AppCompatActivity {
   TabLayoutAdapter_PetitionerHome adapter;
   List<Notification> notificationList = new ArrayList<>();
   User user;
+  Map notificationHistory;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_petitioner_home);
+    notificationHistory  = new HashMap<>();
+    //SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    //myPrefs.edit().putString("notificationsIdsPetitioner", "").apply();
     bindContent();
     initContent();
     catchIntent();
@@ -125,14 +129,18 @@ public class PetitionerHomeActivity extends AppCompatActivity {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         notificationList.clear();
+        chargeNotificationHistory();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Notification notification = snapshot.getValue(Notification.class);
           assert notification != null;
           if (notification.getUserId().equals(myPrefs.getString("userId", "none"))) {
-            if (!notification.isShow()) {
+            if (!notification.isShow() && !notificationHistory.containsKey(notification.getId())) {
+              //notificationHistory.put(notification.getId(), notification);
               notificationList.add(notification);
             }
           }
+        }
+        if (notificationList.size() > 0) {
           showNotification();
         }
       }
@@ -148,12 +156,34 @@ public class PetitionerHomeActivity extends AppCompatActivity {
   @RequiresApi(api = Build.VERSION_CODES.N)
   public void showNotification() {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
+    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
     final Map notificationMap = new HashMap<>();
+    String s = "";
+    if (!myPrefs.getString("notificationsIdsPetitioner", "").equals("")) {
+      s = myPrefs.getString("notificationsIdsPetitioner", "");
+    }
 
     for (Notification notification : notificationList) {
-      NotificationFactory.createNotificationWithoutExtras(this, notification);
-      notificationMap.put(notification.getId() + "/show", true);
+        NotificationFactory.createNotificationWithoutExtras(this, notification);
+        notificationMap.put(notification.getId() + "/show", true);
+        s = s + " " + notification.getId();
     }
+    myPrefs.edit().putString("notificationsIdsPetitioner", s).apply();
     ref.updateChildren(notificationMap);
+  }
+
+  private void chargeNotificationHistory() {
+    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    String s = "";
+    String[] splitedString;
+    notificationHistory = new HashMap();
+    if (!myPrefs.getString("notificationsIdsPetitioner", "").equals("")) {
+      s = myPrefs.getString("notificationsIdsPetitioner", "");
+      splitedString = s.split(" ");
+
+      for (String string : splitedString) {
+        notificationHistory.put(string, "");
+      }
+    }
   }
 }
