@@ -6,328 +6,461 @@
     android:layout_height="match_parent"
     tools:context=".entities.offer.OfferDetailActivity">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bidderDetail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/returnIcon"
-            android:layout_width="wrap_content"
-            android:onClick="goToHome"
-            android:layout_height="18dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_left_arrow" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/offerTopContainer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="#023D67"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imgBill"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/costTitle"
-        app:layout_constraintStart_toStartOf="@+id/viewTitle"
-        app:layout_constraintTop_toBottomOf="@+id/viewTitle"
-        app:srcCompat="@drawable/ic_money" />
+                <ImageView
+                    android:id="@+id/returnIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:onClick="goToHome"
+                    android:src="@drawable/ic_left_arrow_white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/costTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Costo del proyecto"
-        android:textColor="#000"
-        app:layout_constraintStart_toEndOf="@+id/imgBill"
-        app:layout_constraintTop_toBottomOf="@+id/viewTitle" />
+                <ImageView
+                    android:id="@+id/imgOfferSettings"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:onClick="openOfferSettings"
+                    android:src="@drawable/ic_elipsis_white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/costValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="₡ 180000"
-        app:layout_constraintStart_toStartOf="@+id/costTitle"
-        app:layout_constraintTop_toBottomOf="@+id/costTitle" />
+                <customfonts.MyTextView_SF_Pro_Display_Bold
+                    android:id="@+id/viewTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Mi oferta"
+                    android:textColor="#fff"
+                    android:textSize="23sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imgWork"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/viewTitle"
-        app:layout_constraintTop_toBottomOf="@+id/costValue"
-        app:srcCompat="@drawable/ic_repair" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/middleContentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/offerTopContainer">
 
-    <TextView
-        android:id="@+id/durationTypeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Modo de trabajo"
-        android:textColor="#000"
-        app:layout_constraintStart_toEndOf="@+id/imgWork"
-        app:layout_constraintTop_toBottomOf="@+id/costValue" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnCreateAppointment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:background="@drawable/rect_blue"
+                    android:onClick="goToAppointmentAgenda"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/durationTypeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Por hora"
-        app:layout_constraintStart_toStartOf="@+id/durationTypeTitle"
-        app:layout_constraintTop_toBottomOf="@+id/durationTypeTitle" />
+                    <ImageView
+                        android:id="@+id/imgAppoCreation"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="@drawable/calendar_alt_regular_white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imgTime"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/viewTitle"
-        app:layout_constraintTop_toBottomOf="@+id/durationTypeValue"
-        app:srcCompat="@drawable/ic_clock" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/durationTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Duración del proyecto"
-        android:textColor="#000"
-        app:layout_constraintStart_toEndOf="@+id/imgTime"
-        app:layout_constraintTop_toBottomOf="@+id/durationTypeValue" />
+                <customfonts.MyTextView_SF_Pro_Display_Semibold
+                    android:id="@+id/btnOfferCreation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="96dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/rect_blue"
+                    android:gravity="center"
+                    android:onClick="openCounterOfferDialog"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="7dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Contraofertar"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/durationValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:text="64 horas"
-        app:layout_constraintStart_toStartOf="@+id/durationTitle"
-        app:layout_constraintTop_toBottomOf="@+id/durationTitle" />
+                <ImageView
+                    android:id="@+id/imgBill"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="60dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/costTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_money" />
 
-    <ImageView
-        android:id="@+id/imgDesc"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/viewTitle"
-        app:layout_constraintTop_toBottomOf="@+id/durationValue"
-        app:srcCompat="@drawable/ic_copy" />
+                <TextView
+                    android:id="@+id/costTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="60dp"
+                    android:text="Costo del proyecto"
+                    android:textColor="#000"
+                    app:layout_constraintStart_toEndOf="@+id/imgBill"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/descriptionTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="Descripción del proyecto"
-        android:textColor="#000"
-        app:layout_constraintStart_toEndOf="@+id/imgDesc"
-        app:layout_constraintTop_toBottomOf="@+id/durationValue" />
+                <TextView
+                    android:id="@+id/costValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="20dp"
+                    android:text="₡ 180000"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/costTitle" />
 
-    <TextView
-        android:id="@+id/descriptionValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="El proyecto contempla la construccion de una fuente en el patio del cliente."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/descriptionTitle"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+                <View
+                    android:id="@+id/costDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#34495e"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/costValue" />
 
-    <TextView
-        android:id="@+id/viewTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Mi oferta"
-        android:textColor="#300"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/createOfferButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/createOfferButton" />
+                <ImageView
+                    android:id="@+id/imgWork"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/costDivider"
+                    app:srcCompat="@drawable/ic_repair" />
 
-    <customfonts.MyTextView_SF_Pro_Display_Medium
-        android:id="@+id/createOfferButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/rect_blue"
-        android:onClick="goToOfferUpdate"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:text="Modificar oferta"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+                <TextView
+                    android:id="@+id/durationTypeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Modo de trabajo"
+                    android:textColor="#000"
+                    app:layout_constraintStart_toEndOf="@+id/imgWork"
+                    app:layout_constraintTop_toBottomOf="@+id/costDivider" />
 
-    <customfonts.MyTextView_SF_Pro_Display_Medium
-        android:id="@+id/btnCreateAppointment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="156dp"
-        android:layout_marginRight="156dp"
-        android:background="@drawable/rect_blue"
-        android:onClick="goToAppointmentAgenda"
-        android:paddingLeft="24dp"
-        android:paddingTop="8dp"
-        android:paddingRight="24dp"
-        android:paddingBottom="8dp"
-        android:visibility="gone"
-        android:text="Crear cita"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/counterOfferDescDetail" />
 
-    <View
-        android:id="@+id/divisorLineOfferDetail"
-        android:layout_width="match_parent"
-        android:layout_height="0.3dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="#A3979797"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionValue" />
+                <TextView
+                    android:id="@+id/durationTypeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Por hora"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationTypeTitle" />
 
-    <ImageView
-        android:id="@+id/counterOfferIconDetail"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:src="@drawable/ic_bell"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
-        app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+                <View
+                    android:id="@+id/durationTypeDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#34495e"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationTypeValue" />
 
-    <TextView
-        android:id="@+id/petCounterOfferDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Costo de la contraoferta"
-        android:textColor="#000"
-        android:textFontWeight="700"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
-        app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+                <ImageView
+                    android:id="@+id/imgTime"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationTypeDivider"
+                    app:srcCompat="@drawable/ic_clock" />
 
-    <TextView
-        android:id="@+id/petCounterOfferCostDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="000"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/petCounterOfferDetail"
-        app:layout_constraintTop_toBottomOf="@+id/petCounterOfferDetail" />
+                <TextView
+                    android:id="@+id/durationTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Duración del proyecto"
+                    android:textColor="#000"
+                    app:layout_constraintStart_toEndOf="@+id/imgTime"
+                    app:layout_constraintTop_toBottomOf="@+id/durationTypeDivider" />
 
-    <TextView
-        android:id="@+id/counterOfferTextDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:text="Tiene una contraoferta"
-        android:textColor="#000000"
-        android:textFontWeight="700"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/counterOfferIconDetail"
-        app:layout_constraintStart_toEndOf="@+id/counterOfferIconDetail"
-        app:layout_constraintTop_toTopOf="@+id/counterOfferIconDetail" />
+                <TextView
+                    android:id="@+id/durationValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="20dp"
+                    android:text="64 horas"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationTitle" />
 
-    <TextView
-        android:id="@+id/counterOfferDescDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="El creador de la solicitud está interesado en su oferta, pero realizó una contraoferta."
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/counterOfferIconDetail"
-        app:layout_constraintTop_toBottomOf="@+id/counterOfferTextDetail" />
+                <View
+                    android:id="@+id/durationDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="#34495e"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationValue" />
 
-    <TextView
-        android:id="@+id/counterOfferCostTitleDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Costo de la contraoferta"
-        android:textColor="#000"
-        android:textFontWeight="700"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/counterOfferDescDetail"
-        app:layout_constraintTop_toBottomOf="@+id/counterOfferDescDetail" />
+                <ImageView
+                    android:id="@+id/imgDesc"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/durationDivider"
+                    app:srcCompat="@drawable/ic_copy" />
 
-    <TextView
-        android:id="@+id/counterOfferCostDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:text="000"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="@+id/counterOfferCostTitleDetail"
-        app:layout_constraintTop_toBottomOf="@+id/counterOfferCostTitleDetail" />
+                <TextView
+                    android:id="@+id/descriptionTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="40dp"
+                    android:text="Descripción del proyecto"
+                    android:textColor="#000"
+                    app:layout_constraintStart_toEndOf="@+id/imgDesc"
+                    app:layout_constraintTop_toBottomOf="@+id/durationDivider" />
 
-    <customfonts.MyTextView_SF_Pro_Display_Semibold
-        android:id="@+id/btnAcceptCounterOffer"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_gravity="center"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/rect_blue"
-        android:gravity="center"
-        android:onClick="openConfirmCounterOfferDialog"
-        android:paddingLeft="8dp"
-        android:paddingTop="7dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="8dp"
-        android:text="Aceptar contraoferta"
-        android:textColor="#ffffff"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/counterOfferCostDetail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/counterOfferCostTitleDetail" />
+                <TextView
+                    android:id="@+id/descriptionValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="El proyecto contempla la construccion de una fuente en el patio del cliente."
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/offerBottomContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/middleContentContainer">
+
+                <View
+                    android:id="@+id/divisorLineOfferDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.3dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:background="#A3979797"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/counterOfferIconDetail"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/ic_bell"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+
+                <TextView
+                    android:id="@+id/petCounterOfferDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Costo de la contraoferta"
+                    android:textColor="#000"
+                    android:textFontWeight="700"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/divisorLineOfferDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/divisorLineOfferDetail" />
+
+                <TextView
+                    android:id="@+id/petCounterOfferCostDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="000"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/petCounterOfferDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/petCounterOfferDetail" />
+
+                <TextView
+                    android:id="@+id/counterOfferTextDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="Tiene una contraoferta"
+                    android:textColor="#000000"
+                    android:textFontWeight="700"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/counterOfferIconDetail"
+                    app:layout_constraintStart_toEndOf="@+id/counterOfferIconDetail"
+                    app:layout_constraintTop_toTopOf="@+id/counterOfferIconDetail" />
+
+                <TextView
+                    android:id="@+id/counterOfferDescDetail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:text="El creador de la solicitud está interesado en su oferta, pero realizó una contraoferta."
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/counterOfferIconDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/counterOfferTextDetail" />
+
+                <TextView
+                    android:id="@+id/counterOfferCostTitleDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Costo de la contraoferta"
+                    android:textColor="#000"
+                    android:textFontWeight="700"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@+id/counterOfferDescDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/counterOfferDescDetail" />
+
+                <TextView
+                    android:id="@+id/counterOfferCostDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="000"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/counterOfferCostTitleDetail"
+                    app:layout_constraintTop_toBottomOf="@+id/counterOfferCostTitleDetail" />
+
+                <customfonts.MyTextView_SF_Pro_Display_Semibold
+                    android:id="@+id/btnAcceptCounterOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:background="@drawable/rect_blue"
+                    android:gravity="center"
+                    android:onClick="openConfirmCounterOfferDialog"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="7dp"
+                    android:paddingRight="8dp"
+                    android:paddingBottom="8dp"
+                    android:text="Aceptar contraoferta"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/counterOfferCostDetail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/counterOfferCostTitleDetail" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/bidderDetail"
@@ -337,8 +470,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -349,13 +482,11 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/offerUserImage"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:src="@drawable/profile" />
-
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -390,47 +521,22 @@
                     android:id="@+id/acceptOfferButton"
                     android:layout_width="100dp"
                     android:layout_height="33dp"
-                    android:gravity="center"
                     android:layout_marginTop="1dp"
                     android:layout_marginRight="20dp"
-                    android:onClick="openAcceptOfferDialog"
                     android:layout_weight="1"
                     android:background="@drawable/rect_blue"
+                    android:gravity="center"
+                    android:onClick="openAcceptOfferDialog"
                     android:paddingTop="7dp"
                     android:paddingBottom="8dp"
-                    android:visibility="gone"
                     android:text="Aceptar oferta"
                     android:textColor="#ffffff"
-                    android:textSize="12sp" />
-
-
+                    android:textSize="12sp"
+                    android:visibility="gone" />
             </LinearLayout>
-
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <customfonts.MyTextView_SF_Pro_Display_Semibold
-        android:id="@+id/btnOfferCreation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/rect_blue"
-        android:gravity="center"
-        android:onClick="openCounterOfferDialog"
-        android:paddingLeft="8dp"
-        android:paddingTop="7dp"
-        android:paddingRight="8dp"
-        android:paddingBottom="8dp"
-        android:text="Contraofertar"
-        android:textColor="#ffffff"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/costValue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/costTitle"
-        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -352,7 +352,7 @@ public class BidderUpdateActivity extends AppCompatActivity {
     private void openBidderProfile() {
         finish();
         Intent intent = new Intent(this, BidderHomeActivity.class);
-        intent.putExtra("forceProfileAction", 4);
+        intent.putExtra("forceProfileAction", 3);
         startActivity(intent);
 
     }

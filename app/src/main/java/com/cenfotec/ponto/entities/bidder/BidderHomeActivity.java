@@ -87,8 +87,9 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
 
   private void catchIntent() {
     if (getIntent().getExtras() != null) {
-      TabLayout.Tab tab = tabLayout.getTabAt(4);
+      TabLayout.Tab tab = tabLayout.getTabAt(3);
       tab.select();
+      changeView(3);
 
     }
   }
@@ -119,7 +120,7 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
   }
 
   public void chargeNotification() {
-    SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+    final SharedPreferences myPrefs = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
     String userId = myPrefs.getString("userId", "none");
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Notifications");
@@ -131,8 +132,10 @@ public class BidderHomeActivity extends GeneralActivity implements RateUserDialo
         notificationList.clear();
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
           Notification notification = snapshot.getValue(Notification.class);
-          if (!notification.isShow()) {
-            notificationList.add(notification);
+          if (notification.getUserId().equals(myPrefs.getString("userId", "none"))) {
+            if (!notification.isShow()) {
+              notificationList.add(notification);
+            }
           }
         }
         showNotification();

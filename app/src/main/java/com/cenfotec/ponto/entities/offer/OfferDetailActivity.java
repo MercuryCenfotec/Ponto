@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Account;
@@ -55,7 +58,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
   TextView userName;
   ImageView userImage;
   LinearLayout bidderDetail;
-  TextView createOfferButton;
+  //TextView createOfferButton;
   TextView viewTitle;
   boolean hasCounterOffer;
   String offerId;
@@ -80,12 +83,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
   String userId;
 
   // ## Appointment ##
-  TextView btnCreateAppointment;
+  ConstraintLayout btnCreateAppointment;
   // ## Appointment end ##
 
   // Account start
   Account userAccount;
   // Account end
+
+  // ## OfferSettings ##
+  ImageView imgOfferSettings;
+  // ## OfferSettings end ##
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +110,7 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     userName = findViewById(R.id.offerUserName);
     bidderDetail = findViewById(R.id.bidderDetail);
     bidderDetail.setVisibility(View.GONE);
-    createOfferButton = findViewById(R.id.createOfferButton);
+    //createOfferButton = findViewById(R.id.createOfferButton);
     viewTitle = findViewById(R.id.viewTitle);
     counterOfferButton = findViewById(R.id.btnOfferCreation);
     acceptOfferButton = findViewById(R.id.acceptOfferButton);
@@ -125,6 +132,11 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
 
     userId = myPrefs.getString("userId", "none");
     offerId = myPrefs.getString("offerId", "none");
+
+    // ## OfferSettings ##
+    imgOfferSettings = findViewById(R.id.imgOfferSettings);
+    // ## OfferSettings end ##
+
 
     loadOfferData(userId, offerId);
 
@@ -252,13 +264,16 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
               acceptOfferButton.setVisibility(View.VISIBLE);
             }
             bidderDetail.setVisibility(View.VISIBLE);
-            createOfferButton.setVisibility(View.GONE);
+            //createOfferButton.setVisibility(View.GONE);
+            imgOfferSettings.setVisibility(View.GONE);
             userName.setText(data.child("bidderName").getValue().toString());
             if (!data.child("bidderImageUrl").getValue().toString().equals("")) {
               Picasso.get().load(data.child("bidderImageUrl").getValue().toString()).into(userImage);
             }
           } else if (data.child("accepted").getValue().toString().equals("accepted")) {
-            createOfferButton.setVisibility(View.GONE);
+            //createOfferButton.setVisibility(View.GONE);
+            imgOfferSettings.setVisibility(View.GONE);
+
           }
         }
       }
@@ -500,4 +515,29 @@ public class OfferDetailActivity extends AppCompatActivity implements CounterOff
     btnAcceptCounterOffer.setVisibility(View.GONE);
     Toast.makeText(this, "Se aceptó la contraoferta", Toast.LENGTH_LONG).show();
   }
+
+  // ## AppointmentSettingsMenu statements start here ##
+  public void openOfferSettings(View view) {
+    PopupMenu popupMenu = new PopupMenu(OfferDetailActivity.this, imgOfferSettings);
+    popupMenu.getMenuInflater().inflate(R.menu.offer_detail_settings, popupMenu.getMenu());
+    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+      @Override
+      public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+          case R.id.offerSettingsOptionModify:
+            go();
+            return true;
+          default:
+            return false;
+        }
+      }
+    });
+    popupMenu.show();
+  }
+
+  private void go() {
+    Intent intent = new Intent(this, OfferUpdateActivity.class);
+    startActivity(intent);
+  }
+  // ## AppointmentSettingsMenu statements end ##
 }

@@ -44,6 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,41 +125,41 @@
             android:textSize="15sp" />
 
         <!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content">-->
 
-<!--            <customfonts.EditText__SF_Pro_Display_Medium-->
-<!--                android:id="@+id/txtPassword"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="41dp"-->
-<!--                android:layout_marginTop="21dp"-->
-<!--                android:layout_marginRight="41dp"-->
-<!--                android:background="@drawable/rect_black"-->
-<!--                android:hint="Contraseña"-->
-<!--                android:inputType="textPassword"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingTop="13dp"-->
-<!--                android:paddingRight="13dp"-->
-<!--                android:paddingBottom="14dp"-->
-<!--                android:textColor="#000"-->
-<!--                android:textColorHint="#000"-->
-<!--                android:textSize="11.5sp" />-->
+        <!--            <customfonts.EditText__SF_Pro_Display_Medium-->
+        <!--                android:id="@+id/txtPassword"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:layout_marginLeft="41dp"-->
+        <!--                android:layout_marginTop="21dp"-->
+        <!--                android:layout_marginRight="41dp"-->
+        <!--                android:background="@drawable/rect_black"-->
+        <!--                android:hint="Contraseña"-->
+        <!--                android:inputType="textPassword"-->
+        <!--                android:paddingLeft="20dp"-->
+        <!--                android:paddingTop="13dp"-->
+        <!--                android:paddingRight="13dp"-->
+        <!--                android:paddingBottom="14dp"-->
+        <!--                android:textColor="#000"-->
+        <!--                android:textColorHint="#000"-->
+        <!--                android:textSize="11.5sp" />-->
 
-<!--            <ImageView-->
-<!--                android:id="@+id/imgViewPassword"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignTop="@+id/txtPassword"-->
-<!--                android:layout_alignEnd="@+id/txtPassword"-->
-<!--                android:layout_alignRight="@+id/txtPassword"-->
-<!--                android:layout_alignBottom="@+id/txtPassword"-->
-<!--                android:layout_marginRight="16dp"-->
-<!--                android:onClick="showHidePass"-->
-<!--                android:src="@drawable/ic_eye" />-->
+        <!--            <ImageView-->
+        <!--                android:id="@+id/imgViewPassword"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignTop="@+id/txtPassword"-->
+        <!--                android:layout_alignEnd="@+id/txtPassword"-->
+        <!--                android:layout_alignRight="@+id/txtPassword"-->
+        <!--                android:layout_alignBottom="@+id/txtPassword"-->
+        <!--                android:layout_marginRight="16dp"-->
+        <!--                android:onClick="showHidePass"-->
+        <!--                android:src="@drawable/ic_eye" />-->
 
-<!--        </RelativeLayout>-->
+        <!--        </RelativeLayout>-->
 
         <customfonts.MyTextView_SF_Pro_Display_Medium
             android:id="@+id/btnRegisterPetitioner"

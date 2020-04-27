@@ -344,7 +344,7 @@ public class PetitionerUpdateActivity extends AppCompatActivity {
     private void openPetitionerProfile(String id) {
         finish();
         Intent intent = new Intent(this, PetitionerHomeActivity.class);
-        intent.putExtra("forceProfileAction", 4);
+        intent.putExtra("forceProfileAction", 3);
         startActivity(intent);
     }
 
