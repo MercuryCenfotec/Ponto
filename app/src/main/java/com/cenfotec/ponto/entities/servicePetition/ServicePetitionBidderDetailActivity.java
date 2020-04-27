@@ -201,6 +201,7 @@ public class ServicePetitionBidderDetailActivity extends AppCompatActivity {
     public void goToOfferCreation() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("servicePetitionTitle", servicePetition.getName());
+        editor.putString("servicePetitionUserId", servicePetition.getPetitionerId());
         editor.commit();
 
         Intent intent = new Intent(this, OfferCreationActivity.class);

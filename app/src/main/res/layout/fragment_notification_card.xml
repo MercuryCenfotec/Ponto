@@ -69,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Hola this is a test sabdioknsao pkdnoilksnd oiknsalkodnas"
+                        android:text="Notification message"
                         android:textColor="#000000"
                         android:textSize="14sp" />
 

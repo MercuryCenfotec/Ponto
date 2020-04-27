@@ -39,12 +39,6 @@
                     android:textColor="#3b3b3b"
                     android:textSize="22sp" />
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/ic_search_magnifier_interface_symbol" />
-
             </LinearLayout>
         </LinearLayout>
 
@@ -67,12 +61,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Todos" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabArchived"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Archivados" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/tabClosed"
@@ -99,7 +87,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view3" />
+            app:layout_constraintTop_toBottomOf="@+id/view3" >
+
+        </androidx.viewpager.widget.ViewPager>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

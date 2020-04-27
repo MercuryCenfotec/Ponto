@@ -3,15 +3,15 @@ package com.cenfotec.ponto.entities.chat;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.cenfotec.ponto.R;
 import com.cenfotec.ponto.data.model.Chat;
@@ -41,6 +41,7 @@ public class ChatsList extends Fragment {
   private RecyclerView recyclerview;
   private List<Chat> chatList;
   private ChatCard_Adapter chatCard_adapter;
+  private TextView chatsListEmpty;
 
   public ChatsList() {
   }
@@ -67,6 +68,7 @@ public class ChatsList extends Fragment {
     sharedPreferences = getActivity().getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
     userId = sharedPreferences.getString("userId", "");
     userType = sharedPreferences.getString("userType", "");
+    chatsListEmpty = view.findViewById(R.id.chatsListEmpty);
 
   }
 
@@ -95,11 +97,18 @@ public class ChatsList extends Fragment {
         chatList.clear();
         for (DataSnapshot chatSnapshot : snapshot.getChildren()) {
           Chat chat = chatSnapshot.getValue(Chat.class);
-          if(chat.getState().equals(filter)){
+          if (chat.getState().equals(filter)) {
             chatList.add(chat);
           }
         }
         chatCard_adapter.notifyDataSetChanged();
+        if (chatList.isEmpty()) {
+          chatsListEmpty.setVisibility(View.VISIBLE);
+          recyclerview.setVisibility(View.GONE);
+        }else{
+          recyclerview.setVisibility(View.VISIBLE);
+          chatsListEmpty.setVisibility(View.GONE);
+        }
       }
 
       @Override

@@ -27,9 +27,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/ic_left_arrow"
-            app:layout_constraintBottom_toBottomOf="@+id/txtReceiver"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/txtReceiver" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <customfonts.MyTextView_SF_Pro_Display_Semibold
             android:id="@+id/txtReceiver"
