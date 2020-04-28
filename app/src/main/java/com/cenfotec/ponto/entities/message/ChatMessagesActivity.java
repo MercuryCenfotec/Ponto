@@ -154,25 +154,41 @@ public class ChatMessagesActivity extends GeneralActivity {
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Appointments");
     Query query;
     final DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
+    String otherId = "";
     if (userType.equals("petitioner")) {
       query = ref.orderByChild("petitionerId").equalTo(userId);
+      otherId = chat.getBidderId();
     } else {
       query = ref.orderByChild("bidderId").equalTo(userId);
+      otherId = chat.getPetitionerId();
     }
+    final String finalOtherId = otherId;
     query.addValueEventListener(new ValueEventListener() {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+          boolean belongs = false;
           int difference;
           Appointment tempApp = snapshot.getValue(Appointment.class);
-          LocalDateTime tempLocalDateTime = LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter);
-          if (appointment == null && LocalDateTime.now().compareTo(tempLocalDateTime) < 0) {
-            appointment = tempApp;
-          } else if (appointment != null) {
-            LocalDateTime appoLocalDateTime = LocalDateTime.parse(appointment.getStartDateTime(), customFormatter);
-            difference = LocalDateTime.now().compareTo(tempLocalDateTime);
-            if (appoLocalDateTime.compareTo(tempLocalDateTime) < 0 && appoLocalDateTime.compareTo(tempLocalDateTime) > difference) {
+          if (userType.equals("petitioner")) {
+            if (tempApp.getBidderId().equals(finalOtherId)) {
+              belongs = true;
+            }
+          } else {
+            if (tempApp.getPetitionerId().equals(finalOtherId)) {
+              belongs = true;
+            }
+          }
+          if (belongs) {
+            LocalDateTime tempLocalDateTime = LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter);
+            if (appointment == null && LocalDateTime.now().compareTo(tempLocalDateTime) < 0) {
               appointment = tempApp;
+            } else if (appointment != null) {
+              LocalDateTime appoLocalDateTime = LocalDateTime.parse(appointment.getStartDateTime(), customFormatter);
+              difference = LocalDateTime.now().compareTo(tempLocalDateTime);
+              if (appoLocalDateTime.compareTo(tempLocalDateTime) < 0 && appoLocalDateTime.compareTo(tempLocalDateTime) > difference) {
+                appointment = tempApp;
+              }
             }
           }
         }
