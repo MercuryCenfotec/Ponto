@@ -73,7 +73,8 @@ public class ChatsList extends Fragment {
   }
 
   private void chargeContent() {
-    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    layoutManager.setReverseLayout(true);
     chatCard_adapter = new ChatCard_Adapter(getActivity(), chatList, userId);
 
     recyclerview.setLayoutManager(layoutManager);
@@ -105,7 +106,7 @@ public class ChatsList extends Fragment {
         if (chatList.isEmpty()) {
           chatsListEmpty.setVisibility(View.VISIBLE);
           recyclerview.setVisibility(View.GONE);
-        }else{
+        } else {
           recyclerview.setVisibility(View.VISIBLE);
           chatsListEmpty.setVisibility(View.GONE);
         }

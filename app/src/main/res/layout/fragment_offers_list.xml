@@ -11,6 +11,16 @@
         android:isScrollContainer="true"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/listEmptyTextView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="No tiene ofertas..."
+            android:textSize="24sp"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler5"
             android:layout_width="match_parent"

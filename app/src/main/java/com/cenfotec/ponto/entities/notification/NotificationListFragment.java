@@ -114,7 +114,8 @@ public class NotificationListFragment extends Fragment implements NotificationCa
 
 
   private void setContent() {
-    RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+    layoutManager.setReverseLayout(true);
     notificationCard_adapter = new NotificationCard_Adapter(getActivity(), notificationList, (NotificationCard_Adapter.NotificationClickListener) this);
 
     recyclerview.setLayoutManager(layoutManager);
