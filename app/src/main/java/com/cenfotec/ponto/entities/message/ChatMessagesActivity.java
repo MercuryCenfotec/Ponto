@@ -163,13 +163,15 @@ public class ChatMessagesActivity extends GeneralActivity {
       @Override
       public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+          int difference;
           Appointment tempApp = snapshot.getValue(Appointment.class);
           LocalDateTime tempLocalDateTime = LocalDateTime.parse(tempApp.getStartDateTime(), customFormatter);
           if (appointment == null && LocalDateTime.now().compareTo(tempLocalDateTime) < 0) {
             appointment = tempApp;
           } else if (appointment != null) {
             LocalDateTime appoLocalDateTime = LocalDateTime.parse(appointment.getStartDateTime(), customFormatter);
-            if (appoLocalDateTime.compareTo(tempLocalDateTime) < 0) {
+            difference = LocalDateTime.now().compareTo(tempLocalDateTime);
+            if (appoLocalDateTime.compareTo(tempLocalDateTime) < 0 && appoLocalDateTime.compareTo(tempLocalDateTime) > difference) {
               appointment = tempApp;
             }
           }
@@ -187,7 +189,7 @@ public class ChatMessagesActivity extends GeneralActivity {
   @RequiresApi(api = Build.VERSION_CODES.O)
   private void validateMeetingInfo() {
     DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
-    if (appointment != null) {
+    if (appointment != null && chat.getState().equals("active")) {
       layoutMeetingInfo.setVisibility(View.VISIBLE);
       txtMeetingDate.setText(LocalDateTime.parse(appointment.getStartDateTime(), customFormatter).format(DateTimeFormatter.ofPattern("d/MM/yyyy")).toString());
       btnGoToMeeting.setOnClickListener(new View.OnClickListener() {
