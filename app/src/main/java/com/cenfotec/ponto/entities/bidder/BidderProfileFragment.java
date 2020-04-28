@@ -51,7 +51,7 @@ public class BidderProfileFragment extends Fragment {
   Integer arrow = R.drawable.ic_chevron_right_black_24dp;
   String txttrades[] = {"Agenda de proyectos", "Cuenta interna", "Contratos",
           "Mi perfil", "Ajustes de notificaciones", "Cerrar sesión"};
-  String txthistory[] = {"Revise sus contrataciones", "Estructure la membresía de la app",
+  String txthistory[] = {"Revise sus contrataciones",
           "Administe su cuenta interna", "Contratos realizados", "Cambie la información de su perfil",
           "Configure las notificaciones de la aplicación", "Cierre la sesión"};
 
