@@ -68,7 +68,7 @@ public class ChatCard_Adapter extends RecyclerView.Adapter<ChatCard_Adapter.View
       }
     });
 
-    if (userId == chatList.get(position).getPetitionerId()) {
+    if (userId.equals(chatList.get(position).getPetitionerId())) {
       holder.name.setText(chatList.get(position).getBidderName());
       if (chatList.get(position).getBidderImgUrl().length() > 0) {
         Picasso.get().load(chatList.get(position).getBidderImgUrl()).into(holder.image);
