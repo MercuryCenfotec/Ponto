@@ -28,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,6 +79,7 @@ public class NotificationListFragment extends Fragment implements NotificationCa
           Notification notification = snapshot.getValue(Notification.class);
           notificationList.add(notification);
         }
+        Collections.reverse(notificationList);
         notificationCard_adapter.notifyDataSetChanged();
         setNotificationRead();
         if (notificationList.isEmpty()) {
@@ -115,7 +117,6 @@ public class NotificationListFragment extends Fragment implements NotificationCa
 
   private void setContent() {
     StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-    layoutManager.setReverseLayout(true);
     notificationCard_adapter = new NotificationCard_Adapter(getActivity(), notificationList, (NotificationCard_Adapter.NotificationClickListener) this);
 
     recyclerview.setLayoutManager(layoutManager);

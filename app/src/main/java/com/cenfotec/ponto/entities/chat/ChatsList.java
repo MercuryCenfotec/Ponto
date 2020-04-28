@@ -23,6 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import adapter.ChatCard_Adapter;
@@ -74,7 +75,6 @@ public class ChatsList extends Fragment {
 
   private void chargeContent() {
     StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-    layoutManager.setReverseLayout(true);
     chatCard_adapter = new ChatCard_Adapter(getActivity(), chatList, userId);
 
     recyclerview.setLayoutManager(layoutManager);
@@ -102,6 +102,8 @@ public class ChatsList extends Fragment {
             chatList.add(chat);
           }
         }
+
+        Collections.reverse(chatList);
         chatCard_adapter.notifyDataSetChanged();
         if (chatList.isEmpty()) {
           chatsListEmpty.setVisibility(View.VISIBLE);

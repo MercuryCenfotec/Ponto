@@ -29,6 +29,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,7 +138,6 @@ public class ServicePetitionsList extends Fragment {
 
   private void setContent() {
     StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
-    layoutManager.setReverseLayout(true);
     servicePetitionCard_adapter = new ServicePetitionCard_Adapter(getActivity(), servicePetitionArrayList, serviceTypesList, isPetitioner);
 
     recyclerview.setLayoutManager(layoutManager);
@@ -201,7 +201,10 @@ public class ServicePetitionsList extends Fragment {
             listEmptyTextView.setVisibility(View.GONE);
           }
         }
+
+        Collections.reverse(servicePetitionArrayList);
         servicePetitionCard_adapter.notifyDataSetChanged();
+
       }
 
       @Override
