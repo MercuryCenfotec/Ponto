@@ -265,5 +265,6 @@ public class ServicePetitionPetitionerDetailActivity extends AppCompatActivity i
     Float newRating = (totalRating + rating) / (numRatings + 1);
     userDBReference.child(bidder.getId()).child("rating").setValue(Float.parseFloat(df.format(newRating)));
 
+    finish();
   }
 }
