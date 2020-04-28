@@ -184,7 +184,7 @@ public class AppointmentCreationActivity extends AppCompatActivity {
     String notificationId = notiRef.push().getKey();
     String appointmentId = databaseReference.push().getKey();
     String userNotifId = "";
-    if(userType=="petitioner"){
+    if(userType.equals("petitioner")){
       userNotifId = bidderUserId;
     }else{
       userNotifId = petitionerId;
